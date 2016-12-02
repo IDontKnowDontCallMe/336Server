@@ -32,70 +32,108 @@ public class UserBLImpl implements UserBLService {
 
 	@Override
 	public boolean updateCustomer(CustomerVO vo) throws RemoteException {
+		DataFactory.getUserDataService().deleteCustomer(vo.customerID);
 		CustomerPO po = new CustomerPO(vo.customerName, vo.phoneNumber, vo.customerID, vo.birthday, vo.companyName,
 				vo.credit, vo.level, vo.isBirthVIP, vo.isCompanyVIP);
-		DataFactory.getCustomerDataService().updateInfo(po);
+		DataFactory.getUserDataService().insertCustomer(po);
 		return true;
 	}
 
 	@Override
-	public boolean addCustomer(CustomerVO customervo) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean addCustomer(CustomerVO vo) throws RemoteException {
+		CustomerPO po = new CustomerPO(vo.customerName, vo.phoneNumber, vo.customerID, vo.birthday, vo.companyName,
+				vo.credit, vo.level, vo.isBirthVIP, vo.isCompanyVIP);
+		DataFactory.getUserDataService().insertCustomer(po);
+		return true;
 	}
 
 	@Override
 	public List<HotelVO> getHotelList() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		List<HotelVO> result = new ArrayList<HotelVO>();
+		for (HotelPO po : hotelList) {
+			HotelVO vo = new HotelVO(po.getHotelID(), po.getHotelName(), po.getCity(), po.getBusinessCircle(),
+					po.getAddress(), po.getIntroduction(), po.getService(), po.getScore(), po.getCommentScore(),
+					po.getWorkerName(), po.getPhoneNumber(), po.getMinPrice(), po.getBookedTag());
+			result.add(vo);
+		}
+		return result;
 	}
 
 	@Override
-	public boolean addHotel(HotelVO hotelVO) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean addHotel(HotelVO vo) throws RemoteException {
+		HotelPO po = new HotelPO(vo.hotelID, vo.hotelName, vo.city, vo.businessCircle, vo.address, vo.introduction,
+				vo.service, vo.workerName, vo.phoneNumber, vo.score, vo.commentScore, vo.minPrice, vo.bookedTag);
+		DataFactory.getUserDataService().insertHotel(po);
+		return true;
 	}
 
 	@Override
-	public boolean updateHotelWorker(HotelVO hotelVO) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean updateHotelWorker(HotelVO vo) throws RemoteException {
+		DataFactory.getUserDataService().deleteHotel(vo.hotelID);
+		HotelPO po = new HotelPO(vo.hotelID, vo.hotelName, vo.city, vo.businessCircle, vo.address, vo.introduction,
+				vo.service, vo.workerName, vo.phoneNumber, vo.score, vo.commentScore, vo.minPrice, vo.bookedTag);
+		DataFactory.getUserDataService().insertHotel(po);
+		return true;
 	}
 
 	@Override
 	public List<WebMarketerVO> getWebMarketerList() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		List<WebMarketerVO> result = new ArrayList<WebMarketerVO>();
+		for (WebMarketerPO po : webMarketerList) {
+			WebMarketerVO vo = new WebMarketerVO(po.getWebMarketerID(), po.getName(), po.getPhoneNumber());
+			result.add(vo);
+		}
+		return result;
 	}
 
 	@Override
-	public boolean addWebMarketer(WebMarketerVO webMarketerVO) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean addWebMarketer(WebMarketerVO vo) throws RemoteException {
+		WebMarketerPO po = new WebMarketerPO(vo.ID, vo.name, vo.phoneNumber);
+		DataFactory.getUserDataService().insertWebMarketer(po);
+		return true;
 	}
 
 	@Override
-	public boolean updateWebMarketer(WebMarketerVO webMarketerVO) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean deleteWebMarketer(int WebMarketerID) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean updateWebMarketer(WebMarketerVO vo) throws RemoteException {
+		DataFactory.getUserDataService().deleteWebMarketer(vo.ID);
+		WebMarketerPO po = new WebMarketerPO(vo.ID, vo.name, vo.phoneNumber);
+		DataFactory.getUserDataService().insertWebMarketer(po);
+		return true;
 	}
 
 	@Override
 	public boolean updateCreditOfCustomer(int customerID, int delta) {
-		// TODO Auto-generated method stub
+		DataFactory.getUserDataService().deleteCustomer(customerID);
+		CustomerPO temp = null;
+		for (CustomerPO po : customerList) {
+			if (po.getID() == customerID) {
+				temp = po;
+				break;
+			}
+		}
+		temp.setCredit(temp.getCredit() + delta);
+		DataFactory.getUserDataService().insertCustomer(temp);
 		return false;
 	}
 
 	@Override
 	public String login(int userID, String password) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		if (userID / 100000000 == 1) {
+			System.out.println("customer logs in.");
+			return "customer";
+		} else if (userID / 100000000 == 2) {
+			System.out.println("hotel worker logs in.");
+			return "hotelWorker";
+		} else if (userID / 100000000 == 3) {
+			System.out.println("web marketer logs in.");
+			return "webMarketer";
+		} else if (userID / 100000000 == 4) {
+			System.out.println("web manager logs in.");
+			return "webManager";
+		} else {
+			System.out.println("wrong userID.");
+			return null;
+		}
 	}
 
 }

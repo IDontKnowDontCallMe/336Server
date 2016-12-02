@@ -4,9 +4,6 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
-import po.CustomerPO;
-import po.HotelPO;
-import po.WebMarketerPO;
 import vo.CustomerVO;
 import vo.HotelVO;
 import vo.WebMarketerVO;
@@ -14,6 +11,8 @@ import vo.WebMarketerVO;
 public interface UserBLService extends Remote{
 
 	public List<CustomerVO> getCustomerList() throws RemoteException;
+	
+	public boolean addCustomer(CustomerVO customervo) throws RemoteException;
 	
 	public boolean updateCustomer(CustomerVO customerVO) throws RemoteException;
 	
@@ -29,10 +28,11 @@ public interface UserBLService extends Remote{
 	
 	public boolean updateWebMarketer(WebMarketerVO webMarketerVO) throws RemoteException;
 	
-	public boolean deleteWebMarketer(WebMarketerVO webMarketerVO) throws RemoteException;
+	public boolean deleteWebMarketer(int WebMarketerID) throws RemoteException;
 	
 	public boolean updateCreditOfCustomer(int customerID, int delta);
-
 	
 	public String login(int userID, String password) throws RemoteException;
+
+	
 }

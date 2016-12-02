@@ -4,7 +4,7 @@ import java.util.List;
 
 import po.CustomerPO;
 
-public class CustomerDaoImpl implements CustomerDao{
+public class CustomerDaoImpl implements CustomerDao {
 
 	@Override
 	public List<CustomerPO> getCustomerList() {
@@ -19,7 +19,13 @@ public class CustomerDaoImpl implements CustomerDao{
 	}
 
 	@Override
-	public boolean updateCustomer(int customerID, CustomerPO po) {
+	public boolean deleteCustomer(int customerID) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean insertCustomer(CustomerPO po) {
 		// TODO Auto-generated method stub
 		return false;
 	}

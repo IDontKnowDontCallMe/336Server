@@ -4,7 +4,7 @@ public class UserDaoFactory {
 	
 	private static CustomerDao customerDao;
 	private static HotelDao hotelDao;
-	private static MarketerDao marketerDao;
+	private static WebMarketerDao marketerDao;
 	
 	public static CustomerDao getCustomerDao(){
 		if(customerDao==null){
@@ -20,9 +20,9 @@ public class UserDaoFactory {
 		return hotelDao;
 	}
 	
-	public static MarketerDao getMarketerDao(){
+	public static WebMarketerDao getMarketerDao(){
 		if(marketerDao==null){
-			marketerDao = new MarketerDaoImpl();
+			marketerDao = new WebMarketerDaoImpl();
 		}
 		return marketerDao;
 	}

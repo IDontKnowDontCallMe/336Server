@@ -2,30 +2,30 @@ package data.userdata;
 
 import java.util.List;
 
-import po.MarketerPO;
+import po.WebMarketerPO;
 
-public class MarketerDaoImpl implements MarketerDao{
+public class WebMarketerDaoImpl implements WebMarketerDao {
 
 	@Override
-	public int addMarketer(MarketerPO po) {
+	public boolean insertWebMarketer(WebMarketerPO po) {
 		// TODO Auto-generated method stub
-		return 0;
+		return false;
 	}
 
 	@Override
-	public List<MarketerPO> getMarketerList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public MarketerPO getMarketer(int MarketerID) {
+	public List<WebMarketerPO> getWebMarketerList() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean updateMarketer(MarketerPO po) {
+	public WebMarketerPO getWebMarketer(int webMarketerID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean deleteWebMarketer(int webMarketerID) {
 		// TODO Auto-generated method stub
 		return false;
 	}

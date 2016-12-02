@@ -4,7 +4,6 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 import businesslogicservice.userblservice.UserBLService;
-import po.HotelPO;
 import vo.CustomerVO;
 import vo.HotelVO;
 import vo.WebMarketerVO;
@@ -15,6 +14,12 @@ public class UserController implements UserBLService{
 		}
 	
 	public boolean updateCustomer(CustomerVO customerVO) throws RemoteException {
+		return false;
+	}
+	
+	@Override
+	public boolean addCustomer(CustomerVO customervo) throws RemoteException {
+		// TODO Auto-generated method stub
 		return false;
 	}
 	
@@ -51,7 +56,7 @@ public class UserController implements UserBLService{
 	}
 
 	@Override
-	public boolean deleteWebMarketer(WebMarketerVO webMarketerVO) throws RemoteException {
+	public boolean deleteWebMarketer(int WebMarketerID) throws RemoteException {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -61,4 +66,6 @@ public class UserController implements UserBLService{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	
 }

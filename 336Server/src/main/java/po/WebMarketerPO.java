@@ -1,7 +1,5 @@
 package po;
 
-import vo.WebMarketerVO;
-
 public class WebMarketerPO {
 	
 	int ID;

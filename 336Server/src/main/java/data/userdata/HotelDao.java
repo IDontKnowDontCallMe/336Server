@@ -2,16 +2,16 @@ package data.userdata;
 
 import java.util.List;
 
-import po.WorkerPO;
+import po.HotelPO;
 
 public interface HotelDao {
+	
+	public List<HotelPO> getHotelList();
 
-	public List<WorkerPO> getWorkerList();
-	
-	public WorkerPO getWorker(int hotelID);
-	
-	public boolean updateWorker(int hotelID, WorkerPO po);
-	
-	public int addHotel(String hotelName);
+	public HotelPO getHotel(int hotelID);
+
+	public boolean deleteHotel(int hotelID);
+
+	public boolean insertHotel(HotelPO po);
 	
 }

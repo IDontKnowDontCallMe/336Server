@@ -2,32 +2,32 @@ package data.userdata;
 
 import java.util.List;
 
-import po.WorkerPO;
+import po.HotelPO;
 
-public class HotelDaoImpl implements HotelDao{
+public class HotelDaoImpl implements HotelDao {
 
 	@Override
-	public List<WorkerPO> getWorkerList() {
+	public List<HotelPO> getHotelList() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public WorkerPO getWorker(int hotelID) {
+	public HotelPO getHotel(int hotelID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean updateWorker(int hotelID, WorkerPO po) {
+	public boolean deleteHotel(int hotelID) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public int addHotel(String hotelName) {
+	public boolean insertHotel(HotelPO po) {
 		// TODO Auto-generated method stub
-		return 0;
+		return false;
 	}
 
 }

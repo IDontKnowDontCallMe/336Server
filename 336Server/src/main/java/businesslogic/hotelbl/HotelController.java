@@ -3,6 +3,7 @@ package businesslogic.hotelbl;
 import java.util.List;
 
 import businesslogicservice.hotelblservice.HotelBLService;
+import businesslogicservice.hotelblservice.OrderForC_H_Service;
 import po.HotelPO;
 import vo.AreaVO;
 import vo.CommentVO;
@@ -13,6 +14,11 @@ import vo.SearchConditionVO;
 
 public class HotelController implements HotelBLService{
 
+	private HotelSearchingImpl hotelSearchingImpl;
+	private HotelDetailInfoImpl hotelDetailInfoImpl;
+	private HotelInfoImpl hotelInfoImol;
+	
+	
 	@Override
 	public List<HotelVO> getHotelVOsOfArea(AreaVO areaVO, int customerID) {
 		// TODO Auto-generated method stub
@@ -74,6 +80,8 @@ public class HotelController implements HotelBLService{
 		return null;
 	}
 
+	//-------------------------------------//maybe delet 
+	
 	@Override
 	public boolean update(HotelVO hotelVO) {
 		// TODO Auto-generated method stub

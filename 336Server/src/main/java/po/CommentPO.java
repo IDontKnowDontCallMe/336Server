@@ -1,22 +1,40 @@
 package po;
 
+import java.time.LocalDateTime;
+
 public class CommentPO {
 	
+	private int hotelID;
 	private String nameOfHotel;
 	private String nameOfRoom;
 	private String comment;
-	private int score;
-	private String writer;
-	private String time;
+	private double score;
+	private LocalDateTime produingDateTime;
+	private int customerID;
+	
+
+
 	
 	
-	public CommentPO(String nameOfHotel, String nameOfRoom, String comment, int score, String writer, String time){
+	
+	public CommentPO(int hotelID, String nameOfHotel, String nameOfRoom, String comment, double score, 
+						LocalDateTime producingDateTime, int customerID){
+		this.hotelID = hotelID;
 		this.nameOfHotel = nameOfHotel;
 		this.nameOfRoom = nameOfRoom;
 		this.comment = comment;
 		this.score = score;
-		this.writer = writer;
-		this.time = time;
+		this.produingDateTime = producingDateTime;
+		this.customerID = customerID;
+	}
+	
+	
+	public void setHotelID(int hotelID){
+		this.hotelID = hotelID;
+	}
+	
+	public int getHotelID(){
+		return this.hotelID;
 	}
 	
 	public void setNameOfHotel(String nameOfHotel){
@@ -43,28 +61,30 @@ public class CommentPO {
 		return this.comment;
 	}
 	
-	public void setScore(int score){
+	public void setScore(double score){
 		this.score = score;
 	}
 	
-	public int getScore(){
+	public double getScore(){
 		return this.score;
 	}
 	
-	public void setWriter(String writer){
-		this.writer = writer;
+	
+	
+	public void setProducingDateTime(LocalDateTime producingDateTime){
+		this.produingDateTime = producingDateTime;
 	}
 	
-	public String getWriter(){
-		return this.writer;
-	}
-	
-	public void setTime(String time){
-		this.time = time;
-	}
-	
-	public String getTime(){
-		return this.time;
+	public LocalDateTime getProducingDateTime(){
+		return this.produingDateTime;
 	}
 
+	
+	public void setCustomerID(int customerID){
+		this.customerID = customerID;
+	}
+	
+	public int getCustomerID(){
+		return this.customerID;
+	}
 }

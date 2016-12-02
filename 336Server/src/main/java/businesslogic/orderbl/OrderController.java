@@ -70,6 +70,24 @@ public class OrderController implements OrderBLService{
 		return null;
 	}
 
+	@Override
+	public List<OrderVO> getOrderListOfHotel(int hotelID, int customerID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getBookedTag(int customerID, int hotelID) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<Integer> getBookedHotelidOf(int customerID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	
 	

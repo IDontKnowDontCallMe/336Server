@@ -3,6 +3,7 @@ package dataservice.orderdataservice;
 import java.util.List;
 
 import po.OrderPO;
+import vo.OrderVO;
 
 public interface OrderDataService {
 	
@@ -21,5 +22,8 @@ public interface OrderDataService {
 	public boolean insertOrder(OrderPO po);
 	
 	public int getNumOfAllOrders();
+	
+	//2016/12/2 22:27 +
+	public List<OrderPO> getOrderListOfHotel(int hotelID, int customerID) ;
 
 }

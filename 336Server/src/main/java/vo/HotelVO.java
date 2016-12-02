@@ -13,12 +13,12 @@ public class HotelVO {
 	public double commentScore;
 	public String workerName;
 	public String phoneNumber;
-	public int minPrice;
 	
-	public String bookedTag;
+	public int minPrice;
+	public int bookedTag;
 	
 	public HotelVO(int hotelID, String hotelName, String city, String businessCircle, String address, String introduction, String service,
-					int score, double commentScore, String workerName, String phoneNumber, int minPrice, String bookedTag) {
+					int score, double commentScore, String workerName, String phoneNumber, int minPrice, int bookedTag) {
 		this.hotelID = hotelID;
 		this.hotelName = hotelName;
 		this.city = city;

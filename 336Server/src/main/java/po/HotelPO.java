@@ -1,35 +1,66 @@
 package po;
 
+
 public class HotelPO {
 	
-	private String hotelID;
+	private int hotelID;
+	private String hotelName;
+	private String city;
+	private String businessCircle;
 	private String address;
 	private String introduction;
-	private String[] service;
-	private String[] roomType;
-	private int[] price;
+	private String service;
 	private String workerName;
 	private String phoneNumber;
+	private int score;
+	private double commentScore;
 	
-	public HotelPO(String hotelID, String address, String introduction, String[] service, String[] roomType, 
-			        int[] price, String workerName, String phoneNumeber){
+	public HotelPO(int hotelID, String hotelName, String city, String businessCircle, String address, String introduction, String service,  
+			        String workerName, String phoneNumeber, int score, double commentScore){
 		
 		this.hotelID = hotelID;
+		this.hotelName = hotelName;
+		this.city = city;
+		this.businessCircle = businessCircle;
 		this.address = address;
 		this.introduction = introduction;
 		this.service = service;
-		this.roomType = roomType;
-		this.price = price;
 		this.workerName = workerName;
 		this.phoneNumber = phoneNumeber;
+		this.score = score;
+		this.commentScore =commentScore;
 	}
 	
-	public void setHotelID(String hotelID){
+	public void setHotelID(int hotelID){
 		this.hotelID = hotelID;
 	}
 	
-	public String getHotelID(){
+	public int getHotelID(){
 		return this.hotelID;
+	}
+	
+	public void setHotelName(String hotelName){
+		this.hotelName = hotelName;
+	}
+	
+	public String getHotelName(){
+		return this.hotelName;
+	}
+	
+	public void setCity(String city){
+		this.city = city;
+	}
+	
+	public String getCity(){
+		return this.city;
+	}
+	
+	public void setBusinessCircle(String businessCircle){
+		this.businessCircle = businessCircle;
+	}
+	
+	public String getBusinessCircle(){
+		return this.businessCircle;
 	}
 	
 	public void setAddress(String address){
@@ -48,28 +79,12 @@ public class HotelPO {
 		return this.introduction;
 	}
 	
-	public void setService(String[] service){
+	public void setService(String service){
 		this.service = service;
 	}
 	
-	public String[] getService(){
+	public String getService(){
 		return this.service;
-	}
-	
-	public void setRoomType(String[] roomType){
-		this.roomType = roomType;
-	}
-	
-	public String[] getRoomType(){
-		return this.roomType;
-	}
-	
-	public void setPrice(int[] price){
-		this.price = price;
-	}
-	
-	public int[] getPrice(){
-		return this.price;
 	}
 	
 	public void setWorkerName(String workerName){
@@ -86,6 +101,22 @@ public class HotelPO {
 	
 	public String getPhoneNumber(){
 		return this.phoneNumber;
+	}
+	
+	public void setScore(int score){
+		this.score = score;
+	}
+	
+	public int getScore(){
+		return score;
+	}
+	
+	public void setCommentScore(double commentScore){
+		this.commentScore = commentScore;
+	}
+	
+	public double getCommentScore(){
+		return this.commentScore;
 	}
 	
 

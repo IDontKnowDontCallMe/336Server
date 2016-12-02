@@ -34,4 +34,11 @@ public interface OrderBLService extends Remote{
 	
 	public boolean changeOrderState(int orderID, String state) throws RemoteException;
 	
+	//-------------
+	public List<OrderVO> getOrderListOfHotel(int hotelID, int customerID);
+	
+	public List<Integer> getBookedHotelidOf(int customerID);
+	
+	public int getBookedTag(int customerID, int hotelID);
+	
 }

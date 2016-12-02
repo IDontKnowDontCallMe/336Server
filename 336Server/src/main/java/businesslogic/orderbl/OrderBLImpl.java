@@ -9,9 +9,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Queue;
 
+import javax.naming.spi.DirStateFactory.Result;
 
-import businesslogic.factory.BLFactory;
+import factory.BLFactory;
 import data.factory.DataFactory;
+import po.HotelPO;
 import po.OrderPO;
 import vo.CalculationConditionVO;
 import vo.CustomerVO;
@@ -133,6 +135,71 @@ public class OrderBLImpl {
 		}
 		
 		return true;
+	}
+	
+	
+	public List<OrderVO> getOrderListOfHotel(int hotelID, int customerID) {
+		
+		if(!orderPOCache.containsKey(customerID)){
+			loadToCache(customerID);
+		}
+
+		List<OrderPO> list = new ArrayList<OrderPO>();
+		
+		for(OrderPO po: orderPOCache.get(customerID)){
+			if(po.getHotelID() == hotelID){
+				list.add(po);
+			}
+		}
+		
+		List<OrderVO> result = getVOListByPOList(list);
+		
+		return result;
+	}
+
+	
+	public int getBookedTag(int customerID, int hotelID) {
+		if(!orderPOCache.containsKey(customerID)){
+			loadToCache(customerID);
+		}
+		
+		List<OrderPO> list = orderPOCache.get(customerID);
+		
+		int result = 0;
+		
+		for(OrderPO po: list){
+			if(po.getHotelID() != hotelID){
+				continue;
+			}
+			else if(po.getOrderState().equals("已执行")) {
+				result = 2;
+				break;
+			}
+			else{
+				result = 1;
+				continue;
+			}
+		}
+		
+		return result;
+	}
+
+
+	public List<Integer> getBookedHotelidOf(int customerID) {
+
+		if(!orderPOCache.containsKey(customerID)){
+			loadToCache(customerID);
+		}
+		
+		List<Integer> result = new ArrayList<Integer>();
+		
+		List<OrderPO> orderList = orderPOCache.get(customerID);
+		
+		for(OrderPO po: orderList){
+			result.add(po.getHotelID());
+		}
+		
+		return result;
 	}
 	
 	

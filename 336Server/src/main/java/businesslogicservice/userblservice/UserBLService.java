@@ -26,11 +26,11 @@ public interface UserBLService extends Remote{
 	
 	public boolean addWebMarketer(WebMarketerVO webMarketerVO) throws RemoteException;
 	
-	public boolean updateWebMarketer(WebMarketerVO webMarketerVO) throws RemoteException;
-	
 	public boolean updateCreditOfCustomer(int customerID, int delta);
 	
 	public String login(int userID, String password) throws RemoteException;
+
+	public boolean updateWebMarketer(WebMarketerVO vo) throws RemoteException;
 
 	
 }

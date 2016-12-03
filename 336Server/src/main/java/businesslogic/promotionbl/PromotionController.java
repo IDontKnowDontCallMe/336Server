@@ -64,25 +64,13 @@ public class PromotionController implements PromotionBLService{
 	}
 
 	@Override
-	public LevelVO getLevelMethod() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public int calculateLevel(int credit) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public boolean setLevelMethod(LevelVO levelVO) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean updateLevelInfo(LevelVO levelVO) {
+	public boolean updateLevel(LevelVO levelVO) {
 		// TODO Auto-generated method stub
 		return false;
 	}

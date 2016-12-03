@@ -5,6 +5,7 @@ import java.util.List;
 import vo.CalculationConditionVO;
 import vo.CustomerVO;
 import vo.HotelPromotionVO;
+import vo.LevelVO;
 import vo.WebPromotionVO;
 
 public class PromotionBLImpl {
@@ -12,7 +13,7 @@ public class PromotionBLImpl {
 	private HotelPromotionImpl hotelPromotionImpl;
 	private WebPromotionImpl webPromotionImpl;
 	private LevelImpl levelImpl;
-	
+
 	public List<HotelPromotionVO> getHotelPromotionList(int hotelID) {
 		return hotelPromotionImpl.getHotelPromotionList(hotelID);
 	}
@@ -52,10 +53,12 @@ public class PromotionBLImpl {
 		return (originalPrice > 0) ? originalPrice - hotelPrice - webPrice : 0;
 	}
 
-	public int calculateLevel(int credit){
-		LevelMethodImpl levelMethodImpl = new LevelMethodImpl(credit);
-		levelImpl.setCalculateLevel(levelMethodImpl);
-		
-		return levelImpl.getCalculateLevel(credit);
+	public int calculateLevel(int credit) {
+		return levelImpl.calculateLevel(credit);
 	}
+
+	public boolean updateLevel(LevelVO vo) {
+		return levelImpl.updateLevel(vo);
+	}
+	
 }

@@ -29,15 +29,10 @@ public interface PromotionBLService extends Remote{
 	
 	public boolean deleteWebPromotion(WebPromotionVO webPromotionVO) throws RemoteException;
 	
-	public boolean setLevelMethod(LevelVO levelVO) throws RemoteException;
-	
-	public LevelVO getLevelMethod() throws RemoteException;
-	
-	public boolean updateLevelInfo(LevelVO levelVO);
+	public boolean updateLevel(LevelVO levelVO);
 	
 	public int calculateOrder(CalculationConditionVO calculationConditionVO, CustomerVO customerVO) throws RemoteException;
 	
 	public int calculateLevel(int credit) throws RemoteException;
-	
 
 }

@@ -1,29 +1,26 @@
 package businesslogic.promotionbl;
 
-public class LevelImpl{
+import data.factory.DataFactory;
+import po.LevelPO;
+import vo.LevelVO;
 
-	LevelMethodImpl levelMethodImpl;
-	int credit;
-	
-	public LevelImpl(int credit){
-		this.credit = credit;
+public class LevelImpl {
+
+	public boolean updateLevel(LevelVO vo) {
+		LevelPO po = new LevelPO(vo.creditDistance, vo.maxLevel, vo.discountDistance);
+		DataFactory.getPromotionDataService().updateLevelObject(po);
+		return true;
 	}
-	
-	public int getCalculateLevel(int credit){
-		int level = levelMethodImpl.calculateLevel(credit);
-		System.out.println("得到会员等级为"+level);
+
+	public int calculateLevel(int credit) {
+		int creditDistance = DataFactory.getPromotionDataService().getLevelObject().getCreditDistance();
+		int level = credit / creditDistance;
 		return level;
 	}
 
-	public void setCalculateLevel(LevelMethodImpl levelMethodImpl){
-		this.levelMethodImpl = levelMethodImpl;
-	}
-	
-	public double getDiscount(int credit){
-		return levelMethodImpl.getDiscount(credit);		
-	}
-	
-	public void setDiscount(LevelMethodImpl levelMethodImpl){
-		this.levelMethodImpl = levelMethodImpl;
+	public double getDiscount(int credit) {
+		int level = calculateLevel(credit);
+		double discount = 1 - level * DataFactory.getPromotionDataService().getLevelObject().getDiscountDistance();
+		return discount;
 	}
 }

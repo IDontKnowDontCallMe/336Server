@@ -56,12 +56,6 @@ public class UserController implements UserBLService{
 	}
 
 	@Override
-	public boolean deleteWebMarketer(int WebMarketerID) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public boolean updateCreditOfCustomer(int customerID, int delta) {
 		// TODO Auto-generated method stub
 		return false;

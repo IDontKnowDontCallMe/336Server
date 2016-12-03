@@ -118,22 +118,28 @@ public class UserBLImpl implements UserBLService {
 
 	@Override
 	public String login(int userID, String password) throws RemoteException {
-		if (userID / 100000000 == 1) {
-			System.out.println("customer logs in.");
-			return "customer";
-		} else if (userID / 100000000 == 2) {
-			System.out.println("hotel worker logs in.");
-			return "hotelWorker";
-		} else if (userID / 100000000 == 3) {
-			System.out.println("web marketer logs in.");
-			return "webMarketer";
-		} else if (userID / 100000000 == 4) {
-			System.out.println("web manager logs in.");
-			return "webManager";
+		boolean isRightPassword = DataFactory.getUserDataService().checkPassword(userID, password);
+		String result = "";
+		if (isRightPassword) {
+			System.out.println("right password");
+			if (userID / 100000000 == 1) {
+				System.out.println("customer logs in.");
+				result = "customer";
+			} else if (userID / 100000000 == 2) {
+				System.out.println("hotel worker logs in.");
+				result = "hotelWorker";
+			} else if (userID / 100000000 == 3) {
+				System.out.println("web marketer logs in.");
+				result = "webMarketer";
+			} else if (userID / 100000000 == 4) {
+				System.out.println("web manager logs in.");
+				result = "webManager";
+			}
 		} else {
-			System.out.println("wrong userID.");
-			return null;
+			System.out.println("failed in logging in");
+			result = null;
 		}
+		return result;
 	}
 
 }

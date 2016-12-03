@@ -103,12 +103,6 @@ public class ControllerRemoteFactory extends UnicastRemoteObject implements Cust
 	}
 
 	@Override
-	public boolean deleteWebMarketer(WebMarketerVO webMarketerVO) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public boolean updateCreditOfCustomer(int customerID, int delta) {
 		// TODO Auto-generated method stub
 		return false;
@@ -194,24 +188,6 @@ public class ControllerRemoteFactory extends UnicastRemoteObject implements Cust
 
 	@Override
 	public boolean deleteWebPromotion(WebPromotionVO webPromotionVO) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean setLevelMethod(LevelVO levelVO) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public LevelVO getLevelMethod() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean updateLevelInfo(LevelVO levelVO) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -383,6 +359,34 @@ public class ControllerRemoteFactory extends UnicastRemoteObject implements Cust
 	public boolean registerCompanyVIP(int customerID, String companyName) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+
+	@Override
+	public boolean addCustomer(CustomerVO customervo) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean updateLevel(LevelVO levelVO) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public List<Integer> getBookedHotelidOf(int customerID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public int getBookedTag(int customerID, int hotelID) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

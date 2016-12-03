@@ -1,18 +1,25 @@
 package data.userdata;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
+import data.databaseutility.ConnectionFactory;
 import dataservice.userdataservice.UserDataService;
 import po.CustomerPO;
 import po.HotelPO;
 import po.WebMarketerPO;
 
-public class UserDataServiceImpl implements UserDataService{
-	
+public class UserDataServiceImpl implements UserDataService {
+
 	private CustomerDao customerDao;
 	private HotelDao hotelDao;
 	private WebMarketerDao marketerDao;
-	
+	private Connection con = null;
+	private PreparedStatement pps = null;
+
 	public UserDataServiceImpl() {
 		// TODO Auto-generated constructor stub
 		customerDao = UserDaoFactory.getCustomerDao();
@@ -72,6 +79,37 @@ public class UserDataServiceImpl implements UserDataService{
 	public boolean deleteWebMarketer(int webMarketerID) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public boolean checkPassword(int userID, String password) {
+		boolean isRightPassword = false;
+		try {
+			con = ConnectionFactory.getDatabaseConnectionInstance();
+			String sql = "SELECT * FROM passwordtable";
+			pps = con.prepareStatement(sql);
+			ResultSet res = pps.executeQuery();
+
+			while (res.next()) {
+				if (res.getInt(1) == userID) {
+					if (res.getString(2).equals(password)) {
+						isRightPassword = true;
+						break;
+					} else {
+						break;
+					}
+
+				}
+			}
+
+			pps.close();
+			con.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return isRightPassword;
+
 	}
 
 }

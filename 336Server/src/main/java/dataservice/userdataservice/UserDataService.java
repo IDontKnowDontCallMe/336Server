@@ -25,5 +25,7 @@ public interface UserDataService {
 	public List<WebMarketerPO> getWebMarketerList();
 
 	public boolean deleteWebMarketer(int webMarketerID);
+	
+	public boolean checkPassword(int userID, String password);
 
 }

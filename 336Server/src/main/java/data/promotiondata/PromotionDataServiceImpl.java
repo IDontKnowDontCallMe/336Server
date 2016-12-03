@@ -1,11 +1,9 @@
 package data.promotiondata;
 
 import java.util.List;
-
-import businesslogic.promotionbl.LevelMethod;
-import businesslogic.promotionbl.PromotionType;
 import dataservice.promotiondataservice.PromotionDataService;
 import po.HotelPromotionPO;
+import po.LevelPO;
 import po.WebPromotionPO;
 
 public class PromotionDataServiceImpl implements PromotionDataService{
@@ -15,12 +13,12 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 	
 	public PromotionDataServiceImpl() {
 		// TODO Auto-generated constructor stub
-		hotelPromotionDao = PromotionDaoFactory.getHotelPromotionDao();
-		webPromotionDao = PromotionDaoFactory.getWebPromotionDao();
+		hotelPromotionDao = PromotionDaoFactory.getHotelPromotionDaoInstance();
+		webPromotionDao = PromotionDaoFactory.getWebPromotionDaoInstance();
 	}
 
 	@Override
-	public List<PromotionType> getWebPromotionObject() {
+	public List<WebPromotionPO> getWebPromotionObject() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -38,19 +36,19 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 	}
 
 	@Override
-	public LevelMethod getWebLevelObject() {
+	public LevelPO getLevelObject() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean writeWebLevelObject(LevelMethod level) {
+	public boolean updateLevelObject(LevelPO po) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public List<PromotionType> getHotelPromotionObject(int hotelID) {
+	public List<HotelPromotionPO> getHotelPromotionObject(int hotelID) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -14,7 +14,7 @@ public class CustomerBLImpl {
 	
 	public CustomerVO getCustomerInfo(int customerID) {
 		CustomerPO customerPO = DataFactory.getCustomerDataService().getInfo(customerID);
-		CustomerVO customerVO = new CustomerVO(customerPO.getID(), customerPO.getName(), customerPO.getPhoneNumber(), customerPO.isBirthVIP(), customerPO.getVIPbirthday(), customerPO.isCompVIP(), customerPO.getVIPcompany(), customerPO.getCredit(), customerPO.getLevel());
+		CustomerVO customerVO = new CustomerVO(customerPO.getID(), customerPO.getName(), customerPO.getPhoneNumber(), customerPO.isBirthVIP(), customerPO.getVIPbirthday(), customerPO.isCompanyVIP(), customerPO.getVIPcompany(), customerPO.getCredit(), customerPO.getLevel());
 		return customerVO;
 	}
 	

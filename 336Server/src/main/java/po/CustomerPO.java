@@ -29,23 +29,7 @@ public class CustomerPO {
 		this.isCompanyVIP = iscompvip;
 
 	}
-
-	public void setBirthVIP(boolean ifis) {
-		this.isBirthVIP = ifis;
-	}
-
-	public void setCompVIP(boolean ifis) {
-		this.isCompanyVIP = ifis;
-	}
-
-	public boolean isBirthVIP() {
-		return isBirthVIP;
-	}
-
-	public boolean isCompVIP() {
-		return isCompanyVIP;
-	}
-
+	
 	public void setID(int id) {
 		this.ID = id;
 	}
@@ -102,4 +86,19 @@ public class CustomerPO {
 		return this.level;
 	}
 
+	public void setBirthVIP(boolean isBirthVIP) {
+		this.isBirthVIP = isBirthVIP;
+	}
+
+	public boolean isBirthVIP() {
+		return this.isBirthVIP;
+	}
+
+	public void setCompanyVIP(boolean isCompanyVIP) {
+		this.isCompanyVIP = isCompanyVIP;
+	}
+
+	public boolean isCompanyVIP() {
+		return this.isCompanyVIP;
+	}
 }

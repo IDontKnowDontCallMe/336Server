@@ -24,7 +24,7 @@ public class UserBLImpl implements UserBLService {
 		List<CustomerVO> result = new ArrayList<CustomerVO>();
 		for (CustomerPO po : customerList) {
 			CustomerVO vo = new CustomerVO(po.getID(), po.getName(), po.getPhoneNumber(), po.isBirthVIP(),
-					po.getVIPbirthday(), po.isCompVIP(), po.getVIPcompany(), po.getCredit(), po.getLevel());
+					po.getVIPbirthday(), po.isCompanyVIP(), po.getVIPcompany(), po.getCredit(), po.getLevel());
 			result.add(vo);
 		}
 		return result;

@@ -6,8 +6,6 @@ import dataservice.userdataservice.UserDataService;
 import po.CustomerPO;
 import po.HotelPO;
 import po.WebMarketerPO;
-import po.WebMarketerPO;
-import po.HotelPO;
 
 public class UserDataServiceImpl implements UserDataService{
 	
@@ -29,13 +27,6 @@ public class UserDataServiceImpl implements UserDataService{
 	}
 
 	@Override
-	public CustomerPO getCustomer(int customerID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
-	@Override
 	public boolean deleteCustomer(int customerID) {
 		// TODO Auto-generated method stub
 		return false;
@@ -49,12 +40,6 @@ public class UserDataServiceImpl implements UserDataService{
 
 	@Override
 	public List<HotelPO> getHotelList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public HotelPO getHotel(int hotelID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -79,12 +64,6 @@ public class UserDataServiceImpl implements UserDataService{
 
 	@Override
 	public List<WebMarketerPO> getWebMarketerList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public WebMarketerPO getWebMarketer(int webMarketerID) {
 		// TODO Auto-generated method stub
 		return null;
 	}

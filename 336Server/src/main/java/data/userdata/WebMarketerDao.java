@@ -10,8 +10,6 @@ public interface WebMarketerDao {
 
 	public List<WebMarketerPO> getWebMarketerList();
 
-	public WebMarketerPO getWebMarketer(int webMarketerID);
-
 	public boolean deleteWebMarketer(int webMarketerID);
 	
 }

@@ -91,13 +91,13 @@ public class OrderBLImpl {
 
 	public boolean produceOrder(OrderVO orderVO, CalculationConditionVO calculationConditionVO) throws RemoteException {
 
-		int orderID = orderVO.orderID == -1? DataFactory.getOrderDataService().getNumOfAllOrders()+1: orderVO.orderID;
+		int orderID = orderVO.orderID == -1? DataFactory.getOrderDataService().getNumOfAllOrders()+1+900000000 : orderVO.orderID;
 		
 		CustomerVO customerVO = BLFactory.getCustomerBLService().getCustomerInfo(orderVO.customerID);
 		
 		OrderPO orderPO = new OrderPO(orderID, customerVO.customerName, customerVO.customerID, LocalDateTime.now(), orderVO.hotelName, 
 									calculationConditionVO.hotelID, orderVO.roomName, calculationConditionVO.roomNum, orderVO.hasChildren, 
-				orderVO.peopleNum, orderVO.checkInTime, orderVO.lastestArrivingTime, orderVO.checkOutTime, orderVO.total, "正常", null, null, null);
+				orderVO.peopleNum, orderVO.checkInTime, orderVO.lastestArrivingTime, orderVO.checkOutTime, orderVO.total, "正常", null, null, null,false);
 		
 		DataFactory.getOrderDataService().insertOrder(orderPO);
 		
@@ -240,7 +240,7 @@ public class OrderBLImpl {
 			
 			OrderVO vo = new OrderVO(po.getOrderID(), customerVO.customerName, customerVO.customerID, customerVO.phoneNumber, po.getProducingDateTime(), 
 									po.getHotelName(),  po.getRoomName(), po.getRoomNum(), po.getPeopleNum(), po.getHasChildren(), po.getCheckInDate(), po.getLatestArrivingTime(),
-									po.getCheckOutDate(), po.getTotal(), po.getOrderState());
+									po.getCheckOutDate(), po.getTotal(), po.getOrderState(),po.getHasComment());
 			result.add(vo);
 		}
 		return result;

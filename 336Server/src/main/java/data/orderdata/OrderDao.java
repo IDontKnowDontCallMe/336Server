@@ -6,14 +6,20 @@ import po.OrderPO;
 
 public interface OrderDao {
 	
-	public OrderPO getOrderInfo(int orderID);
+	public OrderPO getOrderByOrderID(int orderID);
 	
-	public List<OrderPO> getCustomerOrder(int customerID);
+	public List<OrderPO> getOrderByCustomerID(int customerID);
 	
-	public List<OrderPO> getHotelOrder(int hotelID);
-		
-	public boolean updateOrderState(int orderID,String orderState);
+	public List<OrderPO> getOrderByHotelID(int hotelID);
+	
+	public List<OrderPO> getAbnormalOrdersOfToday();
+	
+	public boolean updateOrder(OrderPO orderPO);
 	
 	public boolean insertOrder(OrderPO po);
+	
+	public int getNumOfAllOrders();
+
+	public List<OrderPO> getOrderListByHotelID_CustomerID(int hotelID, int customerID) ;
 
 }

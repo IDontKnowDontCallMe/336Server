@@ -27,11 +27,12 @@ public class OrderPO {
 	private LocalDateTime revokingDateTime;
 	private LocalDateTime executingDateTime;
 	private LocalDateTime leavingDateTime;
+	private boolean hasComment;
 	
 	public OrderPO(int orderID, String customerName, int customerID, LocalDateTime producingDateTime, String hotelName, int hotelID,
 			       String roomName, int roomNum, boolean hasChildren, int peopleNum, LocalDate checkInDate, LocalTime lastestArrivingTime, 
 			       LocalDate checkOutDate, int total, String orderState, LocalDateTime revokingDateTime, LocalDateTime executingDateTime,
-			       LocalDateTime leavingDateTime){
+			       LocalDateTime leavingDateTime, boolean hasComment){
 		this.orderID = orderID;
 		this.customerName = customerName;
 		this.customerID = customerID;
@@ -50,6 +51,7 @@ public class OrderPO {
 		this.revokingDateTime = revokingDateTime;
 		this.executingDateTime = executingDateTime;
 		this.leavingDateTime = leavingDateTime;
+		this.hasComment = hasComment;
 	}
 	
 	public void setOrderID(int orderID){
@@ -194,6 +196,14 @@ public class OrderPO {
 	
 	public LocalDateTime getLeavingDateTime(){
 		return this.leavingDateTime;
+	}
+	
+	public void setHasComment(boolean hasComment){
+		this.hasComment = hasComment;
+	}
+	
+	public boolean getHasComment(){
+		return this.hasComment;
 	}
 
 }

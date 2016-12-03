@@ -17,7 +17,7 @@ public class OrderDataServiceImpl implements OrderDataService{
 	@Override
 	public OrderPO getOrderInfo(int orderID) {
 		// TODO Auto-generated method stub
-		return orderDao.getOrderInfo(orderID);
+		return null;
 	}
 
 	@Override
@@ -26,10 +26,14 @@ public class OrderDataServiceImpl implements OrderDataService{
 		return null;
 	}
 
-
-
 	@Override
 	public List<OrderPO> getHotelOrder(int hotelID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OrderPO> getAbnormalOrdersOfToday() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -47,17 +51,21 @@ public class OrderDataServiceImpl implements OrderDataService{
 	}
 
 	@Override
-	public List<OrderPO> getAbnormalOrdersOfToday() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public int getNumOfAllOrders() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	@Override
+	public List<OrderPO> getOrderListOfHotel(int hotelID, int customerID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	
+	
+	
 
 
 	

@@ -23,10 +23,11 @@ public class OrderVO {
 	public LocalDate checkOutTime;
 	public int total;
 	public String orderState;
+	public boolean hasComment;
 	
 	public OrderVO(int orderID, String customerName, int customerID, String customerPhoneNumber,LocalDateTime producingTime, String hotelName, String roomName,
 					int roomNum, int peopleNum, boolean hasChildren, LocalDate checkInTime, LocalTime lastestArrivingTime,LocalDate checkOutTime, int total, 
-					String orderState){
+					String orderState, boolean hasComment){
 		this.orderID = orderID;
 		this.customerName = customerName;
 		this.customerID = customerID;
@@ -42,7 +43,7 @@ public class OrderVO {
 		this.checkOutTime = checkOutTime;
 		this.total = total;
 		this.orderState = orderState;
-		
+		this.hasComment = hasComment;
 	}
 	
 	public OrderVO(OrderVO vo) {
@@ -60,6 +61,7 @@ public class OrderVO {
 		this.checkOutTime = vo.checkOutTime;
 		this.total = vo.total;
 		this.orderState = vo.orderState;
+		this.hasComment = vo.hasComment;
 	}
 	
 }

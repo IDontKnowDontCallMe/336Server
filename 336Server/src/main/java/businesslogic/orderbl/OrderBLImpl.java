@@ -229,6 +229,7 @@ public class OrderBLImpl  {
 	
 	private List<OrderVO> getVOListByPOList(List<OrderPO> orderPOs) {
 		List<OrderVO> result = new ArrayList<OrderVO>();
+		
 		for(OrderPO po: orderPOs){
 			CustomerVO customerVO = BLFactory.getCustomerBLService().getCustomerInfo(po.getCustomerID());
 			
@@ -237,6 +238,7 @@ public class OrderBLImpl  {
 									po.getCheckOutDate(), po.getTotal(), po.getOrderState(),po.getHasComment());
 			result.add(vo);
 		}
+		
 		return result;
 	}
 	

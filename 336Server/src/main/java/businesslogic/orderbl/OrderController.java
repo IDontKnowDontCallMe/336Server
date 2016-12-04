@@ -14,10 +14,15 @@ public class OrderController implements OrderBLService{
 
 	private OrderBLImpl orderBLImpl;
 	
+	public OrderController() {
+		// TODO Auto-generated constructor stub
+		orderBLImpl = new OrderBLImpl();
+	}
+	
 	@Override
 	public List<OrderVO> getCustomerOrder(int customerID){
 		// TODO Auto-generated method stub
-		return null;
+		return orderBLImpl.getCustomerOrder(customerID);
 	}
 
 	@Override
@@ -29,7 +34,7 @@ public class OrderController implements OrderBLService{
 	@Override
 	public List<OrderVO> getAbnormalOrdersOfToday(){
 		// TODO Auto-generated method stub
-		return null;
+		return orderBLImpl.getAbnormalOrdersOfToday();
 	}
 
 	@Override

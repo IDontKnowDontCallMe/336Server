@@ -12,9 +12,11 @@ public class OrderDataMain {
 
 	public static void main(String[] args){
 		
-		OrderDao orderDao = new OrderDaoImpl();
+		OrderDataServiceImpl orderDao = new OrderDataServiceImpl();
 		
 		List<OrderPO> list = orderDao.getAbnormalOrdersOfToday();
+		
+		System.out.println(list.get(0).getCustomerName());
 		
 		/****
 		OrderPO po = list.get(0);
@@ -28,9 +30,7 @@ public class OrderDataMain {
 		*****/
 		
 		
-		OrderPO po2 = new OrderPO(900000004, "小方", 100000004, LocalDateTime.now(), "南大宿舍", 200000001, "单人房", 1, false, 1, LocalDate.of(2016, 12, 5), LocalTime.of(11, 0), LocalDate.of(2016, 12, 6), 150, "已执行", null, LocalDateTime.now(), null, false);
-	
-		orderDao.updateOrder(po2);
+		
 	}
 	
 }

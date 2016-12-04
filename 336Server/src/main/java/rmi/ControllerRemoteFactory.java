@@ -209,7 +209,8 @@ public class ControllerRemoteFactory extends UnicastRemoteObject implements Remo
 	@Override
 	public List<OrderVO> getCustomerOrder(int customerID) throws RemoteException {
 		// TODO Auto-generated method stub
-		return orderBLService.getCustomerOrder(customerID);
+		List<OrderVO> list = orderBLService.getCustomerOrder(customerID);
+		return list;
 	}
 
 	@Override

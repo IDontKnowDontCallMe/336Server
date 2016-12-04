@@ -155,12 +155,7 @@ public class HotelSearchingImpl {
 		RoomBLService roomBLService = BLFactory.getRoomBLService();
 		List<RoomVO> roomList = null;
 		
-		try {
-			roomList = roomBLService.getRoomTypeList(hotelID);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		roomList = roomBLService.getRoomTypeList(hotelID);
 		
 		int minPrice = Integer.MAX_VALUE;
 		for(RoomVO roomVO: roomList){

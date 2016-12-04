@@ -19,7 +19,7 @@ import vo.CalculationConditionVO;
 import vo.CustomerVO;
 import vo.OrderVO;
 
-public class OrderBLImpl {
+public class OrderBLImpl  {
 
 	private HashMap<Integer, List<OrderPO>> orderPOCache;
 	private Queue<Integer> IDQueue;
@@ -43,7 +43,7 @@ public class OrderBLImpl {
 		return getOrderListOf(hotelID);
 	}
 
-	public List<OrderVO> getAbnormalOrdersOfToday(){
+	public List<OrderVO> getAbnormalOrdersOfToday()  {
 		List<OrderPO> abnormalList = DataFactory.getOrderDataService().getAbnormalOrdersOfToday();
 		
 		return getVOListByPOList(abnormalList);
@@ -71,25 +71,19 @@ public class OrderBLImpl {
 		return judger.judge();
 	}
 	
-	public int calculateTotal(CalculationConditionVO vo) {
+	public int calculateTotal(CalculationConditionVO vo){
 
 		CustomerVO customerVO = BLFactory.getCustomerBLService().getCustomerInfo(vo.customerID);
 		
 		int total = -1;
 		
-		try {
 			total = BLFactory.getPromotionBLService().calculateOrder(vo, customerVO);
 
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 		return total;
 	}
 	
 
-	public boolean produceOrder(OrderVO orderVO, CalculationConditionVO calculationConditionVO) throws RemoteException {
+	public boolean produceOrder(OrderVO orderVO, CalculationConditionVO calculationConditionVO){
 
 		int orderID = orderVO.orderID == -1? DataFactory.getOrderDataService().getNumOfAllOrders()+1+900000000 : orderVO.orderID;
 		
@@ -109,7 +103,7 @@ public class OrderBLImpl {
 	}
 	
 
-	public boolean changeOrderState(int orderID, String state) throws RemoteException {
+	public boolean changeOrderState(int orderID, String state){
 		
 		OrderChanger orderChanger = new OrderChanger(orderID, state);
 		
@@ -206,7 +200,7 @@ public class OrderBLImpl {
 	
 	//-------------------------------------------------------------------
 	
-	private List<OrderVO> getOrderListOf(int id){
+	private List<OrderVO> getOrderListOf(int id) {
 		if(!orderPOCache.containsKey(id)){
 			loadToCache(id);
 		}
@@ -233,7 +227,7 @@ public class OrderBLImpl {
 		
 	}
 	
-	private List<OrderVO> getVOListByPOList(List<OrderPO> orderPOs){
+	private List<OrderVO> getVOListByPOList(List<OrderPO> orderPOs) {
 		List<OrderVO> result = new ArrayList<OrderVO>();
 		for(OrderPO po: orderPOs){
 			CustomerVO customerVO = BLFactory.getCustomerBLService().getCustomerInfo(po.getCustomerID());

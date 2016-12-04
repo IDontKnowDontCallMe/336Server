@@ -6,19 +6,27 @@ import dataservice.hoteldataservice.HotelDataService;
 import po.CommentPO;
 import po.HotelPO;
 
+
 public class HotelDataServiceImpl implements HotelDataService{
+
+	private HotelDao hotelDao;
 	
-	private HotelInfoDao hotelInfoDao;
-	
-	public HotelDataServiceImpl() {
-		// TODO Auto-generated constructor stub
-		hotelInfoDao = HotelDaoFactory.getHotelInfoDao();
+	@Override
+	public List<HotelPO> getHotelListOfArea(String city, String businessCircle) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public List<HotelPO> getHotelList(String city, String businessCircle) {
+	public HotelPO getHotelInfo(int hotelID) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean updateHotel(HotelPO hotelPO) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
@@ -26,5 +34,15 @@ public class HotelDataServiceImpl implements HotelDataService{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public List<CommentPO> getCommentListOf(int hotelID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	
+	
 
 }

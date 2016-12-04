@@ -17,49 +17,49 @@ public class OrderDataServiceImpl implements OrderDataService{
 	@Override
 	public OrderPO getOrderInfo(int orderID) {
 		// TODO Auto-generated method stub
-		return null;
+		return orderDao.getOrderByOrderID(orderID);
 	}
 
 	@Override
 	public List<OrderPO> getCustomerOrder(int customerID) {
 		// TODO Auto-generated method stub
-		return null;
+		return orderDao.getOrderByCustomerID(customerID);
 	}
 
 	@Override
 	public List<OrderPO> getHotelOrder(int hotelID) {
 		// TODO Auto-generated method stub
-		return null;
+		return orderDao.getOrderByHotelID(hotelID);
 	}
 
 	@Override
 	public List<OrderPO> getAbnormalOrdersOfToday() {
 		// TODO Auto-generated method stub
-		return null;
+		return orderDao.getAbnormalOrdersOfToday();
 	}
 
 	@Override
 	public boolean updateOrder(OrderPO orderPO) {
 		// TODO Auto-generated method stub
-		return false;
+		return orderDao.updateOrder(orderPO);
 	}
 
 	@Override
 	public boolean insertOrder(OrderPO po) {
 		// TODO Auto-generated method stub
-		return false;
+		return orderDao.insertOrder(po);
 	}
 
 	@Override
 	public int getNumOfAllOrders() {
 		// TODO Auto-generated method stub
-		return 0;
+		return orderDao.getNumOfAllOrders();
 	}
 
 	@Override
 	public List<OrderPO> getOrderListOfHotel(int hotelID, int customerID) {
 		// TODO Auto-generated method stub
-		return null;
+		return orderDao.getOrderListByHotelID_CustomerID(hotelID, customerID);
 	}
 
 	

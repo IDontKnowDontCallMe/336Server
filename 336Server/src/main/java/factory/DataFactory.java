@@ -22,45 +22,42 @@ public class DataFactory {
 	private static PromotionDataService promotionDataService ;
 	
 	
+	public static void initDataFactory(){
+		orderDataService = new OrderDataServiceImpl();
+		customerDataService = new CustomerDataServiceImpl();
+		roomDataService = new RoomDataServiceImpl();
+		hotelDataService = new HotelDataServiceImpl();
+		userDataService = new UserDataServiceImpl();
+		promotionDataService = new PromotionDataServiceImpl();
+	}
+	
 	public static OrderDataService getOrderDataService(){
-		if(orderDataService==null){
-			orderDataService = new OrderDataServiceImpl();
-		}
+		
 		return orderDataService;
 	}
 	
 	public static CustomerDataService getCustomerDataService(){
-		if(customerDataService==null){
-			customerDataService = new CustomerDataServiceImpl();
-		}
+		
 		return customerDataService;
 	}
 	
 	public static RoomDataService getRoomDataService(){
-		if(roomDataService==null){
-			roomDataService = new RoomDataServiceImpl();
-		}
+		
 		return roomDataService;
 	}
 	
 	public static HotelDataService getHotelDataService(){
-		if(hotelDataService==null){
-			hotelDataService = new HotelDataServiceImpl();
-		}
+		
 		return hotelDataService;
 	}
 	
 	public static UserDataService getUserDataService(){
-		if(userDataService==null){
-			userDataService = new UserDataServiceImpl();
-		}
+		
 		return userDataService;
 	}
 	
 	public static PromotionDataService getPromotionDataService(){
-		if(promotionDataService==null){
-			promotionDataService = new PromotionDataServiceImpl();
-		}
+		
 		return promotionDataService;
 	}
 }

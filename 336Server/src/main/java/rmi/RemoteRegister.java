@@ -3,17 +3,20 @@ package rmi;
 import java.net.MalformedURLException;
 import java.nio.channels.AlreadyBoundException;
 import java.rmi.Naming;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
 
-public class Server {
+public class RemoteRegister {
 
-	public static void main(String args[]) {
-		ControllerRemoteFactory controllerRemoteFactory;
+	public static boolean register(UnicastRemoteObject remoteObject) {
 		try {
-			controllerRemoteFactory = new ControllerRemoteFactory();
+			
 			LocateRegistry.createRegistry(8888);
-			Naming.bind("rmi://localhost:8888/controllerRemoteFactory", controllerRemoteFactory);
+			Naming.bind("rmi://localhost:8888/controllerRemoteFactory", remoteObject);
+			
+			return true;
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		} catch (AlreadyBoundException e) {
@@ -23,6 +26,9 @@ public class Server {
 		} catch (java.rmi.AlreadyBoundException e) {
  			e.printStackTrace();
 		}
+		
+		return false;
 	}
 
+	
 }

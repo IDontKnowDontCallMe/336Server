@@ -12,33 +12,33 @@ import vo.OrderVO;
  * @author USER
  *
  */
-public interface OrderBLService extends Remote{
+public interface OrderBLService{
 	
-	public List<OrderVO> getCustomerOrder(int customerID) throws RemoteException;
+	public List<OrderVO> getCustomerOrder(int customerID);
 	
-	public List<OrderVO> getHotelOrder(int hotelID) throws RemoteException;
+	public List<OrderVO> getHotelOrder(int hotelID);
 	
-	public List<OrderVO> getAbnormalOrdersOfToday() throws RemoteException;
+	public List<OrderVO> getAbnormalOrdersOfToday() ;
 	
-	public List<OrderVO> filterCustomerList(int customerID, String state) throws RemoteException;
+	public List<OrderVO> filterCustomerList(int customerID, String state) ;
 	
-	public List<OrderVO> filterHotelList(int hotelID, String state) throws RemoteException;
+	public List<OrderVO> filterHotelList(int hotelID, String state) ;
 
 	//public int calculateTotal() throws RemoteException;
 	
-	public int calculateTotal(CalculationConditionVO vo) throws RemoteException;
+	public int calculateTotal(CalculationConditionVO vo) ;
 	
-	public String canBeProduced(CalculationConditionVO vo) throws RemoteException;
+	public String canBeProduced(CalculationConditionVO vo) ;
 	
-	public boolean produceOrder(OrderVO orderVO, CalculationConditionVO calculationConditionVO) throws RemoteException;
+	public boolean produceOrder(OrderVO orderVO, CalculationConditionVO calculationConditionVO) ;
 	
-	public boolean changeOrderState(int orderID, String state) throws RemoteException;
+	public boolean changeOrderState(int orderID, String state) ;
 	
 	//-------------
-	public List<OrderVO> getOrderListOfHotel(int hotelID, int customerID);
+	public List<OrderVO> getOrderListOfHotel(int hotelID, int customerID) ;
 	
 	public List<Integer> getBookedHotelidOf(int customerID);
 	
-	public int getBookedTag(int customerID, int hotelID);
+	public int getBookedTag(int customerID, int hotelID) ;
 	
 }

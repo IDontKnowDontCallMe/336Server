@@ -15,31 +15,31 @@ public class OrderController implements OrderBLService{
 	private OrderBLImpl orderBLImpl;
 	
 	@Override
-	public List<OrderVO> getCustomerOrder(int customerID) throws RemoteException {
+	public List<OrderVO> getCustomerOrder(int customerID){
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<OrderVO> getHotelOrder(int hotelID) throws RemoteException {
+	public List<OrderVO> getHotelOrder(int hotelID){
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<OrderVO> getAbnormalOrdersOfToday() throws RemoteException {
+	public List<OrderVO> getAbnormalOrdersOfToday(){
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<OrderVO> filterCustomerList(int customerID, String state) throws RemoteException {
+	public List<OrderVO> filterCustomerList(int customerID, String state) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<OrderVO> filterHotelList(int hotelID, String state) throws RemoteException {
+	public List<OrderVO> filterHotelList(int hotelID, String state) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -47,25 +47,25 @@ public class OrderController implements OrderBLService{
 	
 
 	@Override
-	public int calculateTotal(CalculationConditionVO vo) throws RemoteException {
+	public int calculateTotal(CalculationConditionVO vo) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public boolean produceOrder(OrderVO orderVO , CalculationConditionVO calculationConditionVO) throws RemoteException {
+	public boolean produceOrder(OrderVO orderVO , CalculationConditionVO calculationConditionVO) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean changeOrderState(int orderID, String state) throws RemoteException {
+	public boolean changeOrderState(int orderID, String state) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public String canBeProduced(CalculationConditionVO vo) throws RemoteException {
+	public String canBeProduced(CalculationConditionVO vo) {
 		// TODO Auto-generated method stub
 		return null;
 	}

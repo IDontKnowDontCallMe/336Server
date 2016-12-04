@@ -11,11 +11,7 @@ public class CommentPO {
 	private double score;
 	private LocalDateTime produingDateTime;
 	private int customerID;
-	
 
-
-	
-	
 	
 	public CommentPO(int hotelID, String nameOfHotel, String nameOfRoom, String comment, double score, 
 						LocalDateTime producingDateTime, int customerID){

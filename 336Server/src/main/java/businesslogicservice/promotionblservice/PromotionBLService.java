@@ -10,29 +10,29 @@ import vo.HotelPromotionVO;
 import vo.LevelVO;
 import vo.WebPromotionVO;
 
-public interface PromotionBLService extends Remote{
+public interface PromotionBLService{
 	
 	
-	public List<HotelPromotionVO> getHotelPromotionList(int hotelID) throws RemoteException;
+	public List<HotelPromotionVO> getHotelPromotionList(int hotelID) ;
 	
-	public boolean addHotelPromotion(HotelPromotionVO hotelPromotionVO) throws RemoteException;
+	public boolean addHotelPromotion(HotelPromotionVO hotelPromotionVO) ;
 	
-	public boolean updateHotelPromotion(HotelPromotionVO hotelPromotionVO) throws RemoteException;
+	public boolean updateHotelPromotion(HotelPromotionVO hotelPromotionVO);
 	
-	public boolean deleteHotelPromotion(HotelPromotionVO vo) throws RemoteException;
+	public boolean deleteHotelPromotion(HotelPromotionVO vo);
 	
-	public List<WebPromotionVO> getWebPromotionList() throws RemoteException;
+	public List<WebPromotionVO> getWebPromotionList() ;
 	
-	public boolean addWebPromotion(WebPromotionVO webPromotionVO) throws RemoteException;
+	public boolean addWebPromotion(WebPromotionVO webPromotionVO) ;
 	
-	public boolean updateWebPromotion(WebPromotionVO webPromotionVO) throws RemoteException;
+	public boolean updateWebPromotion(WebPromotionVO webPromotionVO) ;
 	
-	public boolean deleteWebPromotion(WebPromotionVO webPromotionVO) throws RemoteException;
+	public boolean deleteWebPromotion(WebPromotionVO webPromotionVO) ;
 	
 	public boolean updateLevel(LevelVO levelVO);
 	
-	public int calculateOrder(CalculationConditionVO calculationConditionVO, CustomerVO customerVO) throws RemoteException;
+	public int calculateOrder(CalculationConditionVO calculationConditionVO, CustomerVO customerVO);
 	
-	public int calculateLevel(int credit) throws RemoteException;
+	public int calculateLevel(int credit);
 
 }

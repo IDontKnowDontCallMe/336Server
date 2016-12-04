@@ -1,5 +1,12 @@
 package factory;
 
+import businesslogic.customerbl.CustomerBLImpl;
+import businesslogic.customerbl.CustomerController;
+import businesslogic.hotelbl.HotelController;
+import businesslogic.orderbl.OrderController;
+import businesslogic.promotionbl.PromotionController;
+import businesslogic.roombl.RoomController;
+import businesslogic.userbl.UserController;
 import businesslogicservice.customerblservice.CustomerBLService;
 import businesslogicservice.hotelblservice.HotelBLService;
 import businesslogicservice.hotelblservice.OrderForC_H_Service;
@@ -7,6 +14,7 @@ import businesslogicservice.orderblservice.OrderBLService;
 import businesslogicservice.promotionblservice.PromotionBLService;
 import businesslogicservice.roomblservice.RoomBLService;
 import businesslogicservice.userblservice.UserBLService;
+import data.customerdata.CustomerDataServiceImpl;
 
 public class BLFactory {
 
@@ -17,34 +25,39 @@ public class BLFactory {
 	private static RoomBLService roomBLService;
 	private static UserBLService userBLService;
 	
-	private static OrderForC_H_Service orderForC_H_Service;
+	public static void initBLFactory(){
+		customerBLService = new CustomerController();
+		hotelBLService = new HotelController();
+		orderBLService = new OrderController();
+		promotionBLService = new PromotionController();
+		roomBLService = new RoomController();
+		userBLService = new UserController();
+	}
 	
 	public static CustomerBLService getCustomerBLService(){
-		return null;
+		return customerBLService;
 	}
 	
 	public static HotelBLService getHotelBLService(){
-		return null;
+		return hotelBLService;
 	}
 	
 	public static OrderBLService getOrderBLService(){
-		return null;
+		return orderBLService;
 	}
 	
 	public static PromotionBLService getPromotionBLService(){
-		return null;
+		return promotionBLService;
 	}
 	
 	public static RoomBLService getRoomBLService(){
-		return null;
+		return roomBLService;
 	}
 	
 	public static UserBLService getUserBLService(){
-		return null;
+		return userBLService;
 	}
 	
-	public static OrderForC_H_Service getOrderForC_H_Service(){
-		return null;
-	}
+	
 	
 }

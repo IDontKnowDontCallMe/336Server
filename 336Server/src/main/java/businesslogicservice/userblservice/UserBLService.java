@@ -8,29 +8,29 @@ import vo.CustomerVO;
 import vo.HotelVO;
 import vo.WebMarketerVO;
 
-public interface UserBLService extends Remote{
+public interface UserBLService {
 
-	public List<CustomerVO> getCustomerList() throws RemoteException;
+	public List<CustomerVO> getCustomerList() ;
 	
-	public boolean addCustomer(CustomerVO customervo) throws RemoteException;
+	public boolean addCustomer(CustomerVO customervo);
 	
-	public boolean updateCustomer(CustomerVO customerVO) throws RemoteException;
+	public boolean updateCustomer(CustomerVO customerVO) ;
 	
-	public List<HotelVO> getHotelList() throws RemoteException;
+	public List<HotelVO> getHotelList() ;
 	
-	public boolean addHotel(HotelVO hotelVO) throws RemoteException;
+	public boolean addHotel(HotelVO hotelVO) ;
 	
-	public boolean updateHotelWorker(HotelVO hotelVO) throws RemoteException;
+	public boolean updateHotelWorker(HotelVO hotelVO) ;
 	
-	public List<WebMarketerVO> getWebMarketerList() throws RemoteException;
+	public List<WebMarketerVO> getWebMarketerList();
 	
-	public boolean addWebMarketer(WebMarketerVO webMarketerVO) throws RemoteException;
+	public boolean addWebMarketer(WebMarketerVO webMarketerVO) ;
 	
 	public boolean updateCreditOfCustomer(int customerID, int delta);
 	
-	public String login(int userID, String password) throws RemoteException;
+	public String login(int userID, String password) ;
 
-	public boolean updateWebMarketer(WebMarketerVO vo) throws RemoteException;
+	public boolean updateWebMarketer(WebMarketerVO vo) ;
 
 	
 }

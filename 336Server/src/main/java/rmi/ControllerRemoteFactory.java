@@ -16,6 +16,7 @@ import businesslogicservice.orderblservice.OrderBLService;
 import businesslogicservice.promotionblservice.PromotionBLService;
 import businesslogicservice.roomblservice.RoomBLService;
 import businesslogicservice.userblservice.UserBLService;
+import factory.BLFactory;
 import vo.AreaVO;
 import vo.CalculationConditionVO;
 import vo.CommentVO;
@@ -30,7 +31,7 @@ import vo.SearchConditionVO;
 import vo.WebMarketerVO;
 import vo.WebPromotionVO;
 
-public class ControllerRemoteFactory extends UnicastRemoteObject implements CustomerBLService,HotelBLService,OrderBLService,PromotionBLService,RoomBLService,UserBLService{
+public class ControllerRemoteFactory extends UnicastRemoteObject implements RemoteCustomerService, RemoteHotelBLService, RemoteOrderBLService, RemotePromotionBLService, RemoteRoomBLService, RemoteUserBLService{
 
 	/**
 	 * 
@@ -44,13 +45,13 @@ public class ControllerRemoteFactory extends UnicastRemoteObject implements Cust
 	private RoomBLService roomBLService;
 	private UserBLService userBLService;
 	
-	protected ControllerRemoteFactory() throws RemoteException {
-		customerBLService = new CustomerController();
-		hotelBLService = new HotelController();
-		promotioniBLService = new PromotionController();
-		roomBLService = new RoomController();
-		orderBLService = new OrderController();
-		userBLService = new UserController();
+	public ControllerRemoteFactory() throws RemoteException {
+		customerBLService = BLFactory.getCustomerBLService();
+		hotelBLService = BLFactory.getHotelBLService();
+		promotioniBLService = BLFactory.getPromotionBLService();
+		roomBLService = BLFactory.getRoomBLService();
+		orderBLService = BLFactory.getOrderBLService();
+		userBLService = BLFactory.getUserBLService();
 	}
 
 
@@ -208,55 +209,55 @@ public class ControllerRemoteFactory extends UnicastRemoteObject implements Cust
 	@Override
 	public List<OrderVO> getCustomerOrder(int customerID) throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		return orderBLService.getCustomerOrder(customerID);
 	}
 
 	@Override
 	public List<OrderVO> getHotelOrder(int hotelID) throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		return orderBLService.getHotelOrder(hotelID);
 	}
 
 	@Override
 	public List<OrderVO> getAbnormalOrdersOfToday() throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		return orderBLService.getAbnormalOrdersOfToday();
 	}
 
 	@Override
 	public List<OrderVO> filterCustomerList(int customerID, String state) throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		return orderBLService.filterCustomerList(customerID, state);
 	}
 
 	@Override
 	public List<OrderVO> filterHotelList(int hotelID, String state) throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		return orderBLService.filterHotelList(hotelID, state);
 	}
 
 	@Override
 	public int calculateTotal(CalculationConditionVO vo) throws RemoteException {
 		// TODO Auto-generated method stub
-		return 0;
+		return orderBLService.calculateTotal(vo);
 	}
 
 	@Override
 	public String canBeProduced(CalculationConditionVO vo) throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		return orderBLService.canBeProduced(vo);
 	}
 
 	@Override
 	public boolean produceOrder(OrderVO orderVO, CalculationConditionVO calculationConditionVO) throws RemoteException {
 		// TODO Auto-generated method stub
-		return false;
+		return orderBLService.produceOrder(orderVO, calculationConditionVO);
 	}
 
 	@Override
 	public boolean changeOrderState(int orderID, String state) throws RemoteException {
 		// TODO Auto-generated method stub
-		return false;
+		return orderBLService.changeOrderState(orderID, state);
 	}
 
 	@Override
@@ -286,7 +287,7 @@ public class ControllerRemoteFactory extends UnicastRemoteObject implements Cust
 	@Override
 	public List<OrderVO> getOrderListOfHotel(int hotelID, int customerID) {
 		// TODO Auto-generated method stub
-		return null;
+		return orderBLService.getOrderListOfHotel(hotelID, customerID);
 	}
 
 	@Override
@@ -379,14 +380,14 @@ public class ControllerRemoteFactory extends UnicastRemoteObject implements Cust
 	@Override
 	public List<Integer> getBookedHotelidOf(int customerID) {
 		// TODO Auto-generated method stub
-		return null;
+		return orderBLService.getBookedHotelidOf(customerID);
 	}
 
 
 	@Override
 	public int getBookedTag(int customerID, int hotelID) {
 		// TODO Auto-generated method stub
-		return 0;
+		return orderBLService.getBookedTag(customerID, hotelID);
 	}
 
 }

@@ -25,12 +25,7 @@ public class HotelDetailInfoImpl {
 	public List<RoomVO> getRoomListOfHotel(int hotelID) {
 		List<RoomVO> result = null;
 		
-		try {
-			result = BLFactory.getRoomBLService().getRoomTypeList(hotelID);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		result = BLFactory.getRoomBLService().getRoomTypeList(hotelID);
 		
 		return result;
 	}

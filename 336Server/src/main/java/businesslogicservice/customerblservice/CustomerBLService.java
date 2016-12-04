@@ -1,13 +1,14 @@
 package businesslogicservice.customerblservice;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.List;
 
 import vo.CreditVO;
 import vo.CustomerVO;
 
-public interface CustomerBLService extends Remote{
+public interface CustomerBLService{
 
 
 	public CustomerVO getCustomerInfo(int customerID);

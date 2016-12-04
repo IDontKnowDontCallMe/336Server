@@ -1,6 +1,7 @@
 package data.orderdata;
 
 import java.util.List;
+import java.util.Map;
 
 import po.OrderPO;
 
@@ -8,9 +9,9 @@ public interface OrderDao {
 	
 	public OrderPO getOrderByOrderID(int orderID);
 	
-	public List<OrderPO> getOrderByCustomerID(int customerID);
+	public Map<Integer,OrderPO> getOrderByCustomerID(int customerID);
 	
-	public List<OrderPO> getOrderByHotelID(int hotelID);
+	public Map<Integer,OrderPO> getOrderByHotelID(int hotelID);
 	
 	public List<OrderPO> getAbnormalOrdersOfToday();
 	

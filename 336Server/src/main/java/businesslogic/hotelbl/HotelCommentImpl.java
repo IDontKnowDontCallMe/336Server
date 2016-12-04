@@ -9,19 +9,7 @@ import po.HotelPO;
 import vo.CommentVO;
 import vo.HotelVO;
 
-public class HotelInfoImpl {
-
-	
-	public boolean updateSimpleHotelInfo(HotelVO hotelVO) {
-		HotelPO hotelPO = DataFactory.getHotelDataService().getHotelInfo(hotelVO.hotelID);
-		
-		hotelPO.setAddress(hotelVO.address);
-		hotelPO.setScore(hotelVO.score);
-		hotelPO.setIntroduction(hotelVO.introduction);
-		hotelPO.setService(hotelVO.service);
-		
-		return DataFactory.getHotelDataService().updateHotel(hotelPO);
-	}
+public class HotelCommentImpl {
 
 
 	public boolean addComment(CommentVO commentVO) {

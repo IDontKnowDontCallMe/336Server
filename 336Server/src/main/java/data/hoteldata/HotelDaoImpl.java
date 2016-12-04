@@ -8,7 +8,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import data.databaseutility.ConnectionFactory;
 import po.CommentPO;
@@ -20,10 +22,10 @@ public class HotelDaoImpl implements HotelDao{
 	private PreparedStatement pps;
 	
 	@Override
-	public List<HotelPO> getHotelListOfArea(String city, String businessCircle) {
+	public Map<Integer,HotelPO> getHotelListOfArea(String city, String businessCircle) {
 		// TODO Auto-generated method stub
 		try{
-			List<HotelPO> result = new ArrayList<HotelPO>();
+			HashMap<Integer, HotelPO> result = new HashMap<Integer,HotelPO>();
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "SELECT * FROM hoteltable WHERE city = ? and businessCircle = ?";
 			pps = con.prepareStatement(sql);
@@ -34,7 +36,7 @@ public class HotelDaoImpl implements HotelDao{
 			
 			while(res.next()){
 				HotelPO po = toHotelPO(res);
-				result.add(po);
+				result.put(po.getHotelID(), po);
 			}
 			
 			return result;
@@ -192,6 +194,26 @@ public class HotelDaoImpl implements HotelDao{
 		}
 		
 		return null;
+	}
+
+	@Override
+	public boolean updateWorker(HotelPO hotelPO) {
+		// TODO Auto-generated method stub
+		try{
+			con = ConnectionFactory.getDatabaseConnectionInstance();
+			String sql = "UPDATE commenttable SET workerName = ? WHERE hotelID = ? ";
+			pps = con.prepareStatement(sql);
+			pps.setString(1, hotelPO.getWorkerName());
+			pps.setInt(2, hotelPO.getHotelID());
+			
+			return pps.executeUpdate() > 0;
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 
 }

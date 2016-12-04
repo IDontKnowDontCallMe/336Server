@@ -13,7 +13,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.sun.crypto.provider.RSACipher;
 
@@ -63,9 +65,9 @@ public class OrderDaoImpl implements OrderDao{
 
 
 	@Override
-	public List<OrderPO> getOrderByCustomerID(int customerID) {
+	public Map<Integer,OrderPO> getOrderByCustomerID(int customerID) {
 		// TODO Auto-generated method stub
-		List<OrderPO> result = new ArrayList<OrderPO>();
+		Map<Integer,OrderPO> result = new HashMap<Integer,OrderPO>();
 		
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
@@ -77,7 +79,7 @@ public class OrderDaoImpl implements OrderDao{
 			while(res.next()){
 				
 				OrderPO po = toOrderPO(res);
-				result.add(po);
+				result.put(po.getOrderID(), po);
 			}
 			
 			pps.close();
@@ -97,9 +99,9 @@ public class OrderDaoImpl implements OrderDao{
 
 
 	@Override
-	public List<OrderPO> getOrderByHotelID(int hotelID) {
+	public Map<Integer,OrderPO> getOrderByHotelID(int hotelID) {
 		// TODO Auto-generated method stub
-		List<OrderPO> result = new ArrayList<OrderPO>();
+		Map<Integer,OrderPO> result = new HashMap<Integer,OrderPO>();
 		
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
@@ -110,7 +112,7 @@ public class OrderDaoImpl implements OrderDao{
 			
 			while(res.next()){
 				OrderPO po = toOrderPO(res);
-				result.add(po);
+				result.put(po.getOrderID(),po);
 			}
 			
 			pps.close();

@@ -1,6 +1,7 @@
 package dataservice.orderdataservice;
 
 import java.util.List;
+import java.util.Map;
 
 import po.OrderPO;
 import vo.OrderVO;
@@ -9,9 +10,9 @@ public interface OrderDataService {
 	
 	public OrderPO getOrderInfo(int orderID);
 	
-	public List<OrderPO> getCustomerOrder(int customerID);
+	public Map<Integer, OrderPO> getCustomerOrder(int customerID);
 	
-	public List<OrderPO> getHotelOrder(int hotelID);
+	public Map<Integer,OrderPO> getHotelOrder(int hotelID);
 	
 	public List<OrderPO> getAbnormalOrdersOfToday();
 	

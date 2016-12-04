@@ -1,12 +1,13 @@
 package businesslogic.hotelbl;
 
-import java.rmi.RemoteException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Queue;
 
-import businesslogicservice.hotelblservice.OrderForC_H_Service;
 import businesslogicservice.orderblservice.OrderBLService;
 import businesslogicservice.roomblservice.RoomBLService;
 import dataservice.hoteldataservice.HotelDataService;
@@ -15,20 +16,25 @@ import factory.DataFactory;
 import po.HotelPO;
 import vo.AreaVO;
 import vo.HotelVO;
-import vo.OrderVO;
 import vo.RoomVO;
 import vo.SearchConditionVO;
 
 public class HotelSearchingImpl {
 
-	private HashMap<String, List<HotelPO>> areaCache;
+	private HashMap<String, Map<Integer, HotelPO>> areaCache;
 	private HashMap<Integer, List<HotelVO>> resultCache;
 	private Queue<String> areaQueue;
 	private Queue<Integer> customerQueue;
 	private static final int maxCache = 220;
 	private static final int cleanTimes = 10;
 
-	
+	public HotelSearchingImpl() {
+		// TODO Auto-generated constructor stub
+		areaCache = new HashMap<String, Map<Integer, HotelPO>>();
+		resultCache = new HashMap<Integer, List<HotelVO>>();
+		areaQueue = new ArrayDeque<String>();
+		customerQueue = new ArrayDeque<Integer>();
+	}
 	
 	
 	public List<HotelVO> getHotelVOsOfArea(AreaVO areaVO, int customerID) {
@@ -81,19 +87,35 @@ public class HotelSearchingImpl {
 	}
 	
 	public List<HotelVO> getBookedHotelList(int customerID) {
-		List<HotelPO> tempList = new ArrayList<HotelPO>();
+		Map<Integer, HotelPO> map = new HashMap<Integer,HotelPO>();
 		
 		List<Integer> hotelID = BLFactory.getOrderBLService().getBookedHotelidOf(customerID);
 		
 		for(int id: hotelID){
 			HotelPO hotelPO = DataFactory.getHotelDataService().getHotelInfo(id);
-			tempList.add(hotelPO);
+			map.put(hotelPO.getHotelID(), hotelPO);
 		}
 		
-		List<HotelVO> result = getVOsByPOs(tempList, customerID);
+		List<HotelVO> result = getVOsByPOs(map, customerID);
 		addResult(customerID, result);
 		
 		return result;
+	}
+	
+	public boolean exitSearch(int customerID){
+		
+		if(resultCache.containsKey(customerID)){
+			resultCache.remove(customerID);
+		}
+		
+		return true;
+	}
+	
+	public void  updateAreaCache(HotelVO hotelVO){
+		if(areaCache.containsKey(hotelVO.city + "--" + hotelVO.businessCircle)){
+			HotelPO hotelPO = new HotelPO(hotelVO.hotelID, hotelVO.hotelName, hotelVO.city, hotelVO.businessCircle, hotelVO.address, hotelVO.introduction, hotelVO.service, hotelVO.workerName, hotelVO.phoneNumber, hotelVO.score, hotelVO.commentScore, -1, -1);
+			areaCache.get(hotelPO.getCity()+ "--" + hotelPO.getBusinessCircle()).replace(hotelPO.getHotelID(), hotelPO);
+		}
 	}
 	
 	//-----------------------------------------
@@ -108,8 +130,8 @@ public class HotelSearchingImpl {
 		}
 		
 		HotelDataService hotelDataService = DataFactory.getHotelDataService();
-		List<HotelPO> list = hotelDataService.getHotelListOfArea(areaVO.city, areaVO.businessCircle);
-		areaCache.put(toAreaString(areaVO), list);
+		Map<Integer, HotelPO> map = hotelDataService.getHotelListOfArea(areaVO.city, areaVO.businessCircle);
+		areaCache.put(toAreaString(areaVO), map);
 		areaQueue.add(toAreaString(areaVO));
 	}
 	
@@ -138,14 +160,14 @@ public class HotelSearchingImpl {
 		}
 	}
 	
-	private List<HotelVO> getVOsByPOs(List<HotelPO> list , int customerID){
+	private List<HotelVO> getVOsByPOs(Map<Integer, HotelPO> map , int customerID){
 		List<HotelVO> result = new ArrayList<HotelVO>();
 		OrderBLService orderBLService = BLFactory.getOrderBLService();
-		for(HotelPO po: list){
-			int bookedTag = orderBLService.getBookedTag(customerID, po.getHotelID());
-			int minPrice = getMinPriceOfHotel(po.getHotelID());
-			HotelVO hotelVO = new HotelVO(po.getHotelID(), po.getHotelName(), po.getCity(), po.getBusinessCircle(), po.getAddress(),po.getIntroduction(),
-										po.getService(), po.getScore(), po.getCommentScore(), po.getWorkerName(), po.getPhoneNumber(), minPrice, bookedTag);
+		for(Entry<Integer, HotelPO> entry: map.entrySet()){
+			int bookedTag = orderBLService.getBookedTag(customerID, entry.getValue().getHotelID());
+			int minPrice = getMinPriceOfHotel(entry.getValue().getHotelID());
+			HotelVO hotelVO = new HotelVO(entry.getValue().getHotelID(), entry.getValue().getHotelName(), entry.getValue().getCity(), entry.getValue().getBusinessCircle(), entry.getValue().getAddress(),entry.getValue().getIntroduction(),
+					entry.getValue().getService(), entry.getValue().getScore(), entry.getValue().getCommentScore(), entry.getValue().getWorkerName(), entry.getValue().getPhoneNumber(), minPrice, bookedTag);
 			result.add(hotelVO);
 		}
 		return result;

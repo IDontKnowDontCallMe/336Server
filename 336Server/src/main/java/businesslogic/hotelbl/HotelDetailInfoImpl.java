@@ -9,6 +9,7 @@ import java.util.Queue;
 import factory.BLFactory;
 import factory.DataFactory;
 import po.CommentPO;
+import po.HotelPO;
 import vo.CommentVO;
 import vo.HotelVO;
 import vo.OrderVO;
@@ -21,6 +22,11 @@ public class HotelDetailInfoImpl {
 	//private Queue<Integer> hotelIDQueue;
 	//private static final int maxCache = 220;
 	//private static final int cleanTimes = 10;
+	public HotelVO getHotelInfo(int hotelID){
+		HotelPO hotelPO = DataFactory.getHotelDataService().getHotelInfo(hotelID);
+		HotelVO hotelVO = new HotelVO(hotelPO.getHotelID(), hotelPO.getHotelName(), hotelPO.getCity(), hotelPO.getBusinessCircle(), hotelPO.getAddress(), hotelPO.getIntroduction(), hotelPO.getService(), hotelPO.getScore(), hotelPO.getCommentScore(), hotelPO.getWorkerName(), hotelPO.getPhoneNumber(), -1, -1);
+		return hotelVO;
+	}
 
 	public List<RoomVO> getRoomListOfHotel(int hotelID) {
 		List<RoomVO> result = null;

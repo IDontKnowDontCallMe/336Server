@@ -1,6 +1,7 @@
 package data.orderdata;
 
 import java.util.List;
+import java.util.Map;
 
 import dataservice.orderdataservice.OrderDataService;
 import po.OrderPO;
@@ -21,13 +22,13 @@ public class OrderDataServiceImpl implements OrderDataService{
 	}
 
 	@Override
-	public List<OrderPO> getCustomerOrder(int customerID) {
+	public Map<Integer,OrderPO> getCustomerOrder(int customerID) {
 		// TODO Auto-generated method stub
 		return orderDao.getOrderByCustomerID(customerID);
 	}
 
 	@Override
-	public List<OrderPO> getHotelOrder(int hotelID) {
+	public Map<Integer,OrderPO> getHotelOrder(int hotelID) {
 		// TODO Auto-generated method stub
 		return orderDao.getOrderByHotelID(hotelID);
 	}

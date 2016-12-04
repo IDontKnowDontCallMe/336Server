@@ -1,6 +1,7 @@
 package data.hoteldata;
 
 import java.util.List;
+import java.util.Map;
 
 import dataservice.hoteldataservice.HotelDataService;
 import po.CommentPO;
@@ -12,7 +13,7 @@ public class HotelDataServiceImpl implements HotelDataService{
 	private HotelDao hotelDao;
 	
 	@Override
-	public List<HotelPO> getHotelListOfArea(String city, String businessCircle) {
+	public Map<Integer,HotelPO> getHotelListOfArea(String city, String businessCircle) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -39,6 +40,12 @@ public class HotelDataServiceImpl implements HotelDataService{
 	public List<CommentPO> getCommentListOf(int hotelID) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean updateWorker(HotelPO hotelPO) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	

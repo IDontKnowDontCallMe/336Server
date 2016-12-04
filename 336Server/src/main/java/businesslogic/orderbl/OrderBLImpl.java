@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Queue;
 
 import javax.naming.spi.DirStateFactory.Result;
@@ -21,7 +23,7 @@ import vo.OrderVO;
 
 public class OrderBLImpl  {
 
-	private HashMap<Integer, List<OrderPO>> orderPOCache;
+	private Map<Integer, Map<Integer,OrderPO>> orderPOCache;
 	private Queue<Integer> IDQueue;
 	private static final int maxCache = 220;
 	
@@ -43,10 +45,11 @@ public class OrderBLImpl  {
 		return getOrderListOf(hotelID);
 	}
 
+	// #$%^^&&**
 	public List<OrderVO> getAbnormalOrdersOfToday()  {
-		List<OrderPO> abnormalList = DataFactory.getOrderDataService().getAbnormalOrdersOfToday();
 		
-		return getVOListByPOList(abnormalList);
+		
+		return null;
 	}
 	
 
@@ -93,13 +96,19 @@ public class OrderBLImpl  {
 									calculationConditionVO.hotelID, orderVO.roomName, calculationConditionVO.roomNum, orderVO.hasChildren, 
 				orderVO.peopleNum, orderVO.checkInTime, orderVO.lastestArrivingTime, orderVO.checkOutTime, orderVO.total, "正常", null, null, null,false);
 		
-		DataFactory.getOrderDataService().insertOrder(orderPO);
-		
-		if(orderPOCache.containsKey(orderVO.customerID)){
-			orderPOCache.get(orderVO.customerID).add(orderPO);
+		if(DataFactory.getOrderDataService().insertOrder(orderPO)){
+			if(orderPOCache.containsKey(orderVO.customerID)){
+				orderPOCache.get(orderVO.customerID).put(orderPO.getOrderID(), orderPO);
+			}
+			
+			if(orderPOCache.containsKey(orderPO.getHotelID())){
+				orderPOCache.get(orderPO.getHotelID()).put(orderPO.getOrderID(), orderPO);
+			}
+			return true;
 		}
-		
-		return true;
+		else{
+			return false;
+		}
 	}
 	
 
@@ -110,25 +119,17 @@ public class OrderBLImpl  {
 		OrderPO po = orderChanger.change();
 		
 		if(po!=null){
-			List<OrderPO> list = null;
-			if(orderPOCache.containsKey(po.getCustomerID()) ){
-				list = orderPOCache.get(po.getCustomerID());
+			if(orderPOCache.containsKey(po.getCustomerID())){
+				orderPOCache.get(po.getCustomerID()).replace(po.getOrderID(), po);
 			}
-			else if(orderPOCache.containsKey(po.getHotelID())){
-				list = orderPOCache.get(po.getHotelID());
+			if(orderPOCache.containsKey(po.getHotelID())){
+				orderPOCache.get(po.getHotelID()).replace(po.getOrderID(), po);
 			}
-			
-			if(list!=null){
-				for(OrderPO orderPO: list){
-					if(orderPO.getOrderID()==po.getOrderID()){
-						orderPO.setOrderState(po.getOrderState());
-						break;
-					}
-				}
-			}
+				
+			return true;
 		}
 		
-		return true;
+		return false;
 	}
 	
 	
@@ -138,11 +139,11 @@ public class OrderBLImpl  {
 			loadToCache(customerID);
 		}
 
-		List<OrderPO> list = new ArrayList<OrderPO>();
+		Map<Integer,OrderPO> list = new HashMap<Integer,OrderPO>();
 		
-		for(OrderPO po: orderPOCache.get(customerID)){
-			if(po.getHotelID() == hotelID){
-				list.add(po);
+		for(Entry<Integer, OrderPO> entry: orderPOCache.get(customerID).entrySet()){
+			if(entry.getValue().getHotelID() == hotelID){
+				list.put(entry.getValue().getHotelID(), entry.getValue());
 			}
 		}
 		
@@ -157,15 +158,15 @@ public class OrderBLImpl  {
 			loadToCache(customerID);
 		}
 		
-		List<OrderPO> list = orderPOCache.get(customerID);
+		Map<Integer,OrderPO> list = orderPOCache.get(customerID);
 		
 		int result = 0;
 		
-		for(OrderPO po: list){
-			if(po.getHotelID() != hotelID){
+		for(Entry<Integer, OrderPO> entry: list.entrySet()){
+			if(entry.getValue().getHotelID() != hotelID){
 				continue;
 			}
-			else if(po.getOrderState().equals("已执行")) {
+			else if(entry.getValue().getOrderState().equals("已执行")) {
 				result = 2;
 				break;
 			}
@@ -187,10 +188,10 @@ public class OrderBLImpl  {
 		
 		List<Integer> result = new ArrayList<Integer>();
 		
-		List<OrderPO> orderList = orderPOCache.get(customerID);
+		Map<Integer,OrderPO> orderList = orderPOCache.get(customerID);
 		
-		for(OrderPO po: orderList){
-			result.add(po.getHotelID());
+		for(Entry<Integer, OrderPO> entry : orderList.entrySet()){
+			result.add(entry.getValue().getHotelID());
 		}
 		
 		return result;
@@ -213,13 +214,17 @@ public class OrderBLImpl  {
 			loadToCache(id);
 		}
 		
-		List<OrderVO> list = getVOListByPOList(orderPOCache.get(id));
-		Iterator<OrderVO> iterator = list.iterator();
+		List<OrderVO> list = new ArrayList<OrderVO>();
 		
-		while(iterator.hasNext()){
-			OrderVO vo = iterator.next();
-			if(!vo.equals(state)){
-				iterator.remove();
+		
+		for(Entry<Integer, OrderPO> entry: orderPOCache.get(id).entrySet()){
+			if(entry.getValue().getOrderState().equals(state)){
+				CustomerVO customerVO = BLFactory.getCustomerBLService().getCustomerInfo(entry.getValue().getCustomerID());
+				
+				OrderVO vo = new OrderVO(entry.getValue().getOrderID(), customerVO.customerName, customerVO.customerID, customerVO.phoneNumber, entry.getValue().getProducingDateTime(), 
+						entry.getValue().getHotelName(),  entry.getValue().getRoomName(), entry.getValue().getRoomNum(), entry.getValue().getPeopleNum(), entry.getValue().getHasChildren(), entry.getValue().getCheckInDate(), entry.getValue().getLatestArrivingTime(),
+						entry.getValue().getCheckOutDate(), entry.getValue().getTotal(), entry.getValue().getOrderState(),entry.getValue().getHasComment());
+				list.add(vo);
 			}
 		}
 		
@@ -227,15 +232,15 @@ public class OrderBLImpl  {
 		
 	}
 	
-	private List<OrderVO> getVOListByPOList(List<OrderPO> orderPOs) {
+	private List<OrderVO> getVOListByPOList(Map<Integer, OrderPO> orderPOs) {
 		List<OrderVO> result = new ArrayList<OrderVO>();
 		
-		for(OrderPO po: orderPOs){
-			CustomerVO customerVO = BLFactory.getCustomerBLService().getCustomerInfo(po.getCustomerID());
+		for(Entry<Integer, OrderPO> entry: orderPOs.entrySet()){
+			CustomerVO customerVO = BLFactory.getCustomerBLService().getCustomerInfo(entry.getValue().getCustomerID());
 			
-			OrderVO vo = new OrderVO(po.getOrderID(), customerVO.customerName, customerVO.customerID, customerVO.phoneNumber, po.getProducingDateTime(), 
-									po.getHotelName(),  po.getRoomName(), po.getRoomNum(), po.getPeopleNum(), po.getHasChildren(), po.getCheckInDate(), po.getLatestArrivingTime(),
-									po.getCheckOutDate(), po.getTotal(), po.getOrderState(),po.getHasComment());
+			OrderVO vo = new OrderVO(entry.getValue().getOrderID(), customerVO.customerName, customerVO.customerID, customerVO.phoneNumber, entry.getValue().getProducingDateTime(), 
+					entry.getValue().getHotelName(),  entry.getValue().getRoomName(), entry.getValue().getRoomNum(), entry.getValue().getPeopleNum(), entry.getValue().getHasChildren(), entry.getValue().getCheckInDate(), entry.getValue().getLatestArrivingTime(),
+					entry.getValue().getCheckOutDate(), entry.getValue().getTotal(), entry.getValue().getOrderState(),entry.getValue().getHasComment());
 			result.add(vo);
 		}
 		
@@ -248,13 +253,13 @@ public class OrderBLImpl  {
 		}
 		
 		if(userID/100000000 == 1){
-			List<OrderPO> list = DataFactory.getOrderDataService().getCustomerOrder(userID);
-			orderPOCache.put(userID, list);
+			Map<Integer,OrderPO> map = DataFactory.getOrderDataService().getCustomerOrder(userID);
+			orderPOCache.put(userID, map);
 			IDQueue.add(userID);
 		}
 		else if(userID/100000000 == 2){
-			List<OrderPO> list = DataFactory.getOrderDataService().getHotelOrder(userID);
-			orderPOCache.put(userID, list);
+			Map<Integer,OrderPO> map = DataFactory.getOrderDataService().getHotelOrder(userID);
+			orderPOCache.put(userID, map);
 			IDQueue.add(userID);
 		}
 	}

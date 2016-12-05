@@ -1,6 +1,5 @@
 package businesslogic.userbl;
 
-import java.rmi.RemoteException;
 import java.util.List;
 
 import businesslogicservice.userblservice.UserBLService;
@@ -9,45 +8,44 @@ import vo.HotelVO;
 import vo.WebMarketerVO;
 
 public class UserController implements UserBLService{
-	public List<CustomerVO> getCustomerList() throws RemoteException {
+	public List<CustomerVO> getCustomerList() {
 		return null;
 		}
 	
-	public boolean updateCustomer(CustomerVO customerVO) throws RemoteException {
+	public boolean updateCustomer(CustomerVO customerVO) {
 		return false;
 	}
 	
 	@Override
-	public boolean addCustomer(CustomerVO customervo) throws RemoteException {
-		// TODO Auto-generated method stub
+	public boolean addCustomer(CustomerVO customervo) {
 		return false;
 	}
 	
-		public List<HotelVO> getHotelList() throws RemoteException {
+		public List<HotelVO> getHotelList() {
 		return null;
 	}
 	
-	public boolean addHotel(HotelVO hotelVO) throws RemoteException {
+	public boolean addHotel(HotelVO hotelVO) {
 		return false;
 	}
 	
-	public boolean updateHotelWorker(HotelVO hotelVO) throws RemoteException {
+	public boolean updateHotelWorker(HotelVO hotelVO) {
 		return false;
 	}
 		
-	public List<WebMarketerVO> getWebMarketerList() throws RemoteException {
+	public List<WebMarketerVO> getWebMarketerList() {
 		return null;
 	}
 	
-	public boolean addWebMarketer(WebMarketerVO webMarketerVO) throws RemoteException {
+	public boolean addWebMarketer(WebMarketerVO webMarketerVO) {
 		return false;
 	}
 	
-	public boolean updateWebMarketer(WebMarketerVO webMarketerVO) throws RemoteException {
+	public boolean updateWebMarketer(WebMarketerVO webMarketerVO) {
 		return false;
 	}
 	
-	public String login(int userID, String password) throws RemoteException {
+	public String login(int userID, String password) {
 		return null;
 	}
 
@@ -57,7 +55,6 @@ public class UserController implements UserBLService{
 
 	@Override
 	public boolean updateCreditOfCustomer(int customerID, int delta) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

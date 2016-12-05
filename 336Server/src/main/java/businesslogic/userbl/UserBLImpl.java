@@ -1,6 +1,5 @@
 package businesslogic.userbl;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class UserBLImpl implements UserBLService {
 	private List<WebMarketerPO> webMarketerList;
 
 	@Override
-	public List<CustomerVO> getCustomerList() throws RemoteException {
+	public List<CustomerVO> getCustomerList() {
 		List<CustomerVO> result = new ArrayList<CustomerVO>();
 		for (CustomerPO po : customerList) {
 			CustomerVO vo = new CustomerVO(po.getID(), po.getName(), po.getPhoneNumber(), po.isBirthVIP(),
@@ -31,7 +30,7 @@ public class UserBLImpl implements UserBLService {
 	}
 
 	@Override
-	public boolean updateCustomer(CustomerVO vo) throws RemoteException {
+	public boolean updateCustomer(CustomerVO vo) {
 		DataFactory.getUserDataService().deleteCustomer(vo.customerID);
 		CustomerPO po = new CustomerPO(vo.customerName, vo.phoneNumber, vo.customerID, vo.birthday, vo.companyName,
 				vo.credit, vo.level, vo.isBirthVIP, vo.isCompanyVIP);
@@ -40,7 +39,7 @@ public class UserBLImpl implements UserBLService {
 	}
 
 	@Override
-	public boolean addCustomer(CustomerVO vo) throws RemoteException {
+	public boolean addCustomer(CustomerVO vo) {
 		CustomerPO po = new CustomerPO(vo.customerName, vo.phoneNumber, vo.customerID, vo.birthday, vo.companyName,
 				vo.credit, vo.level, vo.isBirthVIP, vo.isCompanyVIP);
 		DataFactory.getUserDataService().insertCustomer(po);
@@ -48,7 +47,7 @@ public class UserBLImpl implements UserBLService {
 	}
 
 	@Override
-	public List<HotelVO> getHotelList() throws RemoteException {
+	public List<HotelVO> getHotelList() {
 		List<HotelVO> result = new ArrayList<HotelVO>();
 		for (HotelPO po : hotelList) {
 			HotelVO vo = new HotelVO(po.getHotelID(), po.getHotelName(), po.getCity(), po.getBusinessCircle(),
@@ -60,7 +59,7 @@ public class UserBLImpl implements UserBLService {
 	}
 
 	@Override
-	public boolean addHotel(HotelVO vo) throws RemoteException {
+	public boolean addHotel(HotelVO vo) {
 		HotelPO po = new HotelPO(vo.hotelID, vo.hotelName, vo.city, vo.businessCircle, vo.address, vo.introduction,
 				vo.service, vo.workerName, vo.phoneNumber, vo.score, vo.commentScore, vo.minPrice, vo.bookedTag);
 		DataFactory.getUserDataService().insertHotel(po);
@@ -68,7 +67,7 @@ public class UserBLImpl implements UserBLService {
 	}
 
 	@Override
-	public boolean updateHotelWorker(HotelVO vo) throws RemoteException {
+	public boolean updateHotelWorker(HotelVO vo) {
 		DataFactory.getUserDataService().deleteHotel(vo.hotelID);
 		HotelPO po = new HotelPO(vo.hotelID, vo.hotelName, vo.city, vo.businessCircle, vo.address, vo.introduction,
 				vo.service, vo.workerName, vo.phoneNumber, vo.score, vo.commentScore, vo.minPrice, vo.bookedTag);
@@ -77,7 +76,7 @@ public class UserBLImpl implements UserBLService {
 	}
 
 	@Override
-	public List<WebMarketerVO> getWebMarketerList() throws RemoteException {
+	public List<WebMarketerVO> getWebMarketerList() {
 		List<WebMarketerVO> result = new ArrayList<WebMarketerVO>();
 		for (WebMarketerPO po : webMarketerList) {
 			WebMarketerVO vo = new WebMarketerVO(po.getWebMarketerID(), po.getName(), po.getPhoneNumber());
@@ -87,14 +86,14 @@ public class UserBLImpl implements UserBLService {
 	}
 
 	@Override
-	public boolean addWebMarketer(WebMarketerVO vo) throws RemoteException {
+	public boolean addWebMarketer(WebMarketerVO vo) {
 		WebMarketerPO po = new WebMarketerPO(vo.ID, vo.name, vo.phoneNumber);
 		DataFactory.getUserDataService().insertWebMarketer(po);
 		return true;
 	}
 
 	@Override
-	public boolean updateWebMarketer(WebMarketerVO vo) throws RemoteException {
+	public boolean updateWebMarketer(WebMarketerVO vo) {
 		DataFactory.getUserDataService().deleteWebMarketer(vo.ID);
 		WebMarketerPO po = new WebMarketerPO(vo.ID, vo.name, vo.phoneNumber);
 		DataFactory.getUserDataService().insertWebMarketer(po);
@@ -117,7 +116,7 @@ public class UserBLImpl implements UserBLService {
 	}
 
 	@Override
-	public String login(int userID, String password) throws RemoteException {
+	public String login(int userID, String password) {
 		boolean isRightPassword = DataFactory.getUserDataService().checkPassword(userID, password);
 		String result = "";
 		if (isRightPassword) {

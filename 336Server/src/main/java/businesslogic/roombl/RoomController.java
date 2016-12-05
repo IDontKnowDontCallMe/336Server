@@ -1,43 +1,40 @@
 package businesslogic.roombl;
 
-import java.rmi.RemoteException;
-import java.util.Date;
 import java.util.List;
 import businesslogicservice.roomblservice.RoomBLService;
-import po.RoomPO;
 import vo.RoomVO;
 
 public class RoomController implements RoomBLService{
 	RoomBLImpl roomblImpl = new RoomBLImpl();
 
 	@Override
-	public boolean addRoomType(int hotelID, RoomVO roomVO) throws RemoteException {
+	public boolean addRoomType(int hotelID, RoomVO roomVO) {
 		// TODO Auto-generated method stub
-		return false;
+		return roomblImpl.addRoomType(hotelID, roomVO);
 	}
 
 	@Override
-	public boolean updateRoomType(int hotelID, RoomVO roomVO) throws RemoteException {
+	public boolean updateRoomType(int hotelID, RoomVO roomVO) {
 		// TODO Auto-generated method stub
-		return false;
+		return roomblImpl.updateRoomType(hotelID, roomVO);
 	}
 
 	@Override
-	public boolean deleteRoomType(int roomID) throws RemoteException {
+	public boolean deleteRoomType(int roomID) {
 		// TODO Auto-generated method stub
-		return false;
+		return roomblImpl.deleteRoomType(roomID);
 	}
 
 	@Override
-	public List<RoomVO> getRoomTypeList(int hotelID) throws RemoteException {
+	public List<RoomVO> getRoomTypeList(int hotelID) {
 		// TODO Auto-generated method stub
-		return null;
+		return roomblImpl.getRoomTypeList(hotelID);
 	}
 
 	@Override
 	public RoomVO getRoomType(int roomID) {
 		// TODO Auto-generated method stub
-		return null;
+		return roomblImpl.getRoomType(roomID);
 	}
 	
 	

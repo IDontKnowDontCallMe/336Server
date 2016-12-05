@@ -1,8 +1,6 @@
 package data.customerdata;
 
 import java.time.LocalDate;
-import java.util.Date;
-
 import po.CustomerPO;
 
 public interface CustomerInfoDao {

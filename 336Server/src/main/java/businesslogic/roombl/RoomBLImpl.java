@@ -33,7 +33,7 @@ public class RoomBLImpl {
 	};
 	
 	public List<RoomVO> getRoomTypeList(int hotelID) {
-		List<RoomPO> poList = DataFactory.getRoomDataService().getRoomType(hotelID);
+		List<RoomPO> poList = DataFactory.getRoomDataService().getRoomTypeList(hotelID);
 		List<RoomVO> volist = new ArrayList<RoomVO>();
 		for(RoomPO po: poList){
 			RoomVO roomVO = new RoomVO(po.getRoomID(), po.getRoomName(), po.getPrice(), po.getNumOfRoom(), po.getService(), po.getMaxNumOfPeople());
@@ -44,8 +44,9 @@ public class RoomBLImpl {
 	};
 	
 	public RoomVO getRoomType(int roomID){
-		RoomVO roomVO;
-		return DataFactory.getRoomDataService().getRoomType(roomID);
+		RoomPO roomPO = DataFactory.getRoomDataService().getRoomType(roomID);
+		RoomVO roomVO = new RoomVO(roomPO.getRoomID(), roomPO.getRoomName(), roomPO.getPrice(), roomPO.getNumOfRoom(), roomPO.getService(), roomPO.getMaxNumOfPeople());
+		return roomVO;
 		
 	};
 }

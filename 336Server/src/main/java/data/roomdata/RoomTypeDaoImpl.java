@@ -25,7 +25,13 @@ public class RoomTypeDaoImpl implements RoomTypeDao{
 	}
 
 	@Override
-	public List<RoomPO> getRoomType(int hotelID) {
+	public RoomPO getRoomType(int roomID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<RoomPO> getRoomTypeList(int hotelID) {
 		// TODO Auto-generated method stub
 		return null;
 	}

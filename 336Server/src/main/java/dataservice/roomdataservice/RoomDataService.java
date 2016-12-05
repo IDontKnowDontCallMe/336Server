@@ -14,10 +14,14 @@ public interface RoomDataService {
 	
 	public boolean deleteRoomPO(int roomID);
 	
-	public List<RoomPO> getRoomType(int roomID);
+	public RoomPO getRoomType(int roomID);
 	
 	public List<UsagePO> getUsagePO(int roomID, Date start, Date end);
 	
 	public boolean updateUsage(int roomID, Date start, Date end, int delta);
+	
+	public List<RoomPO> getRoomTypeList(int hotelID);
+		
+	
 	
 }

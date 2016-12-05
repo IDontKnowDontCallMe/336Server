@@ -1,9 +1,7 @@
 package runner;
 
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-
 import factory.BLFactory;
 import factory.DataFactory;
 import rmi.ControllerRemoteFactory;

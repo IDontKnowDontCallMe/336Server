@@ -37,9 +37,9 @@ public class RoomDataServiceImpl implements RoomDataService{
 	}
 
 	@Override
-	public List<RoomPO> getRoomType(int hotelID) {
+	public RoomPO getRoomType(int roomID) {
 		// TODO Auto-generated method stub
-		return roomTypeDao.getRoomType(hotelID);
+		return roomTypeDao.getRoomType(roomID);
 	}
 
 	@Override
@@ -52,6 +52,12 @@ public class RoomDataServiceImpl implements RoomDataService{
 	public boolean updateUsage(int roomID, Date start, Date end, int delta) {
 		// TODO Auto-generated method stub
 		return roomUsageDao.updateUsage(roomID, start, end, delta);
+	}
+
+	@Override
+	public List<RoomPO> getRoomTypeList(int hotelID) {
+		// TODO Auto-generated method stub
+		return roomTypeDao.getRoomTypeList(hotelID);
 	}
 
 }

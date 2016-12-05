@@ -12,6 +12,8 @@ public interface RoomTypeDao {
 	
 	public boolean deleteRoomPO(int roomID);
 	
-	public List<RoomPO> getRoomType(int hotelID);
+	public RoomPO getRoomType(int roomID);
+	
+	public List<RoomPO> getRoomTypeList(int hotelID);
 	
 }

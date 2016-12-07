@@ -1,63 +1,37 @@
 package data.roomdata;
 
-import java.util.Date;
-import java.util.List;
+
+import java.util.Map;
 
 import dataservice.roomdataservice.RoomDataService;
 import po.RoomPO;
-import po.UsagePO;
 
 public class RoomDataServiceImpl implements RoomDataService{
 	
-	private RoomTypeDao roomTypeDao;
-	private RoomUsageDao roomUsageDao;
+	private RoomDao roomDao;
 	
 	public RoomDataServiceImpl() {
 		// TODO Auto-generated constructor stub
-		roomTypeDao = RoomDaoFactory.getRoomTypeDao();
-		roomUsageDao = RoomDaoFactory.getRoomUsageDao();
+		roomDao = RoomDaoFactory.getRoomTypeDao();
 	}
 
 	@Override
-	public boolean addRoomType(int hotelID, RoomPO po) {
+	public boolean addRoomType(RoomPO po) {
 		// TODO Auto-generated method stub
-		return roomTypeDao.addRoomType(hotelID, po);
+		return roomDao.addRoomType(po);
 	}
 
 	@Override
-	public boolean updateRoomType(int roomID, RoomPO po) {
+	public Map<Integer, RoomPO> getRoomTypeList(int hotelID) {
 		// TODO Auto-generated method stub
-		return roomTypeDao.updateRoomType(roomID, po);
+		return roomDao.getRoomTypeList(hotelID);
 	}
 
 	@Override
-	public boolean deleteRoomPO(int roomID) {
+	public RoomPO getRoomPO(int roomID) {
 		// TODO Auto-generated method stub
-		return roomTypeDao.deleteRoomPO(roomID);
+		return roomDao.getRoomPO(roomID);
 	}
 
-	@Override
-	public RoomPO getRoomType(int roomID) {
-		// TODO Auto-generated method stub
-		return roomTypeDao.getRoomType(roomID);
-	}
-
-	@Override
-	public List<UsagePO> getUsagePO(int roomID, Date start, Date end) {
-		// TODO Auto-generated method stub
-		return roomUsageDao.getUsagePO(roomID, start, end);
-	}
-
-	@Override
-	public boolean updateUsage(int roomID, Date start, Date end, int delta) {
-		// TODO Auto-generated method stub
-		return roomUsageDao.updateUsage(roomID, start, end, delta);
-	}
-
-	@Override
-	public List<RoomPO> getRoomTypeList(int hotelID) {
-		// TODO Auto-generated method stub
-		return roomTypeDao.getRoomTypeList(hotelID);
-	}
-
+	
 }

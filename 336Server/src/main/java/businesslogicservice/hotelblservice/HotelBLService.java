@@ -1,9 +1,7 @@
 package businesslogicservice.hotelblservice;
 
-import java.rmi.RemoteException;
 import java.util.List;
 
-import po.HotelPO;
 import vo.AreaVO;
 import vo.CommentVO;
 import vo.HotelVO;

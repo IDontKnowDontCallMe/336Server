@@ -4,9 +4,6 @@ import java.util.List;
 
 import businesslogic.userbl.HotelInfoUpdater;
 import businesslogicservice.hotelblservice.HotelBLService;
-import businesslogicservice.hotelblservice.OrderForC_H_Service;
-import factory.DataFactory;
-import po.HotelPO;
 import vo.AreaVO;
 import vo.CommentVO;
 import vo.HotelVO;
@@ -114,6 +111,12 @@ public class HotelController implements HotelBLService, HotelInfoUpdater{
 		}
 		
 	}
+	
+	@Override
+	public boolean addHotel(HotelVO hotelVO) {
+		// TODO Auto-generated method stub
+		return hotelInfoUpdaterImpl.addHotel(hotelVO);
+	}
 
 	//-------------------------------------//maybe delet 
 	
@@ -129,7 +132,5 @@ public class HotelController implements HotelBLService, HotelInfoUpdater{
 		return true;
 	}
 
-
-	
 
 }

@@ -1,7 +1,5 @@
 package businesslogicservice.promotionblservice;
 
-import java.rmi.Remote;
-import java.rmi.RemoteException;
 import java.util.List;
 
 import vo.CalculationConditionVO;

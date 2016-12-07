@@ -1,7 +1,6 @@
 package businesslogicservice.userblservice;
 
-import java.rmi.Remote;
-import java.rmi.RemoteException;
+
 import java.util.List;
 
 import vo.CustomerVO;

@@ -10,21 +10,21 @@ public class CustomerPO {
 	private String VIPcompany;
 
 	private int credit;
-	private int level;
+	//private int level;
 
 	private int ID;
 	private boolean isBirthVIP;
 	private boolean isCompanyVIP;
 
 	public CustomerPO(String name, String phoneNumber, int id, LocalDate VIPbirthday, String VIPcompany, int credit,
-			int level, boolean isbirthvip, boolean iscompvip) {
+			  boolean isbirthvip, boolean iscompvip) {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.ID = id;
 		this.VIPbirthday = VIPbirthday;
 		this.VIPcompany = VIPcompany;
 		this.credit = credit;
-		this.level = level;
+		//this.level = level;
 		this.isBirthVIP = isbirthvip;
 		this.isCompanyVIP = iscompvip;
 
@@ -78,6 +78,7 @@ public class CustomerPO {
 		return this.credit;
 	}
 
+	/**
 	public void setLevel(int level) {
 		this.level = level;
 	}
@@ -85,6 +86,7 @@ public class CustomerPO {
 	public int getLevel() {
 		return this.level;
 	}
+	**/
 
 	public void setBirthVIP(boolean isBirthVIP) {
 		this.isBirthVIP = isBirthVIP;

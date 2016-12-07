@@ -1,51 +1,51 @@
 package data.customerdata;
 
-import java.time.LocalDate;
 import java.util.List;
 import dataservice.customerdataservice.CustomerDataService;
 import po.CreditPO;
 import po.CustomerPO;
 
 public class CustomerDataServiceImpl implements CustomerDataService{
-	
-	private CustomerInfoDao customerInfoDao;
-	private CreditDao creditDao;
-	
-	public CustomerDataServiceImpl() {
-		// TODO Auto-generated constructor stub
-		customerInfoDao = CustomerDaoFactory.getCustomerInfoDao();
-		creditDao = CustomerDaoFactory.getCreditDao();
-	}
 
+	private CustomerDao customerDao = CustomerDaoFactory.getCustomerInfoDao();
+	
 	@Override
 	public CustomerPO getInfo(int customerID) {
 		// TODO Auto-generated method stub
-		return customerInfoDao.getInfo(customerID);
+		return customerDao.getInfo(customerID);
 	}
 
 	@Override
-	public boolean updateInfo(CustomerPO po) {
+	public boolean updateSimpleInfo(CustomerPO po) {
 		// TODO Auto-generated method stub
-		return customerInfoDao.updateInfo(po);
+		return customerDao.updateSimpleInfo(po);
 	}
 
 	@Override
-	public boolean setBirthVIP(int customerID, LocalDate birthday) {
+	public boolean updateVIP(CustomerPO po) {
 		// TODO Auto-generated method stub
-		return customerInfoDao.setBirthVIP(customerID, birthday);
-	}
-
-	@Override
-	public boolean setCompanyVIP(int customerID, String companyName) {
-		// TODO Auto-generated method stub
-		return customerInfoDao.setCompanyVIP(customerID, companyName);
+		return customerDao.updateVIP(po);
 	}
 
 	@Override
 	public List<CreditPO> getCreditList(int customerID) {
 		// TODO Auto-generated method stub
-		return creditDao.getCreditList(customerID);
+		return customerDao.getCreditList(customerID);
 	}
+
+	@Override
+	public boolean addCreditRecord(CreditPO po) {
+		// TODO Auto-generated method stub
+		return customerDao.addCreditRecord(po);
+	}
+
+	@Override
+	public boolean updateCredit(int customerID, int delta) {
+		// TODO Auto-generated method stub
+		return customerDao.updateCredit(customerID, delta);
+	}
+	
+	
 
 
 }

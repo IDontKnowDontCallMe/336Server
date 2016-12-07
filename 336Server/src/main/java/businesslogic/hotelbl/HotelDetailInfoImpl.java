@@ -1,10 +1,7 @@
 package businesslogic.hotelbl;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Queue;
 
 import factory.BLFactory;
 import factory.DataFactory;

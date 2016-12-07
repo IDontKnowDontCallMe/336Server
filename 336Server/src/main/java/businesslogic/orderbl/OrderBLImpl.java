@@ -1,21 +1,18 @@
 package businesslogic.orderbl;
 
-import java.rmi.RemoteException;
+
 import java.time.LocalDateTime;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
 
-import javax.naming.spi.DirStateFactory.Result;
-
 import factory.BLFactory;
 import data.factory.DataFactory;
-import po.HotelPO;
 import po.OrderPO;
 import vo.CalculationConditionVO;
 import vo.CustomerVO;
@@ -29,7 +26,7 @@ public class OrderBLImpl  {
 	
 	public OrderBLImpl() {
 		// TODO Auto-generated constructor stub
-		orderPOCache = new HashMap<>();
+		orderPOCache = new LinkedHashMap<>(30, (float)0.75, false);
 		IDQueue = new ArrayDeque<Integer>();
 	}
 	

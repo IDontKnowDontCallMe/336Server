@@ -15,37 +15,49 @@ public class HotelDataServiceImpl implements HotelDataService{
 	@Override
 	public Map<Integer,HotelPO> getHotelListOfArea(String city, String businessCircle) {
 		// TODO Auto-generated method stub
-		return null;
+		return hotelDao.getHotelListOfArea(city, businessCircle);
 	}
 
 	@Override
 	public HotelPO getHotelInfo(int hotelID) {
 		// TODO Auto-generated method stub
-		return null;
+		return hotelDao.getHotelInfo(hotelID);
 	}
 
 	@Override
 	public boolean updateHotel(HotelPO hotelPO) {
 		// TODO Auto-generated method stub
-		return false;
+		return hotelDao.updateSimpleHotelInfo(hotelPO);
 	}
 
 	@Override
 	public boolean addComment(CommentPO po) {
 		// TODO Auto-generated method stub
-		return false;
+		return hotelDao.addComment(po);
 	}
 
 	@Override
 	public List<CommentPO> getCommentListOf(int hotelID) {
 		// TODO Auto-generated method stub
-		return null;
+		return hotelDao.getCommentListOf(hotelID);
 	}
 
 	@Override
 	public boolean updateWorker(HotelPO hotelPO) {
 		// TODO Auto-generated method stub
-		return false;
+		return hotelDao.updateWorker(hotelPO);
+	}
+
+	@Override
+	public boolean addHotel(HotelPO hotelPO) {
+		// TODO Auto-generated method stub
+		return hotelDao.addHotel(hotelPO);
+	}
+
+	@Override
+	public int getHotelNum() {
+		// TODO Auto-generated method stub
+		return hotelDao.getHotelNum();
 	}
 	
 	

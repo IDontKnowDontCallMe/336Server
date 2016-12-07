@@ -10,17 +10,12 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.sun.crypto.provider.RSACipher;
-
 import data.databaseutility.ConnectionFactory;
-import dataservice.orderdataservice.OrderDataService;
 import po.OrderPO;
 
 public class OrderDaoImpl implements OrderDao{
@@ -67,7 +62,7 @@ public class OrderDaoImpl implements OrderDao{
 	@Override
 	public Map<Integer,OrderPO> getOrderByCustomerID(int customerID) {
 		// TODO Auto-generated method stub
-		Map<Integer,OrderPO> result = new HashMap<Integer,OrderPO>();
+		Map<Integer,OrderPO> result = new LinkedHashMap<Integer,OrderPO>();
 		
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
@@ -93,7 +88,7 @@ public class OrderDaoImpl implements OrderDao{
 		}
 		
 		
-		return null;
+		return result;
 	}
 
 
@@ -101,7 +96,7 @@ public class OrderDaoImpl implements OrderDao{
 	@Override
 	public Map<Integer,OrderPO> getOrderByHotelID(int hotelID) {
 		// TODO Auto-generated method stub
-		Map<Integer,OrderPO> result = new HashMap<Integer,OrderPO>();
+		Map<Integer,OrderPO> result = new LinkedHashMap<Integer,OrderPO>();
 		
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
@@ -126,7 +121,7 @@ public class OrderDaoImpl implements OrderDao{
 		}
 		
 		
-		return null;
+		return result;
 	}
 
 
@@ -163,7 +158,7 @@ public class OrderDaoImpl implements OrderDao{
 		}
 		
 		
-		return null;
+		return result;
 	}
 
 
@@ -300,7 +295,7 @@ public class OrderDaoImpl implements OrderDao{
 		}
 		
 		
-		return null;
+		return result;
 	}
 	
 	private OrderPO toOrderPO(ResultSet res) throws SQLException{

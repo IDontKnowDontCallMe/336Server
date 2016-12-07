@@ -1,9 +1,5 @@
 package businesslogic.orderbl;
 
-import java.rmi.RemoteException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import businesslogicservice.orderblservice.OrderBLService;
@@ -28,7 +24,7 @@ public class OrderController implements OrderBLService{
 	@Override
 	public List<OrderVO> getHotelOrder(int hotelID){
 		// TODO Auto-generated method stub
-		return null;
+		return orderBLImpl.getHotelOrder(hotelID);
 	}
 
 	@Override
@@ -40,13 +36,13 @@ public class OrderController implements OrderBLService{
 	@Override
 	public List<OrderVO> filterCustomerList(int customerID, String state) {
 		// TODO Auto-generated method stub
-		return null;
+		return orderBLImpl.filterCustomerList(customerID, state);
 	}
 
 	@Override
 	public List<OrderVO> filterHotelList(int hotelID, String state) {
 		// TODO Auto-generated method stub
-		return null;
+		return orderBLImpl.filterHotelList(hotelID, state);
 	}
 
 	
@@ -54,43 +50,45 @@ public class OrderController implements OrderBLService{
 	@Override
 	public int calculateTotal(CalculationConditionVO vo) {
 		// TODO Auto-generated method stub
-		return 0;
+		return orderBLImpl.calculateTotal(vo);
 	}
 
 	@Override
 	public boolean produceOrder(OrderVO orderVO , CalculationConditionVO calculationConditionVO) {
 		// TODO Auto-generated method stub
-		return false;
+		return orderBLImpl.produceOrder(orderVO, calculationConditionVO);
 	}
 
 	@Override
 	public boolean changeOrderState(int orderID, String state) {
 		// TODO Auto-generated method stub
-		return false;
+		return orderBLImpl.changeOrderState(orderID, state);
 	}
 
 	@Override
 	public String canBeProduced(CalculationConditionVO vo) {
 		// TODO Auto-generated method stub
-		return null;
+		return orderBLImpl.canBeProduced(vo);
 	}
 
 	@Override
 	public List<OrderVO> getOrderListOfHotel(int hotelID, int customerID) {
 		// TODO Auto-generated method stub
-		return null;
+		return orderBLImpl.getOrderListOfHotel(hotelID, customerID);
 	}
 
 	@Override
 	public int getBookedTag(int customerID, int hotelID) {
 		// TODO Auto-generated method stub
-		return 0;
+		//此方法能够用于hotel模块，搜索功能时，确定该customer是否预订过该hotel
+		return orderBLImpl.getBookedTag(customerID, hotelID);
 	}
 
 	@Override
 	public List<Integer> getBookedHotelidOf(int customerID) {
 		// TODO Auto-generated method stub
-		return null;
+		//此方法用于hotel模块，customer查看自己预定过的酒店时
+		return orderBLImpl.getBookedHotelidOf(customerID);
 	}
 
 	

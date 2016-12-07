@@ -1,20 +1,21 @@
 package factory;
 
-import businesslogic.customerbl.CustomerBLImpl;
+
 import businesslogic.customerbl.CustomerController;
 import businesslogic.hotelbl.HotelController;
 import businesslogic.orderbl.OrderController;
 import businesslogic.promotionbl.PromotionController;
 import businesslogic.roombl.RoomController;
+import businesslogic.userbl.CustomerInfoUpdater;
+import businesslogic.userbl.HotelInfoUpdater;
 import businesslogic.userbl.UserController;
 import businesslogicservice.customerblservice.CustomerBLService;
 import businesslogicservice.hotelblservice.HotelBLService;
-import businesslogicservice.hotelblservice.OrderForC_H_Service;
 import businesslogicservice.orderblservice.OrderBLService;
 import businesslogicservice.promotionblservice.PromotionBLService;
 import businesslogicservice.roomblservice.RoomBLService;
 import businesslogicservice.userblservice.UserBLService;
-import data.customerdata.CustomerDataServiceImpl;
+
 
 public class BLFactory {
 
@@ -24,6 +25,7 @@ public class BLFactory {
 	private static PromotionBLService promotionBLService;
 	private static RoomBLService roomBLService;
 	private static UserBLService userBLService;
+	
 	
 	public static void initBLFactory(){
 		customerBLService = new CustomerController();
@@ -58,6 +60,11 @@ public class BLFactory {
 		return userBLService;
 	}
 	
+	public static HotelInfoUpdater getHotelInfoUpdater(){
+		return (HotelInfoUpdater)hotelBLService;
+	}
 	
-	
+	public static CustomerInfoUpdater getCustomerInfoUpdater(){
+		return (CustomerInfoUpdater) customerBLService;
+	}
 }

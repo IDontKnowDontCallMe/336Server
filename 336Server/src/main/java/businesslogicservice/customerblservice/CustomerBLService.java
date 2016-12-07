@@ -1,7 +1,5 @@
 package businesslogicservice.customerblservice;
 
-import java.rmi.Remote;
-import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -16,6 +14,8 @@ public interface CustomerBLService{
 	public boolean updateCustomerInfo(CustomerVO customerVO);
 	
 	public List<CreditVO> getCreditList(int customerID);
+	
+	public boolean addCreditRecord(CreditVO creditVO);
 	
 	public boolean registerBirthVIP(int customerID, LocalDate birthday);
 	

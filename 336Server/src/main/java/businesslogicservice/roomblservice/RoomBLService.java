@@ -1,10 +1,6 @@
 package businesslogicservice.roomblservice;
 
-import java.rmi.Remote;
-import java.rmi.RemoteException;
-import java.util.Date;
 import java.util.List;
-import po.RoomPO;
 import vo.RoomVO;
 
 public interface RoomBLService {

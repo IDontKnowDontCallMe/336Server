@@ -3,6 +3,7 @@ package businesslogic.hotelbl;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -21,8 +22,8 @@ import vo.SearchConditionVO;
 
 public class HotelSearchingImpl {
 
-	private HashMap<String, Map<Integer, HotelPO>> areaCache;
-	private HashMap<Integer, List<HotelVO>> resultCache;
+	private Map<String, Map<Integer, HotelPO>> areaCache;
+	private Map<Integer, List<HotelVO>> resultCache;
 	private Queue<String> areaQueue;
 	private Queue<Integer> customerQueue;
 	private static final int maxCache = 220;
@@ -30,8 +31,8 @@ public class HotelSearchingImpl {
 
 	public HotelSearchingImpl() {
 		// TODO Auto-generated constructor stub
-		areaCache = new HashMap<String, Map<Integer, HotelPO>>();
-		resultCache = new HashMap<Integer, List<HotelVO>>();
+		areaCache = new LinkedHashMap<String, Map<Integer, HotelPO>>(30, (float)0.75, false);
+		resultCache = new LinkedHashMap<Integer, List<HotelVO>>(30, (float)0.75, false);
 		areaQueue = new ArrayDeque<String>();
 		customerQueue = new ArrayDeque<Integer>();
 	}

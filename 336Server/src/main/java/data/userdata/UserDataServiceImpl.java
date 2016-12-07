@@ -1,12 +1,8 @@
 package data.userdata;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
+
 import java.util.List;
 
-import data.databaseutility.ConnectionFactory;
 import dataservice.userdataservice.UserDataService;
 import po.CustomerPO;
 import po.HotelPO;
@@ -14,102 +10,51 @@ import po.WebMarketerPO;
 
 public class UserDataServiceImpl implements UserDataService {
 
-	private CustomerDao customerDao;
-	private HotelDao hotelDao;
-	private WebMarketerDao marketerDao;
-	private Connection con = null;
-	private PreparedStatement pps = null;
-
-	public UserDataServiceImpl() {
-		// TODO Auto-generated constructor stub
-		customerDao = UserDaoFactory.getCustomerDao();
-		hotelDao = UserDaoFactory.getHotelDao();
-		marketerDao = UserDaoFactory.getMarketerDao();
-	}
-
+	private UserDao userDao = new UserDaoImpl();
+	
 	@Override
 	public List<CustomerPO> getCustomerList() {
 		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean deleteCustomer(int customerID) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean insertCustomer(CustomerPO po) {
-		// TODO Auto-generated method stub
-		return false;
+		return userDao.getCustomerList();
 	}
 
 	@Override
 	public List<HotelPO> getHotelList() {
 		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean deleteHotel(int hotelID) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean insertHotel(HotelPO po) {
-		// TODO Auto-generated method stub
-		return false;
+		return userDao.getHotelList();
 	}
 
 	@Override
 	public boolean insertWebMarketer(WebMarketerPO po) {
 		// TODO Auto-generated method stub
-		return false;
+		return userDao.insertWebMarketer(po);
 	}
 
 	@Override
 	public List<WebMarketerPO> getWebMarketerList() {
 		// TODO Auto-generated method stub
-		return null;
+		return userDao.getWebMarketerList();
 	}
 
 	@Override
-	public boolean deleteWebMarketer(int webMarketerID) {
+	public boolean updateWebMarketer(WebMarketerPO po) {
 		// TODO Auto-generated method stub
-		return false;
+		return userDao.updateWebMarketer(po);
 	}
 
 	@Override
-	public boolean checkPassword(int userID, String password) {
-		boolean isRightPassword = false;
-		try {
-			con = ConnectionFactory.getDatabaseConnectionInstance();
-			String sql = "SELECT * FROM passwordtable";
-			pps = con.prepareStatement(sql);
-			ResultSet res = pps.executeQuery();
-
-			while (res.next()) {
-				if (res.getInt(1) == userID) {
-					if (res.getString(2).equals(password)) {
-						isRightPassword = true;
-						break;
-					} else {
-						break;
-					}
-
-				}
-			}
-
-			pps.close();
-			con.close();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return isRightPassword;
-
+	public String getPassword(int userID) {
+		// TODO Auto-generated method stub
+		return userDao.getPassword(userID);
 	}
 
+	@Override
+	public boolean addUser(int userID, String password) {
+		// TODO Auto-generated method stub
+		return userDao.addUser(userID, password);
+	}
+
+	
+	
+	
 }

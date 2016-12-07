@@ -8,54 +8,64 @@ import vo.HotelVO;
 import vo.WebMarketerVO;
 
 public class UserController implements UserBLService{
+	
+	private UserBLImpl userBLImpl;
+	
+	public UserController() {
+		// TODO Auto-generated constructor stub
+		userBLImpl = new UserBLImpl();
+	}
+	
 	public List<CustomerVO> getCustomerList() {
-		return null;
-		}
+		return userBLImpl.getCustomerList();
+	}
 	
 	public boolean updateCustomer(CustomerVO customerVO) {
-		return false;
+		return userBLImpl.updateCustomer(customerVO);
 	}
 	
 	@Override
 	public boolean addCustomer(CustomerVO customervo) {
 		return false;
+		//需求无，暂时不实现了
 	}
 	
-		public List<HotelVO> getHotelList() {
-		return null;
+	public List<HotelVO> getHotelList() {
+		return userBLImpl.getHotelList();
 	}
 	
 	public boolean addHotel(HotelVO hotelVO) {
-		return false;
+		return userBLImpl.addHotel(hotelVO);
 	}
 	
 	public boolean updateHotelWorker(HotelVO hotelVO) {
-		return false;
+		return userBLImpl.updateHotelWorker(hotelVO);
 	}
 		
 	public List<WebMarketerVO> getWebMarketerList() {
-		return null;
+		return userBLImpl.getWebMarketerList();
 	}
 	
 	public boolean addWebMarketer(WebMarketerVO webMarketerVO) {
-		return false;
+		return userBLImpl.addWebMarketer(webMarketerVO);
 	}
 	
 	public boolean updateWebMarketer(WebMarketerVO webMarketerVO) {
-		return false;
+		return userBLImpl.updateWebMarketer(webMarketerVO);
 	}
 	
 	public String login(int userID, String password) {
-		return null;
+		return userBLImpl.login(userID, password);
 	}
 
 	public WebMarketerVO getWebMarketerInfo(int WebMarketerID) {
 		return null;
+		//需求没有相关要求，具体不实现了（相关需求可通过getWebMarList完成）;
 	}
 
 	@Override
 	public boolean updateCreditOfCustomer(int customerID, int delta) {
-		return false;
+		return userBLImpl.updateCreditOfCustomer(customerID, delta);
 	}
 
 	

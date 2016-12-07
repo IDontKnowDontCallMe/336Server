@@ -9,6 +9,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,8 +25,9 @@ public class HotelDaoImpl implements HotelDao{
 	@Override
 	public Map<Integer,HotelPO> getHotelListOfArea(String city, String businessCircle) {
 		// TODO Auto-generated method stub
+		HashMap<Integer, HotelPO> result = new LinkedHashMap<Integer,HotelPO>();
+		
 		try{
-			HashMap<Integer, HotelPO> result = new HashMap<Integer,HotelPO>();
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "SELECT * FROM hoteltable WHERE city = ? and businessCircle = ?";
 			pps = con.prepareStatement(sql);
@@ -46,7 +48,7 @@ public class HotelDaoImpl implements HotelDao{
 			e.printStackTrace();
 		}
 		
-		return null;
+		return result;
 	}
 
 	@Override
@@ -127,8 +129,9 @@ public class HotelDaoImpl implements HotelDao{
 	@Override
 	public List<CommentPO> getCommentListOf(int hotelID) {
 		// TODO Auto-generated method stub
+		List<CommentPO> result = new ArrayList<CommentPO>();
+		
 		try{
-			List<CommentPO> result = new ArrayList<CommentPO>();
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "SELECT * FROM commenttable WHERE hotelID = ? ";
 			pps = con.prepareStatement(sql);
@@ -148,7 +151,76 @@ public class HotelDaoImpl implements HotelDao{
 			e.printStackTrace();
 		}
 		
-		return null;
+		return result;
+	}
+	
+	@Override
+	public boolean updateWorker(HotelPO hotelPO) {
+		// TODO Auto-generated method stub
+		try{
+			con = ConnectionFactory.getDatabaseConnectionInstance();
+			String sql = "UPDATE commenttable SET workerName = ? WHERE hotelID = ? ";
+			pps = con.prepareStatement(sql);
+			pps.setString(1, hotelPO.getWorkerName());
+			pps.setInt(2, hotelPO.getHotelID());
+			
+			return pps.executeUpdate() > 0;
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	@Override
+	public boolean addHotel(HotelPO hotelPO) {
+		// TODO Auto-generated method stub
+		try{
+			con = ConnectionFactory.getDatabaseConnectionInstance();
+			String sql = "INSERT INTO hoteltable SET hotelID = ?, hotelName = ?, city = ?, businessCircle =?, workerName =?, phoneNumber =? ";
+			pps = con.prepareStatement(sql);
+			pps.setInt(1, hotelPO.getHotelID());
+			pps.setString(2, hotelPO.getHotelName());
+			pps.setString(3, hotelPO.getCity());
+			pps.setString(4, hotelPO.getBusinessCircle());
+			pps.setString(5, hotelPO.getWorkerName());
+			pps.setString(6, hotelPO.getPhoneNumber());
+			
+			
+			return pps.executeUpdate() > 0;
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	@Override
+	public int getHotelNum(){
+		try{
+			con = ConnectionFactory.getDatabaseConnectionInstance();
+			String sql = "SELECT count(*)  FROM  hoteltable ";
+			pps = con.prepareStatement(sql);
+			
+			ResultSet res = pps.executeQuery();
+			
+			if (res.next()) {
+				int result = res.getInt(1);
+				return result;
+			}
+			else {
+				return -1;
+			}
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return -1;
 	}
 	
 	private HotelPO toHotelPO(ResultSet res){
@@ -196,24 +268,8 @@ public class HotelDaoImpl implements HotelDao{
 		return null;
 	}
 
-	@Override
-	public boolean updateWorker(HotelPO hotelPO) {
-		// TODO Auto-generated method stub
-		try{
-			con = ConnectionFactory.getDatabaseConnectionInstance();
-			String sql = "UPDATE commenttable SET workerName = ? WHERE hotelID = ? ";
-			pps = con.prepareStatement(sql);
-			pps.setString(1, hotelPO.getWorkerName());
-			pps.setInt(2, hotelPO.getHotelID());
-			
-			return pps.executeUpdate() > 0;
-		}
-		catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		
-		return false;
-	}
+	
+
+	
 
 }

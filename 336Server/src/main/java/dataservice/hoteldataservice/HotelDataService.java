@@ -19,5 +19,9 @@ public interface HotelDataService {
 	public boolean addComment(CommentPO po);
 	
 	public List<CommentPO> getCommentListOf(int hotelID);
+	
+	public boolean addHotel(HotelPO hotelPO);
+	
+	public int getHotelNum();
 
 }

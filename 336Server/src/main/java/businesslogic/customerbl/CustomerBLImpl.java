@@ -1,10 +1,12 @@
 package businesslogic.customerbl;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import data.factory.DataFactory;
+import factory.BLFactory;
 import po.CreditPO;
 import po.CustomerPO;
 import vo.CreditVO;
@@ -14,18 +16,34 @@ public class CustomerBLImpl {
 	
 	public CustomerVO getCustomerInfo(int customerID) {
 		CustomerPO customerPO = DataFactory.getCustomerDataService().getInfo(customerID);
-		CustomerVO customerVO = new CustomerVO(customerPO.getID(), customerPO.getName(), customerPO.getPhoneNumber(), customerPO.isBirthVIP(), customerPO.getVIPbirthday(), customerPO.isCompanyVIP(), customerPO.getVIPcompany(), customerPO.getCredit(), customerPO.getLevel());
+		
+		int level = BLFactory.getPromotionBLService().calculateLevel(customerPO.getCredit());
+		
+		CustomerVO customerVO = new CustomerVO(customerPO.getID(), customerPO.getName(), customerPO.getPhoneNumber(), customerPO.isBirthVIP(), customerPO.getVIPbirthday(), customerPO.isCompanyVIP(), customerPO.getVIPcompany(), customerPO.getCredit(), level);
 		return customerVO;
 	}
 	
 	public boolean updateCustomerInfo(CustomerVO customerVO) {
-		if (!customerVO.equals(getCustomerInfo(customerVO.customerID))) {
-			CustomerPO customerPO = new CustomerPO(customerVO.customerName, customerVO.phoneNumber, customerVO.customerID, customerVO.birthday, customerVO.companyName, customerVO.credit, customerVO.level, customerVO.isBirthVIP, customerVO.isCompanyVIP);
-			return DataFactory.getCustomerDataService().updateInfo(customerPO);
+		if (customerVO != null) {
+			CustomerPO customerPO = new CustomerPO(customerVO.customerName, customerVO.phoneNumber, customerVO.customerID, customerVO.birthday, customerVO.companyName, customerVO.credit,  customerVO.isBirthVIP, customerVO.isCompanyVIP);
+			return DataFactory.getCustomerDataService().updateSimpleInfo(customerPO);
 		}else{
 			return true;
 		}
 	}
+	/***   用addCreditRecor方法替代之
+	public boolean updateCredit(int customerID, int delta){
+		factory.DataFactory.getCustomerDataService().updateCredit(customerID, delta);
+		return true;
+	}
+	***/
+	
+	/***
+	public boolean addCreditRecord(CreditPO creditPO){
+		DataFactory.getCustomerDataService().addCreditRecord(creditPO);
+		return  true;
+	}
+	***/
 	
 	public List<CreditVO> getCreditList(int customerID) {
 		List<CreditPO> creditPOList= DataFactory.getCustomerDataService().getCreditList(customerID);
@@ -38,13 +56,21 @@ public class CustomerBLImpl {
 	}
 	
 	public boolean registerBirthVIP(int customerID, LocalDate birthday) {
-		return DataFactory.getCustomerDataService().setBirthVIP(customerID, birthday);
+		CustomerPO po = new CustomerPO(null, null, customerID, birthday, null, -1, true, false);
+		
+		return DataFactory.getCustomerDataService().updateVIP(po);
 	}
 
 	public boolean registerCompanyVIP(int customerID, String companyName) {
-		return DataFactory.getCustomerDataService().setCompanyVIP(customerID, companyName);
+		CustomerPO po = new CustomerPO(null, null, customerID, null, companyName, -1, false, true);
+		
+		return DataFactory.getCustomerDataService().updateVIP(po);
 	}
 
+	public boolean addCreditRecord(CreditVO creditVO){
+		CreditPO creditPO = new CreditPO(creditVO.customerID, LocalDateTime.now(), creditVO.orderID, creditVO.action, creditVO.creditDelta, -1);
+		return factory.DataFactory.getCustomerDataService().addCreditRecord(creditPO);
+	}
 	
 
 }

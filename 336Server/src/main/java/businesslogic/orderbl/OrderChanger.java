@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import factory.BLFactory;
 import data.factory.DataFactory;
 import po.OrderPO;
+import vo.CreditVO;
 
 public class OrderChanger {
 
@@ -51,7 +52,12 @@ public class OrderChanger {
 			return orderPO;
 		}
 		else if(orderPO.getOrderState().equals("已执行")){
-			executedToLeaving();
+			if(targetState.equals("已离店")){
+				executedToLeaving();
+			}
+			else{
+				executedToCommented();
+			}
 			
 			return orderPO;
 		}
@@ -66,7 +72,9 @@ public class OrderChanger {
 		orderPO.setOrderState("已执行");
 		DataFactory.getOrderDataService().updateOrder(orderPO);
 		
-		BLFactory.getUserBLService().updateCreditOfCustomer(orderPO.getCustomerID(), orderPO.getTotal());
+		CreditVO creditVO = new CreditVO(orderPO.getCustomerID(), LocalDateTime.now(), String.valueOf(orderPO.getOrderID()), "订单成功执行", orderPO.getTotal(), -1);
+		
+		BLFactory.getCustomerBLService().addCreditRecord(creditVO);
 	}
 	
 	private void normalToRevoked(){
@@ -75,7 +83,9 @@ public class OrderChanger {
 		DataFactory.getOrderDataService().updateOrder(orderPO);
 		
 		if(LocalDateTime.now().plusHours(6).isAfter(LocalDateTime.of(orderPO.getCheckInDate(), orderPO.getLatestArrivingTime()))){
-			BLFactory.getUserBLService().updateCreditOfCustomer(orderPO.getCustomerID(), -orderPO.getTotal()/2);
+			CreditVO creditVO = new CreditVO(orderPO.getCustomerID(), LocalDateTime.now(), String.valueOf(orderPO.getOrderID()), "撤销不及6小时执行的订单", - orderPO.getTotal()/2, -1);
+			
+			BLFactory.getCustomerBLService().addCreditRecord(creditVO);
 		}
 	}
 	
@@ -83,7 +93,9 @@ public class OrderChanger {
 		orderPO.setOrderState("异常");
 		DataFactory.getOrderDataService().updateOrder(orderPO);
 		
-		BLFactory.getUserBLService().updateCreditOfCustomer(orderPO.getCustomerID(), -orderPO.getTotal());
+		CreditVO creditVO = new CreditVO(orderPO.getCustomerID(), LocalDateTime.now(), String.valueOf(orderPO.getOrderID()), "订单异常未执行", - orderPO.getTotal(), -1);
+		
+		BLFactory.getCustomerBLService().addCreditRecord(creditVO);
 	}
 	
 	private void abnormalToExecuted(){
@@ -91,7 +103,9 @@ public class OrderChanger {
 		orderPO.setOrderState("已执行");
 		DataFactory.getOrderDataService().updateOrder(orderPO);
 		
-		BLFactory.getUserBLService().updateCreditOfCustomer(orderPO.getCustomerID(), orderPO.getTotal());
+		CreditVO creditVO = new CreditVO(orderPO.getCustomerID(), LocalDateTime.now(), String.valueOf(orderPO.getOrderID()), "延期入住", orderPO.getTotal(), -1);
+		
+		BLFactory.getCustomerBLService().addCreditRecord(creditVO);
 	}
 	
 	private void abnormalToRevoked(){
@@ -100,10 +114,14 @@ public class OrderChanger {
 		DataFactory.getOrderDataService().updateOrder(orderPO);
 		
 		if(targetState.equals("一半")){
-			BLFactory.getUserBLService().updateCreditOfCustomer(orderPO.getCustomerID(), orderPO.getTotal()/2);
+			CreditVO creditVO = new CreditVO(orderPO.getCustomerID(), LocalDateTime.now(), String.valueOf(orderPO.getOrderID()), "申诉成功恢复一半", orderPO.getTotal()/2, -1);
+			
+			BLFactory.getCustomerBLService().addCreditRecord(creditVO);
 		}
 		else if(targetState.equals("全部")){
-			BLFactory.getUserBLService().updateCreditOfCustomer(orderPO.getCustomerID(), orderPO.getTotal());
+			CreditVO creditVO = new CreditVO(orderPO.getCustomerID(), LocalDateTime.now(), String.valueOf(orderPO.getOrderID()), "申诉成功恢复全部", orderPO.getTotal(), -1);
+			
+			BLFactory.getCustomerBLService().addCreditRecord(creditVO);
 		}
 	}
 	
@@ -112,6 +130,9 @@ public class OrderChanger {
 		DataFactory.getOrderDataService().updateOrder(orderPO);
 	}
 	
-	
+	private void executedToCommented(){
+		orderPO.setHasComment(true);
+		DataFactory.getOrderDataService().updateOrder(orderPO);
+	}
 	
 }

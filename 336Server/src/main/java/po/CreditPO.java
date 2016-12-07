@@ -4,19 +4,29 @@ import java.time.LocalDateTime;
 
 public class CreditPO {
 	
+	private int customerID;
 	private LocalDateTime time;
 	private String orderID;
 	private String actionType;
 	private int delta;
 	private int result;
 	
-	public CreditPO(LocalDateTime time, String orderID, String actionType, int delta, int result){
+	public CreditPO(int customerID, LocalDateTime time, String orderID, String actionType, int delta, int result){
+		this.customerID = customerID;
 		this.time = time;
 		this.orderID = orderID;
 		this.actionType = actionType;
 		this.delta =delta;
 		this.result = result;
 		
+	}
+	
+	public void setCustomerID(int customerID){
+		this.customerID = customerID;
+	}
+	
+	public int getCustomerID(){
+		return this.customerID;
 	}
 	
 	public void setTime(LocalDateTime time){

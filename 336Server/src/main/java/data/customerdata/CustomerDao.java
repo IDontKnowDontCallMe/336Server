@@ -1,11 +1,11 @@
-package dataservice.customerdataservice;
+package data.customerdata;
 
 import java.util.List;
+
 import po.CreditPO;
 import po.CustomerPO;
 
-public interface CustomerDataService {
-
+public interface CustomerDao {
 	public CustomerPO getInfo(int customerID);
 	
 	public boolean updateSimpleInfo(CustomerPO po);
@@ -17,5 +17,4 @@ public interface CustomerDataService {
 	public List<CreditPO> getCreditList(int customerID);
 
 	public boolean addCreditRecord(CreditPO po);
-	
 }

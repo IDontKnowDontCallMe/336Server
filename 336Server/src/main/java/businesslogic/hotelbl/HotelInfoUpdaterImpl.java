@@ -1,9 +1,5 @@
 package businesslogic.hotelbl;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import businesslogic.userbl.HotelInfoUpdater;
 import factory.DataFactory;
 import po.HotelPO;
 import vo.HotelVO;
@@ -42,6 +38,12 @@ public class HotelInfoUpdaterImpl {
 			return false;
 		}
 		
+	}
+	
+	public boolean addHotel(HotelVO hotelVO){
+		int hotelID = DataFactory.getHotelDataService().getHotelNum() + 200000001;
+		HotelPO hotelPO = new HotelPO(hotelID, hotelVO.hotelName, hotelVO.city, hotelVO.businessCircle, null, null, null, hotelVO.workerName, hotelVO.phoneNumber, 1, 0, -1, -1);
+		return DataFactory.getHotelDataService().addHotel(hotelPO);
 	}
 	
 	

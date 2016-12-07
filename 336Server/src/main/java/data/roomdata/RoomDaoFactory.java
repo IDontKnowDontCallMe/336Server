@@ -2,21 +2,13 @@ package data.roomdata;
 
 public class RoomDaoFactory {
 	
-	private static RoomTypeDao roomTypeDao;
-	private static RoomUsageDao roomUsageDao;
+	private static RoomDao roomTypeDao;
 	
-	public static RoomTypeDao getRoomTypeDao(){
+	public static RoomDao getRoomTypeDao(){
 		if(roomTypeDao==null){
-			roomTypeDao = new RoomTypeDaoImpl();
+			roomTypeDao = new RoomDaoImpl();
 		}
 		return roomTypeDao;
-	}
-	
-	public static RoomUsageDao getRoomUsageDao(){
-		if(roomUsageDao==null){
-			roomUsageDao = new RoomUsageDaoImpl();
-		}
-		return roomUsageDao;
 	}
 
 }

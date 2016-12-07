@@ -2,29 +2,14 @@ package data.userdata;
 
 public class UserDaoFactory {
 	
-	private static CustomerDao customerDao;
-	private static HotelDao hotelDao;
-	private static WebMarketerDao marketerDao;
+	private static UserDao userDao;
 	
-	public static CustomerDao getCustomerDao(){
-		if(customerDao==null){
-			customerDao = new CustomerDaoImpl();
+	public static UserDao getUserDao(){
+		if(userDao==null){
+			userDao = new UserDaoImpl();
 		}
-		return customerDao;
+		return userDao;
 	}
-	
-	public static HotelDao getHotelDao(){
-		if(hotelDao==null){
-			hotelDao = new HotelDaoImpl();
-		}
-		return hotelDao;
-	}
-	
-	public static WebMarketerDao getMarketerDao(){
-		if(marketerDao==null){
-			marketerDao = new WebMarketerDaoImpl();
-		}
-		return marketerDao;
-	}
+
 
 }

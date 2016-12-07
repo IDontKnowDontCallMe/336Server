@@ -20,4 +20,7 @@ public interface HotelDao {
 	
 	public List<CommentPO> getCommentListOf(int hotelID);
 	
+	public boolean addHotel(HotelPO hotelPO);
+	
+	public int getHotelNum();
 }

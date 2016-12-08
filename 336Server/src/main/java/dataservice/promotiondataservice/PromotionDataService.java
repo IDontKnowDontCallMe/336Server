@@ -1,15 +1,11 @@
 package dataservice.promotiondataservice;
 
-import java.util.List;
 import java.util.Map;
 
 import businesslogic.promotionbl.LevelMethod;
 import businesslogic.promotionbl.LevelPromotionType;
 import businesslogic.promotionbl.WebPromotionType;
 import businesslogic.promotionbl.HotelPromotionType;
-import po.HotelPromotionPO;
-import po.LevelPO;
-import po.WebPromotionPO;
 
 public interface PromotionDataService {
 	
@@ -17,7 +13,7 @@ public interface PromotionDataService {
 	
 	public boolean writeWebPromotionObject(WebPromotionType newWebPromotion);
 	
-	public boolean deleteWebPromotionObject(String PromotionType);
+	public boolean deleteWebPromotionObject(String promotionType);
 	
 	
 	public Map<Integer, Map<String, HotelPromotionType>> getAllHotelPromotion();

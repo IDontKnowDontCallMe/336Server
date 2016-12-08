@@ -6,17 +6,11 @@ import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import businesslogic.promotionbl.HotelPromotionType;
 import data.databaseutility.ConnectionFactory;
-import po.HotelPromotionPO;
 
 public class HotelPromotionDaoImpl implements HotelPromotionDao {
 	private Connection con = null;

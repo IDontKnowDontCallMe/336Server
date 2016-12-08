@@ -6,21 +6,13 @@ import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
-import businesslogic.promotionbl.HotelPromotionType;
 import businesslogic.promotionbl.LevelMethod;
 import businesslogic.promotionbl.LevelPromotionType;
 import businesslogic.promotionbl.WebPromotionType;
 import data.databaseutility.ConnectionFactory;
-import po.LevelPO;
-import po.WebPromotionPO;
 
 public class WebPromotionDaoImpl implements WebPromotionDao {
 

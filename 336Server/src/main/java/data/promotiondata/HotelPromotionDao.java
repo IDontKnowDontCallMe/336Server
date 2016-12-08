@@ -1,10 +1,8 @@
 package data.promotiondata;
 
-import java.util.List;
 import java.util.Map;
 
 import businesslogic.promotionbl.HotelPromotionType;
-import po.HotelPromotionPO;
 
 public interface HotelPromotionDao {
 

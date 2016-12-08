@@ -12,6 +12,11 @@ public class HotelDataServiceImpl implements HotelDataService{
 
 	private HotelDao hotelDao;
 	
+	public HotelDataServiceImpl() {
+		// TODO Auto-generated constructor stub
+		hotelDao = new HotelDaoImpl();
+	}
+	
 	@Override
 	public Map<Integer,HotelPO> getHotelListOfArea(String city, String businessCircle) {
 		// TODO Auto-generated method stub

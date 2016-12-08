@@ -1,7 +1,13 @@
 package vo;
 
-public class LevelVO {
+import java.io.Serializable;
 
+public class LevelVO implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public int creditDistance;
 	public int maxLevel;
 	public double discountDistance;

@@ -1,5 +1,6 @@
 package businesslogic.promotionbl;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import vo.CalculationConditionVO;
@@ -13,6 +14,12 @@ public class PromotionBLImpl {
 	private HotelPromotionImpl hotelPromotionImpl;
 	private WebPromotionImpl webPromotionImpl;
 	private LevelImpl levelImpl;
+	
+	public PromotionBLImpl(){
+		hotelPromotionImpl = new HotelPromotionImpl();
+		webPromotionImpl = new WebPromotionImpl();
+		levelImpl = new LevelImpl();
+	}
 
 	public List<HotelPromotionVO> getHotelPromotionList(int hotelID) {
 		return hotelPromotionImpl.getHotelPromotionList(hotelID);
@@ -47,18 +54,28 @@ public class PromotionBLImpl {
 	}
 
 	public int calculateOrder(CalculationConditionVO calculationVO, CustomerVO customerVO) {
-		int originalPrice = calculationVO.roomNum * calculationVO.roomPrice;
-		int hotelPrice = originalPrice - hotelPromotionImpl.calculateOrder(calculationVO, customerVO);
-		int webPrice = originalPrice - webPromotionImpl.calculateOrder(calculationVO, customerVO);
-		return (originalPrice > 0) ? originalPrice - hotelPrice - webPrice : 0;
+		customerVO.level = levelImpl.calculateLevel(customerVO.credit);
+		int price = calculationVO.roomPrice;
+		int result = 0;
+		for(LocalDate i = calculationVO.startDate; i.isBefore(calculationVO.endDate) ; i.plusDays(1)){
+			double hotelDiscount = hotelPromotionImpl.getDiscount(calculationVO, i, customerVO);
+			double webDiscount = webPromotionImpl.getDiscount(calculationVO, i, customerVO);
+			double levelDiscount = levelImpl.getDiscount(calculationVO, i, customerVO);
+			result += price * hotelDiscount * webDiscount * levelDiscount;
+		}
+		
+		return result;
 	}
 
 	public int calculateLevel(int credit) {
 		return levelImpl.calculateLevel(credit);
 	}
 
-	public boolean updateLevel(LevelVO vo) {
-		return levelImpl.updateLevel(vo);
+	public boolean updateLevelMethod(LevelVO vo) {
+		return levelImpl.updateLevelMethod(vo);
 	}
 	
+	public boolean updateLevelPromotion(LevelVO vo){
+		return levelImpl.updateLevelPromotion(vo);
+	}
 }

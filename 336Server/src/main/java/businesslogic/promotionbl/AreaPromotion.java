@@ -1,32 +1,40 @@
 package businesslogic.promotionbl;
 
-import java.util.List;
+import java.time.LocalDate;
 
 import vo.CalculationConditionVO;
 import vo.CustomerVO;
 import vo.WebPromotionVO;
 
-public class AreaPromotion implements PromotionType {
+public class AreaPromotion extends WebPromotionType {
 
-	WebPromotionImpl webPromotionImpl;
-	double discount;
+	private static final long serialVersionUID = 1L;
+	private double discountDistance;
+	private String city;
+	private String businessCircle;
+	
+	public AreaPromotion(WebPromotionVO webPromotionVO) {
+		// TODO Auto-generated constructor stub
+		super(webPromotionVO);
+		this.city = webPromotionVO.cityName;
+		this.businessCircle = webPromotionVO.businessCircleName;
+		this.discountDistance = webPromotionVO.discount;
+	}
 
 	@Override
-	public int calculateOrder(CalculationConditionVO calculationVO, CustomerVO customerVO) {
-		List<WebPromotionVO> list = webPromotionImpl.getWebPromotionList();
-		discount = 1.0;
-		for (WebPromotionVO vo : list) {
-			if (vo.promotionType.equals("特定商圈促销策略")) {
-				if (vo.businessCircleName.equals(calculationVO.businessCircle)) {
-					discount = vo.discount;
-				}
-			}
+	public double calculateDiscount(CalculationConditionVO calculationVO, LocalDate checkInDate, CustomerVO customerVO) {
+		if(!city.equals(calculationVO.city) || !businessCircle.equals(calculationVO.businessCircle)){
+			return 1.0;
 		}
-		int days = (int) (calculationVO.endDate.toEpochDay() - calculationVO.startDate.toEpochDay());
-		int result = (int) (calculationVO.roomNum * calculationVO.roomPrice * discount * days);
-		System.out.println("按照特定商圈促销策略计算，折扣为" + discount + ",总价为" + result);
-
-		return result;
+		
+		return 1 - customerVO.level * discountDistance;
 	}
+
+	@Override
+	public WebPromotionVO toWebPromotionVO() {
+		// TODO Auto-generated method stub
+		return new WebPromotionVO("特定商圈促销策略", null, null, city, businessCircle, discountDistance);
+	}
+
 
 }

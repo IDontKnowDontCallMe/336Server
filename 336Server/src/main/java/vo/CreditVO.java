@@ -1,9 +1,15 @@
 package vo;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class CreditVO {
+public class CreditVO implements Serializable{
 
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public int customerID;
 	public LocalDateTime producingDateTime;
 	public String orderID;

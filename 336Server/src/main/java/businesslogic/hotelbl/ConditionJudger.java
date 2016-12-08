@@ -102,12 +102,12 @@ public class ConditionJudger {
 
 
 		for(RoomVO roomVO: roomList){
-		String tag = orderBLService.canBeProduced(new CalculationConditionVO(hotelVO.hotelID, roomVO.roomID, searchConditionVO.customerID, 
-				searchConditionVO.checkInDate, searchConditionVO.checkOutDate, searchConditionVO.roomNum, 0, false, null));
-		if(tag.equals("房间充足")){
-			return true;
+			String tag = orderBLService.canBeProduced(new CalculationConditionVO(hotelVO.hotelID, roomVO.roomID, searchConditionVO.customerID, 
+				searchConditionVO.checkInDate, searchConditionVO.checkOutDate, searchConditionVO.roomNum, 0, false, null, null));
+			if(tag.equals("房间充足")){
+				return true;
+			}
 		}
-}
 		
 		return false;
 		

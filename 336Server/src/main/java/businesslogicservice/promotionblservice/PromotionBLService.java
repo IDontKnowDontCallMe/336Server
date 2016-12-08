@@ -27,7 +27,9 @@ public interface PromotionBLService{
 	
 	public boolean deleteWebPromotion(WebPromotionVO webPromotionVO) ;
 	
-	public boolean updateLevel(LevelVO levelVO);
+	public boolean updateLevelMethod(LevelVO levelVO);
+	
+	public boolean updateLevelPromotion(LevelVO levelVO);
 	
 	public int calculateOrder(CalculationConditionVO calculationConditionVO, CustomerVO customerVO);
 	

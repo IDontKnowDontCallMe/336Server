@@ -1,64 +1,116 @@
 package businesslogic.promotionbl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
-import data.factory.DataFactory;
-import po.HotelPromotionPO;
+import factory.DataFactory;
 import vo.CalculationConditionVO;
 import vo.CustomerVO;
 import vo.HotelPromotionVO;
 
 public class HotelPromotionImpl {
 
-	private List<HotelPromotionPO> list;
+	private Map<Integer, Map<String, HotelPromotionType>> hotelPromotionCache;
+	
+	public HotelPromotionImpl() {
+		// TODO Auto-generated constructor stub
+		hotelPromotionCache = DataFactory.getPromotionDataService().getAllHotelPromotion();
+	}
 
-	public List<HotelPromotionVO> getHotelPromotionList(int hotelID) {
-		List<HotelPromotionVO> result = new ArrayList<HotelPromotionVO>();
-
-		for (HotelPromotionPO po : list) {
-			HotelPromotionVO vo = new HotelPromotionVO(po.getHotelID(), po.getPromotionType(), po.getStartTime(),
-					po.getEndTime(), po.getCompanyName(), po.getMinNum(), po.getDiscount());
-			result.add(vo);
+	public double getDiscount(CalculationConditionVO calculationConditionVO, LocalDate checkInDate, CustomerVO customerVO){
+		double result = 1;
+		int hotelID = calculationConditionVO.hotelID;
+		if(!hotelPromotionCache.containsKey(hotelID)){
+			loadPromotionFromData(hotelID);
+		}
+		
+		if(hotelPromotionCache.get(hotelID).size() < 1){
+			return 1;
+		}
+		
+		for(Entry<String, HotelPromotionType> entry: hotelPromotionCache.get(hotelID).entrySet()){
+			double temp = entry.getValue().calculateDiscount(calculationConditionVO, checkInDate, customerVO);
+			if(temp<result) result = temp;
 		}
 		return result;
 	}
+	
+	public List<HotelPromotionVO> getHotelPromotionList(int hotelID) {
+		if(!hotelPromotionCache.containsKey(hotelID)){
+			loadPromotionFromData(hotelID);
+		}
+		
+		List<HotelPromotionVO> list = new ArrayList<HotelPromotionVO>();
+		
+		for(Entry<String, HotelPromotionType> entry: hotelPromotionCache.get(hotelID).entrySet()){
+			list.add(entry.getValue().toHotelPromotionVO());
+		}
+		
+		return list;
+	}
 
 	public boolean addHotelPromotion(HotelPromotionVO vo) {
-		HotelPromotionPO po = new HotelPromotionPO(vo.hotelID, vo.promotionType, vo.startTime, vo.endTime,
-				vo.companyName, vo.minNum, vo.discount);
-		DataFactory.getPromotionDataService().writeHotelPromotionObject(vo.hotelID, po);
+		if(!hotelPromotionCache.containsKey(vo.hotelID)){
+			loadPromotionFromData(vo.hotelID);
+		}
+		
+		if(hotelPromotionCache.get(vo.hotelID).containsKey(vo.promotionType)){
+			return false;
+		}
+		
+		HotelPromotionType hotelPromotionType = HotelPromotionFactory.creatHotelPromotion(vo);
+		
+		if(hotelPromotionType==null){
+			return false;
+		}
+		
+		hotelPromotionCache.get(vo.hotelID).put(vo.promotionType, hotelPromotionType);
+		
+		DataFactory.getPromotionDataService().writeHotelPromotionObject(vo.hotelID, hotelPromotionType);
+		
 		return true;
 	}
 
 	public boolean updateHotelPromotion(HotelPromotionVO vo) {
+		if(!hotelPromotionCache.containsKey(vo.hotelID)){
+			loadPromotionFromData(vo.hotelID);
+		}
+		
+		if(!hotelPromotionCache.get(vo.hotelID).containsKey(vo.promotionType)){
+			return false;
+		}
+		
+		HotelPromotionType hotelPromotionType = HotelPromotionFactory.creatHotelPromotion(vo);
+		
+		if(hotelPromotionType==null){
+			return false;
+		}
+		
+		
+		hotelPromotionCache.get(vo.hotelID).replace(vo.promotionType, hotelPromotionType);
 		DataFactory.getPromotionDataService().deleteHotelPromotionObject(vo.hotelID, vo.promotionType);
-		HotelPromotionPO po = new HotelPromotionPO(vo.hotelID, vo.promotionType, vo.startTime, vo.endTime,
-				vo.companyName, vo.minNum, vo.discount);
-		DataFactory.getPromotionDataService().writeHotelPromotionObject(vo.hotelID, po);
+		DataFactory.getPromotionDataService().writeHotelPromotionObject(vo.hotelID, hotelPromotionType);
+		
 		return true;
 	}
 
 	public boolean deleteHotelPromotion(HotelPromotionVO vo) {
-		DataFactory.getPromotionDataService().deleteHotelPromotionObject(vo.hotelID, vo.promotionType);
-		return true;
+		
+		if(DataFactory.getPromotionDataService().deleteHotelPromotionObject(vo.hotelID, vo.promotionType)){
+			return true;
+		}
+		
+		return false;
 	}
 
-	public int calculateOrder(CalculationConditionVO calculationVO, CustomerVO customerVO) {
-
-		RoomPromotion roomPromotion = new RoomPromotion();
-		int roomPrice = roomPromotion.calculateOrder(calculationVO, customerVO);
-		HotelTimePromotion hotelTimePromotion = new HotelTimePromotion();
-		int hotelTimePrice = hotelTimePromotion.calculateOrder(calculationVO, customerVO);
-		BirthdayPromotion birthdayPromotion = new BirthdayPromotion();
-		int birthdayPrice = birthdayPromotion.calculateOrder(calculationVO, customerVO);
-		CompanyPromotion companyPromotion = new CompanyPromotion();
-		int companyPrice = companyPromotion.calculateOrder(calculationVO, customerVO);
-
-		int resultPrice = (roomPrice < hotelTimePrice) ? roomPrice : hotelTimePrice;
-		resultPrice = (resultPrice < birthdayPrice) ? resultPrice : birthdayPrice;
-		resultPrice = (resultPrice < companyPrice) ? resultPrice : companyPrice;
-		return resultPrice;
+	private void loadPromotionFromData(int hotelID){
+		if(!hotelPromotionCache.containsKey(hotelID)){
+			Map<String, HotelPromotionType> map = DataFactory.getPromotionDataService().getHotelPromotionObject(hotelID);
+			hotelPromotionCache.put(hotelID, map);
+		}
 	}
 
 }

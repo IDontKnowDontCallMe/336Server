@@ -1,32 +1,41 @@
 package businesslogic.promotionbl;
 
-import java.util.List;
+import java.time.LocalDate;
 
 import vo.CalculationConditionVO;
 import vo.CustomerVO;
 import vo.HotelPromotionVO;
 
-public class RoomPromotion implements PromotionType {
+public class RoomPromotion extends HotelPromotionType {
 
-	HotelPromotionImpl hotelPromotionImpl;
-	double discount;
+	private static final long serialVersionUID = 1L;
+	private double discount;
+	private int minNum;
+	private int hotelID;
+
+	public RoomPromotion(HotelPromotionVO hotelPromotionVO) {
+		super(hotelPromotionVO);
+		this.discount = hotelPromotionVO.discount;
+		this.minNum = hotelPromotionVO.minNum;
+		this.hotelID = hotelPromotionVO.hotelID;
+	}
+
 
 	@Override
-	public int calculateOrder(CalculationConditionVO calculationVO, CustomerVO customerVO) {
-		List<HotelPromotionVO> list = hotelPromotionImpl.getHotelPromotionList(calculationVO.hotelID);
-		discount = 1.0;
-		for (HotelPromotionVO vo : list) {
-			if (vo.promotionType.equals("预定多间促销策略")) {
-				if (vo.minNum <= calculationVO.roomNum) {
-					discount = (discount < vo.discount) ? discount : vo.discount;
-				}
-			}
+	public double calculateDiscount(CalculationConditionVO calculationVO, LocalDate checkInDate, CustomerVO customerVO) {
+		if(calculationVO.roomNum>=minNum){
+			return discount;
 		}
-		int days = (int) (calculationVO.endDate.toEpochDay() - calculationVO.startDate.toEpochDay());
-		int result = (int) (calculationVO.roomNum * calculationVO.roomPrice * discount * days);
-		System.out.println("按照预定多间促销策略计算，折扣为" + discount + ",总价为" + result);
+		else {
+			return 1.0;
+		}
+	}
 
-		return result;
+
+	@Override
+	public HotelPromotionVO toHotelPromotionVO() {
+		// TODO Auto-generated method stub
+		return new HotelPromotionVO(hotelID, "预订多间促销策略", null, null, null, minNum, discount);
 	}
 
 }

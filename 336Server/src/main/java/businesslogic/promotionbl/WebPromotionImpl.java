@@ -1,59 +1,93 @@
 package businesslogic.promotionbl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
-import data.factory.DataFactory;
-import po.WebPromotionPO;
+import factory.DataFactory;
 import vo.CalculationConditionVO;
 import vo.CustomerVO;
 import vo.WebPromotionVO;
 
 public class WebPromotionImpl {
 
-	private List<WebPromotionPO> list;
-
-	public List<WebPromotionVO> getWebPromotionList() {
-		List<WebPromotionVO> result = new ArrayList<WebPromotionVO>();
-
-		for (WebPromotionPO po : list) {
-			WebPromotionVO vo = new WebPromotionVO(po.getPromotionType(), po.getStartTime(), po.getEndTime(),
-					po.getBusinessCircleName(), po.getDiscount());
-			result.add(vo);
+	private Map<String, WebPromotionType> webPromotionCache;
+	
+	public WebPromotionImpl() {
+		// TODO Auto-generated constructor stub
+		webPromotionCache = DataFactory.getPromotionDataService().getAllWebPromotionObject();
+	}
+	
+	public double getDiscount(CalculationConditionVO calculationConditionVO, LocalDate checkInDate, CustomerVO customerVO){
+		double result = 1;
+		if(webPromotionCache.size()<1) return 1.0;
+		for(Entry<String, WebPromotionType> entry: webPromotionCache.entrySet()){
+			double temp = entry.getValue().calculateDiscount(calculationConditionVO, checkInDate, customerVO);
+			if(temp<result){
+				result = temp;
+			}
 		}
+		
 		return result;
 	}
 
-	public boolean addWebPromotion(WebPromotionVO vo) {
-		WebPromotionPO po = new WebPromotionPO(vo.promotionType, vo.startTime, vo.endTime, vo.businessCircleName,
-				vo.discount);
-		DataFactory.getPromotionDataService().writeWebPromotionObject(po);
+	public List<WebPromotionVO> getWebPromotionList() {
+		
+		List<WebPromotionVO> list = new ArrayList<WebPromotionVO>();
+		
+		for(Entry<String, WebPromotionType> entry: webPromotionCache.entrySet()){
+			list.add(entry.getValue().toWebPromotionVO());
+		}
+		
+		return list;
+	}
+
+	public boolean addWebPromotion(WebPromotionVO webPromotionVO) {
+		WebPromotionType webPromotionType = WebPromotionFactory.creatWebPromotion(webPromotionVO);
+		
+		if(webPromotionType==null){
+			return false;
+		}
+		
+		if(webPromotionCache.containsKey(webPromotionVO.promotionType)){
+			return false;
+		}
+		
+		webPromotionCache.put(webPromotionVO.promotionType, webPromotionType);
+		
+		DataFactory.getPromotionDataService().writeWebPromotionObject(webPromotionType);
+		
 		return true;
 	}
 
 	public boolean updateWebPromotion(WebPromotionVO vo) {
+		
+		if(!webPromotionCache.containsKey(vo.promotionType)){
+			return false;
+		}
+		
+		WebPromotionType webPromotionType = WebPromotionFactory.creatWebPromotion(vo);
+		webPromotionCache.replace(vo.promotionType, webPromotionType);
+		
 		DataFactory.getPromotionDataService().deleteWebPromotionObject(vo.promotionType);
-		WebPromotionPO po = new WebPromotionPO(vo.promotionType, vo.startTime, vo.endTime, vo.businessCircleName,
-				vo.discount);
-		DataFactory.getPromotionDataService().writeWebPromotionObject(po);
+		DataFactory.getPromotionDataService().writeWebPromotionObject(webPromotionType);
+		
 		return true;
 	}
 
 	public boolean deleteWebPromotion(WebPromotionVO vo) {
+		
+		if(!webPromotionCache.containsKey(vo.promotionType)){
+			return false;
+		}
+		
+		webPromotionCache.remove(vo.promotionType);
 		DataFactory.getPromotionDataService().deleteWebPromotionObject(vo.promotionType);
+		
 		return true;
 	}
 
-	public int calculateOrder(CalculationConditionVO calculationVO, CustomerVO customerVO) {
-		WebTimePromotion webTimePromotion = new WebTimePromotion();
-		int webTimePrice = webTimePromotion.calculateOrder(calculationVO, customerVO);
-		AreaPromotion areaPromotion = new AreaPromotion();
-		int areaPrice = areaPromotion.calculateOrder(calculationVO, customerVO);
-		LevelPromotion levelPromotion = new LevelPromotion();
-		int levelPrice = levelPromotion.calculateOrder(calculationVO, customerVO);
-
-		int resultPrice = (webTimePrice < areaPrice) ? webTimePrice : areaPrice;
-		resultPrice = (resultPrice < levelPrice) ? resultPrice : levelPrice;
-		return resultPrice;
-	}
+	
 }

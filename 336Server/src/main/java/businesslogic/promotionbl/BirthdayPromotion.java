@@ -1,35 +1,39 @@
 package businesslogic.promotionbl;
 
-import java.util.List;
+import java.time.LocalDate;
 
 import vo.CalculationConditionVO;
 import vo.CustomerVO;
 import vo.HotelPromotionVO;
 
-public class BirthdayPromotion implements PromotionType {
+public class BirthdayPromotion extends HotelPromotionType {
 
-	HotelPromotionImpl hotelPromotionImpl;
-	double discount;
+	
+	private static final long serialVersionUID = 1L;
+	private double discount;
+	private int hotelID;
+
+	public BirthdayPromotion(HotelPromotionVO hotelPromotionVO) {
+		// TODO Auto-generated constructor stub
+		super(hotelPromotionVO);
+		discount = hotelPromotionVO.discount;
+		this.hotelID = hotelPromotionVO.hotelID;
+	}
+	
+	@Override
+	public double calculateDiscount(CalculationConditionVO calculationVO, LocalDate checkInDate, CustomerVO customerVO) {
+		if(!customerVO.isBirthVIP || !customerVO.birthday.isEqual(checkInDate)){
+			return 1.0;
+		}
+		else {
+			return discount;
+		}
+	}
 
 	@Override
-	public int calculateOrder(CalculationConditionVO calculationVO, CustomerVO customerVO) {
-		List<HotelPromotionVO> list = hotelPromotionImpl.getHotelPromotionList(calculationVO.hotelID);
-		discount = 1.0;
-		for (HotelPromotionVO vo : list) {
-			if (vo.promotionType.equals("客户生日促销策略")) {
-				if (customerVO.isBirthVIP && (calculationVO.startDate.isBefore(customerVO.birthday)
-						|| calculationVO.startDate.equals(customerVO.birthday)
-						|| calculationVO.endDate.isAfter(customerVO.birthday))) {
-					discount = vo.discount;
-				}
-			}
-		}
-		int days = (int) (calculationVO.endDate.toEpochDay() - calculationVO.startDate.toEpochDay());
-		int result = (int) (calculationVO.roomNum * calculationVO.roomPrice * discount
-				+ calculationVO.roomNum * calculationVO.roomPrice * discount * (days - 1));
-		System.out.println("按照客户生日促销策略计算，折扣为" + discount + ",总价为" + result);
-
-		return result;
+	public HotelPromotionVO toHotelPromotionVO() {
+		// TODO Auto-generated method stub
+		return new HotelPromotionVO(hotelID, "客户生日促销策略", null, null, null, -1, discount);
 	}
 
 }

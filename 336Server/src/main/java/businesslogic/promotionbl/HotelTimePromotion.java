@@ -1,62 +1,42 @@
 package businesslogic.promotionbl;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import vo.CalculationConditionVO;
 import vo.CustomerVO;
 import vo.HotelPromotionVO;
 
-public class HotelTimePromotion implements PromotionType {
+public class HotelTimePromotion extends HotelPromotionType {
 
-	HotelPromotionImpl hotelPromotionImpl;
-	double discount;
-	int day;
+	private static final long serialVersionUID = 1L;
+	private double discount;
+	private LocalDate start;
+	private LocalDate end;
+	private int hotelID;
+	
+	public HotelTimePromotion(HotelPromotionVO hotelPromotionVO) {
+		// TODO Auto-generated constructor stub
+		super(hotelPromotionVO);
+		this.discount = hotelPromotionVO.discount;
+		this.start = hotelPromotionVO.startTime;
+		this.end = hotelPromotionVO.endTime;
+		this.hotelID = hotelPromotionVO.hotelID;
+	}
 
 	@Override
-	public int calculateOrder(CalculationConditionVO calculationVO, CustomerVO customerVO) {
-		List<HotelPromotionVO> list = hotelPromotionImpl.getHotelPromotionList(calculationVO.hotelID);
-		discount = 1.0;
-
-		for (HotelPromotionVO vo : list) {
-			if (vo.promotionType.equals("特定时间促销策略")) {
-				boolean isFitted = true;
-				LocalDate orderStart = calculationVO.startDate;
-				LocalDate orderEnd = calculationVO.endDate;
-				LocalDate promotionStart = vo.startTime;
-				LocalDate promotionEnd = vo.endTime;
-				if ((orderStart.isBefore(promotionStart) && orderEnd.isBefore(promotionStart))
-						|| (orderStart.isBefore(promotionStart) && orderEnd.equals(promotionStart))
-						|| (orderStart.isAfter(promotionEnd) && orderEnd.isAfter(promotionEnd))) {
-					isFitted = false;
-				} else if (orderStart.isBefore(promotionStart) && orderEnd.isAfter(promotionStart)
-						&& orderEnd.isBefore(promotionEnd)) {
-					day = (int) (orderEnd.toEpochDay() - promotionStart.toEpochDay());
-				} else if ((orderStart.isAfter(promotionStart) && orderEnd.isBefore(promotionEnd))
-						|| (orderStart.equals(promotionStart) && orderEnd.isBefore(promotionEnd))) {
-					day = (int) (orderEnd.toEpochDay() - orderStart.toEpochDay());
-				} else if ((orderStart.isAfter(promotionStart) && orderStart.isBefore(orderEnd)
-						&& orderEnd.isAfter(promotionEnd))
-						|| (orderStart.isAfter(promotionStart) && orderStart.isBefore(orderEnd)
-								&& orderEnd.equals(promotionEnd))) {
-					day = (int) (promotionEnd.toEpochDay() - orderStart.toEpochDay());
-				} else if (orderStart.equals(orderEnd) && orderEnd.isAfter(promotionEnd)) {
-					day = 1;
-				} else {
-					day = (int) (promotionEnd.toEpochDay() - promotionStart.toEpochDay());
-				}
-
-				if (isFitted) {
-					discount = (discount < vo.discount) ? discount : vo.discount;
-				}
-			}
+	public double calculateDiscount(CalculationConditionVO calculationVO, LocalDate checkInDate, CustomerVO customerVO) {
+		if(!checkInDate.isBefore(start) && !checkInDate.isAfter(end)){
+			return discount;
 		}
-		int days = (int) (calculationVO.endDate.toEpochDay() - calculationVO.startDate.toEpochDay());
-		int result = (int) (calculationVO.roomNum * calculationVO.roomPrice * discount * day
-				+ calculationVO.roomNum * calculationVO.roomPrice * discount * (days - day));
-		System.out.println("按照特定时间促销策略计算，折扣为" + discount + ",总价为" + result);
+		else{
+			return 1.0;
+		}
+	}
 
-		return result;
+	@Override
+	public HotelPromotionVO toHotelPromotionVO() {
+		// TODO Auto-generated method stub
+		return new HotelPromotionVO(hotelID, "特定时间促销策略", start, end, null, -1, discount);
 	}
 
 }

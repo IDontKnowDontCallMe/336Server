@@ -1,7 +1,13 @@
 package vo;
 
-public class RoomVO {
+import java.io.Serializable;
+
+public class RoomVO implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public int roomID;
 	public String roomName;
 	public int price;

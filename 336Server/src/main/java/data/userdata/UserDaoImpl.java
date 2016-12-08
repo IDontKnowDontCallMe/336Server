@@ -155,7 +155,7 @@ public class UserDaoImpl implements UserDao{
 	public String getPassword(int userID) {
 		// TODO Auto-generated method stub
 		try{
-			String sql = "SELECT FROM logintable WHERE userID = ? ";
+			String sql = "SELECT * FROM logintable WHERE userID = ? ";
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			pps = con.prepareStatement(sql);
 			pps.setInt(1, userID);

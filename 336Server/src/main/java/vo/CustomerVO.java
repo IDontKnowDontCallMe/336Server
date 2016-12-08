@@ -1,9 +1,14 @@
 package vo;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class CustomerVO {
+public class CustomerVO implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public int customerID;
 	public String customerName;
 	public String phoneNumber;

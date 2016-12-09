@@ -163,49 +163,57 @@ public class ControllerRemoteFactory extends UnicastRemoteObject implements Remo
 	@Override
 	public List<HotelPromotionVO> getHotelPromotionList(int hotelID) throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		List<HotelPromotionVO> list = promotioniBLService.getHotelPromotionList(hotelID);
+		return list;
 	}
 
 	@Override
 	public boolean addHotelPromotion(HotelPromotionVO hotelPromotionVO) throws RemoteException {
 		// TODO Auto-generated method stub
-		return false;
+		boolean addTag = promotioniBLService.addHotelPromotion(hotelPromotionVO);
+		return addTag;
 	}
 
 	@Override
 	public boolean updateHotelPromotion(HotelPromotionVO hotelPromotionVO) throws RemoteException {
 		// TODO Auto-generated method stub
-		return false;
+		boolean updateTag = promotioniBLService.updateHotelPromotion(hotelPromotionVO);
+		return updateTag;
 	}
 
 	@Override
 	public boolean deleteHotelPromotion(HotelPromotionVO vo) throws RemoteException {
 		// TODO Auto-generated method stub
-		return false;
+		boolean deleteTag = promotioniBLService.deleteHotelPromotion(vo);
+		return deleteTag;
 	}
 
 	@Override
 	public List<WebPromotionVO> getWebPromotionList() throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		List<WebPromotionVO> list = promotioniBLService.getWebPromotionList();
+		return list;
 	}
 
 	@Override
 	public boolean addWebPromotion(WebPromotionVO webPromotionVO) throws RemoteException {
 		// TODO Auto-generated method stub
-		return false;
+		boolean addTag = promotioniBLService.addWebPromotion(webPromotionVO);
+		return addTag;
 	}
 
 	@Override
 	public boolean updateWebPromotion(WebPromotionVO webPromotionVO) throws RemoteException {
 		// TODO Auto-generated method stub
-		return false;
+		boolean updateTag = promotioniBLService.updateWebPromotion(webPromotionVO);
+		return updateTag;
 	}
 
 	@Override
 	public boolean deleteWebPromotion(WebPromotionVO webPromotionVO) throws RemoteException {
 		// TODO Auto-generated method stub
-		return false;
+		boolean deleteTag = promotioniBLService.deleteWebPromotion(webPromotionVO);
+		return deleteTag;
 	}
 
 	@Override
@@ -335,13 +343,15 @@ public class ControllerRemoteFactory extends UnicastRemoteObject implements Remo
 	@Override
 	public boolean updateSimpleHotelInfo(HotelVO hotelVO) throws RemoteException{
 		// TODO Auto-generated method stub
-		return false;
+		boolean updateTag = hotelBLService.updateSimpleHotelInfo(hotelVO);
+		return updateTag;
 	}
 
 	@Override
 	public boolean addComment(CommentVO commentVO) throws RemoteException{
 		// TODO Auto-generated method stub
-		return false;
+		boolean addTag = hotelBLService.addComment(commentVO);
+		return addTag;
 	}
 
 	@Override
@@ -354,7 +364,8 @@ public class ControllerRemoteFactory extends UnicastRemoteObject implements Remo
 	@Override
 	public boolean update(HotelVO hotelVO) throws RemoteException{
 		// TODO Auto-generated method stub
-		return false;
+		boolean addTag = hotelBLService.update(hotelVO);
+		return addTag;
 	}
 
 	@Override
@@ -366,13 +377,15 @@ public class ControllerRemoteFactory extends UnicastRemoteObject implements Remo
 	@Override
 	public CustomerVO getCustomerInfo(int customerID) throws RemoteException{
 		// TODO Auto-generated method stub
-		return null;
+		CustomerVO customerVO = customerBLService.getCustomerInfo(customerID);
+		return customerVO;
 	}
 
 	@Override
 	public boolean updateCustomerInfo(CustomerVO customerVO) throws RemoteException{
 		// TODO Auto-generated method stub
-		return false;
+		boolean updateTag = customerBLService.updateCustomerInfo(customerVO);
+		return updateTag;
 	}
 
 	@Override
@@ -421,14 +434,32 @@ public class ControllerRemoteFactory extends UnicastRemoteObject implements Remo
 	@Override
 	public boolean updateLevelMethod(LevelVO levelVO) throws RemoteException {
 		// TODO Auto-generated method stub
-		return false;
+		boolean updateTag = promotioniBLService.updateLevelMethod(levelVO);
+		return updateTag;
 	}
 
 
 	@Override
 	public boolean updateLevelPromotion(LevelVO levelVO) throws RemoteException {
 		// TODO Auto-generated method stub
-		return false;
+		boolean updateTag = promotioniBLService.updateLevelPromotion(levelVO);
+		return updateTag;
+	}
+
+
+	@Override
+	public LevelVO getLevelMethod() throws RemoteException {
+		// TODO Auto-generated method stub
+		LevelVO levelVO = promotioniBLService.getLevelMethod();
+		return levelVO;
+	}
+
+
+	@Override
+	public LevelVO getLevelPromotion() throws RemoteException {
+		// TODO Auto-generated method stub
+		LevelVO levelVO = promotioniBLService.getLevelPromotion();
+		return levelVO;
 	}
 
 }

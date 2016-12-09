@@ -90,4 +90,16 @@ public class PromotionController implements PromotionBLService{
 		return promotionBLImpl.updateLevelPromotion(levelVO);
 	}
 
+	@Override
+	public LevelVO getLevelMethod() {
+		// TODO Auto-generated method stub
+		return promotionBLImpl.getLevelMethod();
+	}
+
+	@Override
+	public LevelVO getLevelPromotion() {
+		// TODO Auto-generated method stub
+		return promotionBLImpl.getLevelPromotion();
+	}
+
 }

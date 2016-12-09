@@ -4,11 +4,17 @@ import vo.LevelVO;
 
 public class SimpleLevelMethod implements LevelMethod{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int creditDistance;
+	private int maxLevel;
 	
 	public SimpleLevelMethod(LevelVO levelVO) {
 		// TODO Auto-generated constructor stub
 		this.creditDistance = levelVO.creditDistance;
+		this.maxLevel = levelVO.maxLevel;
 	}
 	
 	@Override
@@ -20,6 +26,12 @@ public class SimpleLevelMethod implements LevelMethod{
 		else {
 			return credit/creditDistance;
 		}
+	}
+
+	@Override
+	public LevelVO toLevelVO() {
+		// TODO Auto-generated method stub
+		return new LevelVO(creditDistance, maxLevel, -1);
 	}
 
 	

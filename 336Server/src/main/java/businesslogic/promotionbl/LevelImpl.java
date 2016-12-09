@@ -49,4 +49,12 @@ public class LevelImpl {
 	public double getDiscount(CalculationConditionVO calculationConditionVO , LocalDate checkInDate, CustomerVO customerVO){
 		return presentLevelPromotion.calculateDiscount(calculationConditionVO, checkInDate, customerVO);
 	}
+	
+	public LevelVO getLevelMethod(){
+		return presentLevelMethod.toLevelVO();
+	}
+	
+	public LevelVO getLevelPromotion(){
+		return presentLevelPromotion.toLevelVO();
+	}
 }

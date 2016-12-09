@@ -78,4 +78,12 @@ public class PromotionBLImpl {
 	public boolean updateLevelPromotion(LevelVO vo){
 		return levelImpl.updateLevelPromotion(vo);
 	}
+	
+	public LevelVO getLevelMethod(){
+		return levelImpl.getLevelMethod();
+	}
+	
+	public LevelVO getLevelPromotion(){
+		return levelImpl.getLevelPromotion();
+	}
 }

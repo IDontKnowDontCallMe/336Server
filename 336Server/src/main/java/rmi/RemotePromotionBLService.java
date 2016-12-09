@@ -31,6 +31,10 @@ public interface RemotePromotionBLService extends Remote{
 	
 	public boolean updateLevelPromotion(LevelVO levelVO) throws RemoteException;
 	
+	public LevelVO getLevelMethod() throws RemoteException;
+	
+	public LevelVO getLevelPromotion() throws RemoteException;
+	
 	public int calculateOrder(CalculationConditionVO calculationConditionVO, CustomerVO customerVO) throws RemoteException;
 	
 	public int calculateLevel(int credit) throws RemoteException;

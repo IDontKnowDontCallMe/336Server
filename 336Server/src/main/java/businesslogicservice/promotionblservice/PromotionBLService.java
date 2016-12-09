@@ -29,6 +29,10 @@ public interface PromotionBLService{
 	
 	public boolean updateLevelMethod(LevelVO levelVO);
 	
+	public LevelVO getLevelMethod();
+	
+	public LevelVO getLevelPromotion();
+	
 	public boolean updateLevelPromotion(LevelVO levelVO);
 	
 	public int calculateOrder(CalculationConditionVO calculationConditionVO, CustomerVO customerVO);

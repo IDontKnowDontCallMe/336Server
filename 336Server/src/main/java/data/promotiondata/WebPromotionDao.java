@@ -1,20 +1,27 @@
 package data.promotiondata;
 
-import java.util.List;
+import java.util.Map;
 
-import po.LevelPO;
-import po.WebPromotionPO;
+import businesslogic.promotionbl.LevelMethod;
+import businesslogic.promotionbl.LevelPromotionType;
+import businesslogic.promotionbl.WebPromotionType;
+
 
 public interface WebPromotionDao {
 
-	public List<WebPromotionPO> getWebPromotionObject();
+
+	public Map<String, WebPromotionType> getAllWebPromotionObject();
 	
-	public boolean writeWebPromotionObject(WebPromotionPO po);
+	public boolean writeWebPromotionObject(WebPromotionType newWebPromotion);
 	
-	public boolean deleteWebPromotionObject(String promotionType) ;
+	public boolean deleteWebPromotionObject(String PromotionType);
 	
-	public LevelPO getLevelObject();
+	public LevelMethod getLevelMethodObject() ;
 	
-	public boolean updateLevelObject(LevelPO po);
+	public boolean updateLevelMethodObject(LevelMethod newLevelMethod);
+	
+	public LevelPromotionType getLevelPromotionType();
+	
+	public boolean updateLevelPromotionType(LevelPromotionType newLevelPromotionType);
 	
 }

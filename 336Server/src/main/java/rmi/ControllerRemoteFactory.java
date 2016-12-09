@@ -58,91 +58,106 @@ public class ControllerRemoteFactory extends UnicastRemoteObject implements Remo
 	@Override
 	public List<CustomerVO> getCustomerList() throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		List<CustomerVO> list = userBLService.getCustomerList();
+		return list;
 	}
 
 	@Override
 	public boolean updateCustomer(CustomerVO customerVO) throws RemoteException {
 		// TODO Auto-generated method stub
-		return false;
+		boolean updateTag = userBLService.updateCustomer(customerVO);
+		return updateTag;
 	}
 
 	@Override
 	public List<HotelVO> getHotelList() throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		List<HotelVO> list = userBLService.getHotelList();
+		return list;
 	}
 
 	@Override
 	public boolean addHotel(HotelVO hotelVO) throws RemoteException {
 		// TODO Auto-generated method stub
-		return false;
+		boolean addTag = userBLService.addHotel(hotelVO);
+		return addTag;
 	}
 
 	@Override
 	public boolean updateHotelWorker(HotelVO hotelVO) throws RemoteException {
 		// TODO Auto-generated method stub
-		return false;
+		boolean updateTag = userBLService.updateHotelWorker(hotelVO);
+		return updateTag;
 	}
 
 	@Override
 	public List<WebMarketerVO> getWebMarketerList() throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		List<WebMarketerVO> list = userBLService.getWebMarketerList();
+		return list;
 	}
 
 	@Override
 	public boolean addWebMarketer(WebMarketerVO webMarketerVO) throws RemoteException {
 		// TODO Auto-generated method stub
-		return false;
+		boolean addTag = userBLService.addWebMarketer(webMarketerVO);
+		return addTag;
 	}
 
 	@Override
 	public boolean updateWebMarketer(WebMarketerVO webMarketerVO) throws RemoteException {
 		// TODO Auto-generated method stub
-		return false;
+		boolean updateTag = userBLService.updateWebMarketer(webMarketerVO);
+		return updateTag;
 	}
 
 	@Override
 	public boolean updateCreditOfCustomer(int customerID, int delta) {
 		// TODO Auto-generated method stub
-		return false;
+		boolean updateTag = userBLService.updateCreditOfCustomer(customerID, delta);
+		return updateTag;
 	}
 
 	@Override
 	public String login(int userID, String password) throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		String loginTag = userBLService.login(userID, password);
+		return loginTag;
 	}
 
 	@Override
 	public boolean addRoomType(int hotelID, RoomVO roomVO) throws RemoteException {
 		// TODO Auto-generated method stub
-		return false;
+		boolean addTag = roomBLService.addRoomType(hotelID, roomVO);
+		return addTag;
 	}
 
 	@Override
 	public boolean updateRoomType(int hotelID, RoomVO roomVO) throws RemoteException {
 		// TODO Auto-generated method stub
-		return false;
+		boolean updateTag = roomBLService.updateRoomType(hotelID, roomVO);
+		return updateTag;
 	}
 
 	@Override
 	public boolean deleteRoomType(int roomID) throws RemoteException {
 		// TODO Auto-generated method stub
+		//需求无，暂时不实现
 		return false;
 	}
 
 	@Override
 	public List<RoomVO> getRoomTypeList(int hotelID) throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		List<RoomVO> list = roomBLService.getRoomTypeList(hotelID);
+		return list;
 	}
 
 	@Override
 	public RoomVO getRoomType(int roomID) {
 		// TODO Auto-generated method stub
-		return null;
+		RoomVO roomVO = roomBLService.getRoomType(roomID);
+		return roomVO;
 	}
 
 	@Override
@@ -194,8 +209,7 @@ public class ControllerRemoteFactory extends UnicastRemoteObject implements Remo
 	}
 
 	@Override
-	public int calculateOrder(CalculationConditionVO calculationConditionVO, CustomerVO customerVO)
-			throws RemoteException {
+	public int calculateOrder(CalculationConditionVO calculationConditionVO, CustomerVO customerVO) throws RemoteException {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -216,151 +230,170 @@ public class ControllerRemoteFactory extends UnicastRemoteObject implements Remo
 	@Override
 	public List<OrderVO> getHotelOrder(int hotelID) throws RemoteException {
 		// TODO Auto-generated method stub
-		return orderBLService.getHotelOrder(hotelID);
+		List<OrderVO> list = orderBLService.getHotelOrder(hotelID);
+		return list;
 	}
 
 	@Override
 	public List<OrderVO> getAbnormalOrdersOfToday() throws RemoteException {
 		// TODO Auto-generated method stub
-		return orderBLService.getAbnormalOrdersOfToday();
+		List<OrderVO> list = orderBLService.getAbnormalOrdersOfToday();
+		return list;
 	}
 
 	@Override
 	public List<OrderVO> filterCustomerList(int customerID, String state) throws RemoteException {
 		// TODO Auto-generated method stub
-		return orderBLService.filterCustomerList(customerID, state);
+		List<OrderVO> list = orderBLService.filterCustomerList(customerID, state);
+		return list;
 	}
 
 	@Override
 	public List<OrderVO> filterHotelList(int hotelID, String state) throws RemoteException {
 		// TODO Auto-generated method stub
-		return orderBLService.filterHotelList(hotelID, state);
+		List<OrderVO> list = orderBLService.filterHotelList(hotelID, state);
+		return list;
 	}
 
 	@Override
 	public int calculateTotal(CalculationConditionVO vo) throws RemoteException {
 		// TODO Auto-generated method stub
-		return orderBLService.calculateTotal(vo);
+		int total = orderBLService.calculateTotal(vo);
+		return total;
 	}
 
 	@Override
 	public String canBeProduced(CalculationConditionVO vo) throws RemoteException {
 		// TODO Auto-generated method stub
-		return orderBLService.canBeProduced(vo);
+		String tag = orderBLService.canBeProduced(vo);
+		return tag;
 	}
 
 	@Override
 	public boolean produceOrder(OrderVO orderVO, CalculationConditionVO calculationConditionVO) throws RemoteException {
 		// TODO Auto-generated method stub
-		return orderBLService.produceOrder(orderVO, calculationConditionVO);
+		boolean produceTag = orderBLService.produceOrder(orderVO, calculationConditionVO);
+		return produceTag;
 	}
 
 	@Override
 	public boolean changeOrderState(int orderID, String state) throws RemoteException {
 		// TODO Auto-generated method stub
-		return orderBLService.changeOrderState(orderID, state);
+		boolean changeTag = orderBLService.changeOrderState(orderID, state);
+		return changeTag;
 	}
 
 	@Override
-	public List<HotelVO> getHotelVOsOfArea(AreaVO areaVO, int customerID) {
+	public List<HotelVO> getHotelVOsOfArea(AreaVO areaVO, int customerID) throws RemoteException{
 		// TODO Auto-generated method stub
-		return null;
+		List<HotelVO> list = hotelBLService.getHotelVOsOfArea(areaVO, customerID);
+		return list;
 	}
 
 	@Override
-	public List<HotelVO> search(AreaVO areaVO, SearchConditionVO searchCondionVO) {
+	public List<HotelVO> search(AreaVO areaVO, SearchConditionVO searchCondionVO) throws RemoteException{
 		// TODO Auto-generated method stub
-		return null;
+		List<HotelVO> list = hotelBLService.search(areaVO, searchCondionVO);
+		return list;
 	}
 
 	@Override
-	public List<HotelVO> sort(int customerID, String sortType) {
+	public List<HotelVO> sort(int customerID, String sortType) throws RemoteException{
 		// TODO Auto-generated method stub
-		return null;
+		List<HotelVO> list =hotelBLService.sort(customerID, sortType);
+		return list;
 	}
 
 	@Override
-	public List<RoomVO> getRoomListOfHotel(int hotelID) {
+	public List<RoomVO> getRoomListOfHotel(int hotelID) throws RemoteException{
 		// TODO Auto-generated method stub
-		return null;
+		List<RoomVO> list = hotelBLService.getRoomListOfHotel(hotelID);
+		return list;
 	}
 
 	@Override
-	public List<OrderVO> getOrderListOfHotel(int hotelID, int customerID) {
+	public List<OrderVO> getOrderListOfHotel(int hotelID, int customerID) throws RemoteException{
 		// TODO Auto-generated method stub
-		return orderBLService.getOrderListOfHotel(hotelID, customerID);
+		List<OrderVO> list = hotelBLService.getOrderListOfHotel(hotelID, customerID);
+		return list;
 	}
 
 	@Override
-	public List<HotelVO> getBookedHotelList(int customerID) {
+	public List<HotelVO> getBookedHotelList(int customerID) throws RemoteException{
 		// TODO Auto-generated method stub
-		return null;
+		List<HotelVO> list = hotelBLService.getBookedHotelList(customerID);
+		return list;
 	}
 
 	@Override
-	public List<CommentVO> getCommentList(int hotelID) {
+	public List<CommentVO> getCommentList(int hotelID) throws RemoteException{
 		// TODO Auto-generated method stub
-		return null;
+		List<CommentVO> list = hotelBLService.getCommentList(hotelID);
+		return list;
 	}
 
 	@Override
-	public boolean updateSimpleHotelInfo(HotelVO hotelVO) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean addComment(CommentVO commentVO) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public HotelVO getHotelInfo(int hotelID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean update(HotelVO hotelVO) {
+	public boolean updateSimpleHotelInfo(HotelVO hotelVO) throws RemoteException{
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean delete(HotelVO hotelVO) {
+	public boolean addComment(CommentVO commentVO) throws RemoteException{
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public CustomerVO getCustomerInfo(int customerID) {
+	public HotelVO getHotelInfo(int hotelID) throws RemoteException{
+		// TODO Auto-generated method stub
+		HotelVO hotelVO = hotelBLService.getHotelInfo(hotelID);
+		return hotelVO;
+	}
+
+	@Override
+	public boolean update(HotelVO hotelVO) throws RemoteException{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean delete(HotelVO hotelVO) throws RemoteException{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public CustomerVO getCustomerInfo(int customerID) throws RemoteException{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean updateCustomerInfo(CustomerVO customerVO) {
+	public boolean updateCustomerInfo(CustomerVO customerVO) throws RemoteException{
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public List<CreditVO> getCreditList(int customerID) {
+	public List<CreditVO> getCreditList(int customerID) throws RemoteException{
 		// TODO Auto-generated method stub
-		return null;
+		List<CreditVO> list = customerBLService.getCreditList(customerID);
+		return list;
 	}
 
 	@Override
-	public boolean registerBirthVIP(int customerID, LocalDate birthday) {
+	public boolean registerBirthVIP(int customerID, LocalDate birthday) throws RemoteException{
 		// TODO Auto-generated method stub
-		return false;
+		boolean registerTag = customerBLService.registerBirthVIP(customerID, birthday);
+		return registerTag;
 	}
 
 	@Override
-	public boolean registerCompanyVIP(int customerID, String companyName) {
+	public boolean registerCompanyVIP(int customerID, String companyName) throws RemoteException {
 		// TODO Auto-generated method stub
-		return false;
+		boolean registerTag = customerBLService.registerCompanyVIP(customerID, companyName);
+		return registerTag;
 	}
 
 
@@ -372,23 +405,30 @@ public class ControllerRemoteFactory extends UnicastRemoteObject implements Remo
 
 
 	@Override
-	public boolean updateLevel(LevelVO levelVO) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	@Override
-	public List<Integer> getBookedHotelidOf(int customerID) {
+	public List<Integer> getBookedHotelidOf(int customerID) throws RemoteException{
 		// TODO Auto-generated method stub
 		return orderBLService.getBookedHotelidOf(customerID);
 	}
 
 
 	@Override
-	public int getBookedTag(int customerID, int hotelID) {
+	public int getBookedTag(int customerID, int hotelID) throws RemoteException{
 		// TODO Auto-generated method stub
 		return orderBLService.getBookedTag(customerID, hotelID);
+	}
+
+
+	@Override
+	public boolean updateLevelMethod(LevelVO levelVO) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean updateLevelPromotion(LevelVO levelVO) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

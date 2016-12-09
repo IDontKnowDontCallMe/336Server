@@ -1,32 +1,40 @@
 package businesslogic.promotionbl;
 
-import java.util.List;
+import java.time.LocalDate;
 
 import vo.CalculationConditionVO;
 import vo.CustomerVO;
 import vo.HotelPromotionVO;
 
-public class CompanyPromotion implements PromotionType {
+public class CompanyPromotion extends HotelPromotionType {
 
-	HotelPromotionImpl hotelPromotionImpl;
-	double discount;
+	private static final long serialVersionUID = 1L;
+	private double discount;
+	private String requiredCompany;
+	private int hotelID;
+	
+	public CompanyPromotion(HotelPromotionVO hotelPromotionVO) {
+		super(hotelPromotionVO);
+		// TODO Auto-generated constructor stub
+		this.discount = hotelPromotionVO.discount;
+		this.requiredCompany = hotelPromotionVO.companyName;
+		this.hotelID = hotelPromotionVO.hotelID;
+	}
 
 	@Override
-	public int calculateOrder(CalculationConditionVO calculationVO, CustomerVO customerVO) {
-		List<HotelPromotionVO> list = hotelPromotionImpl.getHotelPromotionList(calculationVO.hotelID);
-		discount = 1.0;
-		for (HotelPromotionVO vo : list) {
-			if (vo.promotionType.equals("合作企业促销策略")) {
-				if (customerVO.isCompanyVIP && customerVO.companyName.equals(vo.companyName)) {
-					discount = vo.discount;
-				}
-			}
+	public double calculateDiscount(CalculationConditionVO calculationVO, LocalDate checkInDate, CustomerVO customerVO) {
+		if(!customerVO.isCompanyVIP || !customerVO.companyName.equals(requiredCompany)){
+			return 1.0;
 		}
-		int days = (int) (calculationVO.endDate.toEpochDay() - calculationVO.startDate.toEpochDay());
-		int result = (int) (calculationVO.roomNum * calculationVO.roomPrice * discount * days);
-		System.out.println("按照合作企业促销策略计算，折扣为" + discount + ",总价为" + result);
+		else {
+			return discount;
+		}
+	}
 
-		return result;
+	@Override
+	public HotelPromotionVO toHotelPromotionVO() {
+		// TODO Auto-generated method stub
+		return new HotelPromotionVO(hotelID, "合作企业促销策略", null, null, requiredCompany	, -1, discount);
 	}
 
 }

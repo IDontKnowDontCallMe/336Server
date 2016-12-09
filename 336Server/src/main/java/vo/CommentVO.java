@@ -1,9 +1,14 @@
 package vo;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class CommentVO{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public int hotelID;
 	public String hotelName;
 	public String roomName;

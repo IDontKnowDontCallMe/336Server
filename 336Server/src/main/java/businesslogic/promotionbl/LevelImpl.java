@@ -1,26 +1,52 @@
 package businesslogic.promotionbl;
 
-import data.factory.DataFactory;
-import po.LevelPO;
+import java.time.LocalDate;
+
+import factory.DataFactory;
+import vo.CalculationConditionVO;
+import vo.CustomerVO;
 import vo.LevelVO;
 
 public class LevelImpl {
 
-	public boolean updateLevel(LevelVO vo) {
-		LevelPO po = new LevelPO(vo.creditDistance, vo.maxLevel, vo.discountDistance);
-		DataFactory.getPromotionDataService().updateLevelObject(po);
-		return true;
+	private LevelMethod presentLevelMethod;
+	private LevelPromotionType presentLevelPromotion;
+	
+	public LevelImpl() {
+		// TODO Auto-generated constructor stub
+		presentLevelMethod = DataFactory.getPromotionDataService().getLevelMethodObject();
+		presentLevelPromotion = DataFactory.getPromotionDataService().getLevelPromotionType();
+	}
+	
+	public boolean updateLevelMethod(LevelVO levelVO) {
+		LevelMethod newLevelMethod = new SimpleLevelMethod(levelVO);
+		
+		if(DataFactory.getPromotionDataService().updateLevelMethodObject(newLevelMethod)){
+			presentLevelMethod = newLevelMethod;
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public int calculateLevel(int credit) {
-		int creditDistance = DataFactory.getPromotionDataService().getLevelObject().getCreditDistance();
-		int level = credit / creditDistance;
-		return level;
+		if(presentLevelMethod!=null){
+			return presentLevelMethod.calculateLevel(credit);
+		}
+		else {
+			return -1;
+		}
 	}
-
-	public double getDiscount(int credit) {
-		int level = calculateLevel(credit);
-		double discount = 1 - level * DataFactory.getPromotionDataService().getLevelObject().getDiscountDistance();
-		return discount;
+	
+	public boolean updateLevelPromotion(LevelVO levelVO){
+		presentLevelPromotion = new SimpleLevelPromotion(levelVO);
+		DataFactory.getPromotionDataService().updateLevelPromotionType(presentLevelPromotion);
+		
+		return true;
+	}
+	
+	public double getDiscount(CalculationConditionVO calculationConditionVO , LocalDate checkInDate, CustomerVO customerVO){
+		return presentLevelPromotion.calculateDiscount(calculationConditionVO, checkInDate, customerVO);
 	}
 }

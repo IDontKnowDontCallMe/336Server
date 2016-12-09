@@ -12,72 +12,82 @@ import vo.WebPromotionVO;
 public class PromotionController implements PromotionBLService{
 	
 	private PromotionBLImpl promotionBLImpl;
-	private LevelImpl levelImpl;
+	
+	public PromotionController() {
+		// TODO Auto-generated constructor stub
+		promotionBLImpl = new PromotionBLImpl();
+	}
 
 	@Override
 	public List<HotelPromotionVO> getHotelPromotionList(int hotelID) {
 		// TODO Auto-generated method stub
-		return null;
+		return promotionBLImpl.getHotelPromotionList(hotelID);
 	}
 
 	@Override
 	public boolean addHotelPromotion(HotelPromotionVO vo) {
 		// TODO Auto-generated method stub
-		return false;
+		return promotionBLImpl.addHotelPromotion(vo);
 	}
 
 	@Override
 	public boolean updateHotelPromotion(HotelPromotionVO vo) {
 		// TODO Auto-generated method stub
-		return false;
+		return promotionBLImpl.updateHotelPromotion(vo);
 	}
 
 	@Override
 	public boolean deleteHotelPromotion(HotelPromotionVO vo) {
 		// TODO Auto-generated method stub
-		return false;
+		return promotionBLImpl.deleteHotelPromotion(vo);
 	}
 
 	@Override
 	public List<WebPromotionVO> getWebPromotionList() {
 		// TODO Auto-generated method stub
-		return null;
+		return promotionBLImpl.getWebPromotionList();
 	}
 
 	@Override
 	public boolean addWebPromotion(WebPromotionVO vo) {
 		// TODO Auto-generated method stub
-		return false;
+		return promotionBLImpl.addWebPromotion(vo);
 	}
 
 	@Override
 	public boolean updateWebPromotion(WebPromotionVO vo) {
 		// TODO Auto-generated method stub
-		return false;
+		return promotionBLImpl.updateWebPromotion(vo);
 	}
 
 	@Override
 	public boolean deleteWebPromotion(WebPromotionVO webPromotionVO) {
 		// TODO Auto-generated method stub
-		return false;
+		return promotionBLImpl.deleteWebPromotion(webPromotionVO);
 	}
 
 	@Override
 	public int calculateLevel(int credit) {
 		// TODO Auto-generated method stub
-		return 0;
+		return promotionBLImpl.calculateLevel(credit);
 	}
 
 	@Override
-	public boolean updateLevel(LevelVO levelVO) {
+	public boolean updateLevelMethod(LevelVO levelVO) {
 		// TODO Auto-generated method stub
-		return false;
+		return promotionBLImpl.updateLevelMethod(levelVO);
 	}
 
 	@Override
 	public int calculateOrder(CalculationConditionVO calculationConditionVO, CustomerVO customerVO) {
 		// TODO Auto-generated method stub
-		return 0;
+		return promotionBLImpl.calculateOrder(calculationConditionVO, customerVO);
+	}
+
+	@Override
+	public boolean updateLevelPromotion(LevelVO levelVO) {
+		// TODO Auto-generated method stub
+		return promotionBLImpl.updateLevelPromotion(levelVO);
 	}
 
 }

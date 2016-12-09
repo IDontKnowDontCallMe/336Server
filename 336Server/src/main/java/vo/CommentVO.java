@@ -3,7 +3,7 @@ package vo;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class CommentVO implements Serializable{
+public class CommentVO{
 
 	/**
 	 * 

@@ -1,8 +1,6 @@
 package vo;
 
-import java.io.Serializable;
-
-public class LevelVO implements Serializable{
+public class LevelVO{
 
 	/**
 	 * 

@@ -163,6 +163,9 @@ public class HotelSearchingImpl {
 	
 	private List<HotelVO> getVOsByPOs(Map<Integer, HotelPO> map , int customerID){
 		List<HotelVO> result = new ArrayList<HotelVO>();
+		
+		if(map.size()<1) return result;
+		
 		OrderBLService orderBLService = BLFactory.getOrderBLService();
 		for(Entry<Integer, HotelPO> entry: map.entrySet()){
 			int bookedTag = orderBLService.getBookedTag(customerID, entry.getValue().getHotelID());

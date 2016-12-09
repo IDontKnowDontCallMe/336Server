@@ -232,6 +232,8 @@ public class OrderBLImpl  {
 	private List<OrderVO> getVOListByPOList(Map<Integer, OrderPO> orderPOs) {
 		List<OrderVO> result = new ArrayList<OrderVO>();
 		
+		if(orderPOs.size()<1) return result;
+		
 		for(Entry<Integer, OrderPO> entry: orderPOs.entrySet()){
 			CustomerVO customerVO = BLFactory.getCustomerBLService().getCustomerInfo(entry.getValue().getCustomerID());
 			

@@ -26,6 +26,8 @@ public class ServerRunner {
 		DataFactory.initDataFactory();
 		BLFactory.initBLFactory();
 		
+	
+		//System.setProperty("java.rmi.server.hostname ", "202.119.48.79");
 		
 		System.out.println("Data and BL ready...");
 		

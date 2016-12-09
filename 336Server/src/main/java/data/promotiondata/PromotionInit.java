@@ -7,11 +7,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 import businesslogic.promotionbl.LevelMethod;
+import businesslogic.promotionbl.LevelPromotionType;
 import businesslogic.promotionbl.SimpleLevelMethod;
 import businesslogic.promotionbl.SimpleLevelPromotion;
 import businesslogic.promotionbl.WebPromotionFactory;
 import businesslogic.promotionbl.WebPromotionType;
 import data.databaseutility.ConnectionFactory;
+import vo.CalculationConditionVO;
+import vo.CustomerVO;
 import vo.LevelVO;
 import vo.WebPromotionVO;
 
@@ -21,9 +24,9 @@ public class PromotionInit {
 		
 		WebPromotionDaoImpl webPromotionDaoImpl = new WebPromotionDaoImpl();
 		
-		LevelMethod levelMethod = webPromotionDaoImpl.getLevelMethodObject();
+		LevelPromotionType levelMethod = webPromotionDaoImpl.getLevelPromotionType();
 		
-		int level = levelMethod.calculateLevel(2500);
+		double level = levelMethod.calculateDiscount(new CalculationConditionVO(0, 0, 0, null, null, 0, 2, false, null, null), null, new CustomerVO(0, null, null, false, null, false, null, 2500, 2));
 		
 		System.out.print(level);
 		

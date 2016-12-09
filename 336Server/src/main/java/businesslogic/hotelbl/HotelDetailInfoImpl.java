@@ -44,6 +44,8 @@ public class HotelDetailInfoImpl {
 		List<CommentVO> result = new ArrayList<CommentVO>();
 		List<CommentPO> commentPOs = DataFactory.getHotelDataService().getCommentListOf(hotelID);
 		
+		if(commentPOs.size()<1) return result;
+		
 		for(CommentPO po: commentPOs){
 			CommentVO vo = new CommentVO(po.getHotelID(), po.getNameOfHotel(), po.getNameOfRoom(), po.getCustomerID(), po.getComment(), po.getScore(), po.getProducingDateTime());
 			result.add(vo);

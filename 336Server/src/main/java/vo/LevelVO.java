@@ -1,6 +1,6 @@
 package vo;
 
-public class LevelVO {
+public class LevelVO{
 
 	public int creditDistance;
 	public int maxLevel;

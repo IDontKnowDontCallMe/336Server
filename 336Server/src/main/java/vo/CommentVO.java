@@ -2,7 +2,7 @@ package vo;
 
 import java.time.LocalDateTime;
 
-public class CommentVO {
+public class CommentVO{
 
 	public int hotelID;
 	public String hotelName;

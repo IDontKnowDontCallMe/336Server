@@ -138,6 +138,8 @@ public class OrderBLImpl  {
 
 		Map<Integer,OrderPO> list = new HashMap<Integer,OrderPO>();
 		
+		if(orderPOCache.get(customerID).size()<0) return new ArrayList<OrderVO>();
+		
 		for(Entry<Integer, OrderPO> entry: orderPOCache.get(customerID).entrySet()){
 			if(entry.getValue().getHotelID() == hotelID){
 				list.put(entry.getValue().getHotelID(), entry.getValue());
@@ -158,6 +160,8 @@ public class OrderBLImpl  {
 		Map<Integer,OrderPO> list = orderPOCache.get(customerID);
 		
 		int result = 0;
+		
+		if(list.size() < 0) return 0;
 		
 		for(Entry<Integer, OrderPO> entry: list.entrySet()){
 			if(entry.getValue().getHotelID() != hotelID){
@@ -230,6 +234,7 @@ public class OrderBLImpl  {
 	}
 	
 	private List<OrderVO> getVOListByPOList(Map<Integer, OrderPO> orderPOs) {
+		System.out.println("orders");
 		List<OrderVO> result = new ArrayList<OrderVO>();
 		
 		if(orderPOs.size()<1) return result;

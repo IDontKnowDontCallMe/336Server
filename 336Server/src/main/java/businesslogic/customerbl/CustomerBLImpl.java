@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import data.factory.DataFactory;
 import factory.BLFactory;
+import factory.DataFactory;
 import po.CreditPO;
 import po.CustomerPO;
 import vo.CreditVO;
@@ -17,7 +17,9 @@ public class CustomerBLImpl {
 	public CustomerVO getCustomerInfo(int customerID) {
 		CustomerPO customerPO = DataFactory.getCustomerDataService().getInfo(customerID);
 		
+		
 		int level = BLFactory.getPromotionBLService().calculateLevel(customerPO.getCredit());
+
 		
 		CustomerVO customerVO = new CustomerVO(customerPO.getID(), customerPO.getName(), customerPO.getPhoneNumber(), customerPO.isBirthVIP(), customerPO.getVIPbirthday(), customerPO.isCompanyVIP(), customerPO.getVIPcompany(), customerPO.getCredit(), level);
 		return customerVO;
@@ -26,9 +28,10 @@ public class CustomerBLImpl {
 	public boolean updateCustomerInfo(CustomerVO customerVO) {
 		if (customerVO != null) {
 			CustomerPO customerPO = new CustomerPO(customerVO.customerName, customerVO.phoneNumber, customerVO.customerID, customerVO.birthday, customerVO.companyName, customerVO.credit,  customerVO.isBirthVIP, customerVO.isCompanyVIP);
+			System.out.println("update customer");
 			return DataFactory.getCustomerDataService().updateSimpleInfo(customerPO);
 		}else{
-			return true;
+			return false;
 		}
 	}
 	/***   用addCreditRecor方法替代之

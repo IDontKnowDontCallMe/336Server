@@ -33,7 +33,7 @@ public class HotelSorter {
 	}
 	
 	public List<HotelVO> sort(List<HotelVO> hotelList){
-		for(int i=hotelList.size(); i > 0; i--){
+		for(int i=hotelList.size()-1; i > 0; i--){
 			for(int j=0; j<i; j++){
 				if(comparator.compare(hotelList.get(j), hotelList.get(j+1)) < 0){
 					HotelVO tempHotelVO = new HotelVO(hotelList.get(j));

@@ -16,6 +16,8 @@ public class LevelImpl {
 		// TODO Auto-generated constructor stub
 		presentLevelMethod = DataFactory.getPromotionDataService().getLevelMethodObject();
 		presentLevelPromotion = DataFactory.getPromotionDataService().getLevelPromotionType();
+		
+		if(presentLevelPromotion!=null && presentLevelMethod!=null ) System.out.println("level not null");
 	}
 	
 	public boolean updateLevelMethod(LevelVO levelVO) {

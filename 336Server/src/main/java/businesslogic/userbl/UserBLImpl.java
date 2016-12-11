@@ -129,9 +129,9 @@ public class UserBLImpl implements UserBLService {
 
 	@Override
 	public String login(int userID, String password) {
-		if(loginTag.containsKey(userID)){
-			return "has logined";
-		}
+		//if(loginTag.containsKey(userID)){
+		//	return "has logined";
+		//}
 		
 		String encodePassword = DataFactory.getUserDataService().getPassword(userID);
 		if(encodePassword.equals("NOT_FOUND")){

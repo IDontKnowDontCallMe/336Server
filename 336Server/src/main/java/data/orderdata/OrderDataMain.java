@@ -14,9 +14,9 @@ public class OrderDataMain {
 		
 		OrderDataServiceImpl orderDao = new OrderDataServiceImpl();
 		
-		List<OrderPO> list = orderDao.getAbnormalOrdersOfToday();
+		OrderPO orderPO = new OrderPO(555, null, 88, null, null, 555, null, 11, false, 99, null, null, LocalDate.now(), 55, "44", null, null, null, true);
 		
-		System.out.println(list.get(0).getCustomerName());
+		System.out.println(orderDao.insertOrder(orderPO));
 		
 		/****
 		OrderPO po = list.get(0);

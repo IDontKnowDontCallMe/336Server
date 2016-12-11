@@ -57,11 +57,12 @@ public class PromotionBLImpl {
 		customerVO.level = levelImpl.calculateLevel(customerVO.credit);
 		int price = calculationVO.roomPrice;
 		int result = 0;
-		for(LocalDate i = calculationVO.startDate; i.isBefore(calculationVO.endDate) ; i.plusDays(1)){
+		for(LocalDate i = calculationVO.startDate; i.isBefore(calculationVO.endDate) ; i = i.plusDays(1)){
 			double hotelDiscount = hotelPromotionImpl.getDiscount(calculationVO, i, customerVO);
 			double webDiscount = webPromotionImpl.getDiscount(calculationVO, i, customerVO);
 			double levelDiscount = levelImpl.getDiscount(calculationVO, i, customerVO);
-			result += price * hotelDiscount * webDiscount * levelDiscount;
+			result += price * hotelDiscount * webDiscount * levelDiscount * calculationVO.roomNum;
+			System.out.println("cal");
 		}
 		
 		return result;

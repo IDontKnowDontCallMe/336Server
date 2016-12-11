@@ -27,7 +27,7 @@ public class HotelPromotionImpl {
 			loadPromotionFromData(hotelID);
 		}
 		
-		if(hotelPromotionCache.get(hotelID).size() < 1){
+		if(hotelPromotionCache.get(hotelID)==null || hotelPromotionCache.get(hotelID).size() < 1){
 			return 1;
 		}
 		

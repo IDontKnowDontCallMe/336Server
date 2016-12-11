@@ -22,7 +22,7 @@ public class WebPromotionImpl {
 	
 	public double getDiscount(CalculationConditionVO calculationConditionVO, LocalDate checkInDate, CustomerVO customerVO){
 		double result = 1;
-		if(webPromotionCache.size()<1) return 1.0;
+		if(webPromotionCache==null || webPromotionCache.size()<1) return 1.0;
 		for(Entry<String, WebPromotionType> entry: webPromotionCache.entrySet()){
 			double temp = entry.getValue().calculateDiscount(calculationConditionVO, checkInDate, customerVO);
 			if(temp<result){

@@ -9,7 +9,7 @@ import vo.AreaVO;
 public class TestRmi {
 
 	public static void main(String[] args) throws Exception{
-		Remote remote = Naming.lookup("rmi://localhost:8888/controllerRemoteFactory");
+		Remote remote = Naming.lookup("rmi://172.26.204.41:8888/controllerRemoteFactory");
 		System.out.println("success" + remote!=null);
 		RemoteOrderBLService orderBLService = (RemoteOrderBLService)remote;
 		RemoteHotelBLService hotelBLService = (RemoteHotelBLService)remote;

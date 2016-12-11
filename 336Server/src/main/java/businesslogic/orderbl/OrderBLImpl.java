@@ -85,7 +85,11 @@ public class OrderBLImpl  {
 
 	public boolean produceOrder(OrderVO orderVO, CalculationConditionVO calculationConditionVO){
 
-		int orderID = orderVO.orderID == -1? DataFactory.getOrderDataService().getNumOfAllOrders()+1+900000000 : orderVO.orderID;
+		System.out.println("produce");
+		
+		if(orderVO.customerID == 23333) return produceOfflineOrder(orderVO, calculationConditionVO);
+		
+		int orderID =  DataFactory.getOrderDataService().getNumOfAllOrders()+1+900000000 ;
 		
 		CustomerVO customerVO = BLFactory.getCustomerBLService().getCustomerInfo(orderVO.customerID);
 		
@@ -97,6 +101,26 @@ public class OrderBLImpl  {
 			if(orderPOCache.containsKey(orderVO.customerID)){
 				orderPOCache.get(orderVO.customerID).put(orderPO.getOrderID(), orderPO);
 			}
+			
+			if(orderPOCache.containsKey(orderPO.getHotelID())){
+				orderPOCache.get(orderPO.getHotelID()).put(orderPO.getOrderID(), orderPO);
+			}
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	private boolean produceOfflineOrder(OrderVO orderVO, CalculationConditionVO calculationConditionVO){
+		int orderID = orderVO.orderID == -1? DataFactory.getOrderDataService().getNumOfAllOrders()+1+900000000 : orderVO.orderID;
+		
+		
+		OrderPO orderPO = new OrderPO(orderID, orderVO.customerName, 23333, LocalDateTime.now(), orderVO.hotelName, 
+									calculationConditionVO.hotelID, orderVO.roomName, calculationConditionVO.roomNum, orderVO.hasChildren, 
+				orderVO.peopleNum, orderVO.checkInTime, orderVO.lastestArrivingTime, orderVO.checkOutTime, orderVO.total, "已执行", null, LocalDateTime.now(), null,false);
+		
+		if(DataFactory.getOrderDataService().insertOrder(orderPO)){
 			
 			if(orderPOCache.containsKey(orderPO.getHotelID())){
 				orderPOCache.get(orderPO.getHotelID()).put(orderPO.getOrderID(), orderPO);
@@ -138,7 +162,8 @@ public class OrderBLImpl  {
 
 		Map<Integer,OrderPO> list = new HashMap<Integer,OrderPO>();
 		
-		if(orderPOCache.get(customerID).size()<0) return new ArrayList<OrderVO>();
+		System.out.println("orders");
+		if(orderPOCache.get(customerID) == null || orderPOCache.get(customerID).size()<1) return new ArrayList<OrderVO>();
 		
 		for(Entry<Integer, OrderPO> entry: orderPOCache.get(customerID).entrySet()){
 			if(entry.getValue().getHotelID() == hotelID){

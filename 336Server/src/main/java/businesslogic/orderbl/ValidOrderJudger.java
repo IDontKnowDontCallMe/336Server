@@ -5,7 +5,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import factory.BLFactory;
+import factory.DataFactory;
 import po.OrderPO;
+import po.RoomPO;
 import vo.CalculationConditionVO;
 import vo.CustomerVO;
 import vo.RoomVO;
@@ -54,12 +56,13 @@ public class ValidOrderJudger {
 	}
 	
 	private boolean roomNumIsValid(){
-		RoomVO roomVO = BLFactory.getRoomBLService().getRoomType(roomID);
+		RoomPO roomVO = DataFactory.getRoomDataService().getRoomPO(roomID);
 		
-		int maxRoomNum = roomVO.numOfRoom;
+		int maxRoomNum = roomVO.getRoomNum();
 		
-		for(LocalDate i = checkInDate; i.isBefore(checkOutDate); i.plusDays(1)){
+		for(LocalDate i = checkInDate; i.isBefore(checkOutDate); i = i.plusDays(1)){
 			int usedRoomNum = 0;
+			System.out.println("room is valid");
 			for(Entry<Integer, OrderPO> entry: orderPOs.entrySet()){
 				if(isUsed(entry.getValue(), roomVO) && inDateInterval(entry.getValue(), i)){
 					usedRoomNum += entry.getValue().getRoomNum();
@@ -73,8 +76,8 @@ public class ValidOrderJudger {
 		return true;
 	}
 	
-	private boolean isUsed(OrderPO orderPO ,RoomVO roomVO){
-		return orderPO.getRoomName().equals(roomVO.roomName) && 
+	private boolean isUsed(OrderPO orderPO ,RoomPO roomVO){
+		return  orderPO.getHotelID() == roomVO.getHotelID() && orderPO.getRoomName() == roomVO.getRoomName() &&
 				(orderPO.getOrderState().equals("正常") || (orderPO.getOrderState().equals("已执行"))&&orderPO.getLeavingDateTime()==null);
 	}
 	

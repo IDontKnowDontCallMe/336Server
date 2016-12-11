@@ -118,7 +118,7 @@ public class ConditionJudger {
 			return true;
 		}
 		
-		return searchConditionVO.minScore >= hotelVO.score;
+		return searchConditionVO.minScore <= hotelVO.score;
 	}
 	
 	private boolean satisfyWithCommentLimit(HotelVO hotelVO){
@@ -126,7 +126,7 @@ public class ConditionJudger {
 			return true;
 		}
 		
-		return searchConditionVO.minCommentScore >= hotelVO.commentScore;
+		return searchConditionVO.minCommentScore <= hotelVO.commentScore;
 	}
 	
 	private boolean satisfyWithBookedLimit(HotelVO hotelVO){

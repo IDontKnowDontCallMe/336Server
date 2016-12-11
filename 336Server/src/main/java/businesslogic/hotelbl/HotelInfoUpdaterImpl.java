@@ -8,7 +8,7 @@ public class HotelInfoUpdaterImpl {
 
 	public boolean updateSimpleInfo(HotelVO hotelVO){
 		HotelPO hotelPO = DataFactory.getHotelDataService().getHotelInfo(hotelVO.hotelID);
-		
+		hotelPO.setHotelName(hotelVO.hotelName);
 		hotelPO.setAddress(hotelVO.address);
 		hotelPO.setScore(hotelVO.score);
 		hotelPO.setIntroduction(hotelVO.introduction);

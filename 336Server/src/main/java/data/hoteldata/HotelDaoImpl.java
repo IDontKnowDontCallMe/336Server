@@ -83,7 +83,7 @@ public class HotelDaoImpl implements HotelDao{
 		// TODO Auto-generated method stub
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
-			String sql = "UPDATE commenttable SET hotelName = ?, address = ?, introduction = ?, service = ? WHERE hotelID = ? ";
+			String sql = "UPDATE hoteltable SET hotelName = ?, address = ?, introduction = ?, service = ? WHERE hotelID = ? ";
 			pps = con.prepareStatement(sql);
 			pps.setString(1, hotelPO.getHotelName());
 			pps.setString(2, hotelPO.getAddress());
@@ -159,7 +159,7 @@ public class HotelDaoImpl implements HotelDao{
 		// TODO Auto-generated method stub
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
-			String sql = "UPDATE commenttable SET workerName = ? WHERE hotelID = ? ";
+			String sql = "UPDATE hoteltable SET workerName = ? WHERE hotelID = ? ";
 			pps = con.prepareStatement(sql);
 			pps.setString(1, hotelPO.getWorkerName());
 			pps.setInt(2, hotelPO.getHotelID());

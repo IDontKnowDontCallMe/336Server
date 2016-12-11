@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.sql.Types;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -206,7 +207,7 @@ public class OrderDaoImpl implements OrderDao{
 			pps.setInt(1, po.getOrderID());
 			pps.setString(2, po.getCustomerName());
 			pps.setInt(3, po.getCustomerID());
-			pps.setString(4, po.getProducingDateTime().format(DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm:ss")));
+			pps.setTimestamp(4, Timestamp.valueOf(po.getProducingDateTime()));
 			pps.setString(5, po.getHotelName());
 			pps.setInt(6, po.getHotelID());
 			pps.setString(7, po.getRoomName());
@@ -218,9 +219,29 @@ public class OrderDaoImpl implements OrderDao{
 			pps.setString(13, po.getCheckOutDate().toString());
 			pps.setInt(14, po.getTotal());
 			pps.setString(15, po.getOrderState());
-			pps.setNull(16, Types.TIMESTAMP);
-			pps.setNull(17, Types.TIMESTAMP);
-			pps.setNull(18, Types.TIMESTAMP);
+			
+			if(po.getRevokingDateTime()!=null){
+				pps.setTimestamp(16, Timestamp.valueOf(po.getRevokingDateTime()));
+			}
+			else {
+				pps.setNull(16, Types.TIMESTAMP);
+			}
+			
+			if(po.getExecutingDateTime()!=null){
+				pps.setTimestamp(17, Timestamp.valueOf(po.getExecutingDateTime()));
+			}
+			else {
+				pps.setNull(17, Types.TIMESTAMP);
+			}
+			
+			if(po.getLeavingDateTime()!=null){
+				pps.setTimestamp(18, Timestamp.valueOf(po.getLeavingDateTime()));
+			}
+			else {
+				pps.setNull(18, Types.TIMESTAMP);
+			}
+			
+			
 			pps.setBoolean(19, false);
 			pps.executeUpdate();
 			

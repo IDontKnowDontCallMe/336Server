@@ -100,8 +100,11 @@ public class HotelPromotionImpl {
 	public boolean deleteHotelPromotion(HotelPromotionVO vo) {
 		
 		if(DataFactory.getPromotionDataService().deleteHotelPromotionObject(vo.hotelID, vo.promotionType)){
+			hotelPromotionCache.get(vo.hotelID).remove(vo.promotionType);
 			return true;
 		}
+		
+		
 		
 		return false;
 	}

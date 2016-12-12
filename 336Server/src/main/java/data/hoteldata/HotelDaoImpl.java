@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -68,6 +69,7 @@ public class HotelDaoImpl implements HotelDao{
 				return po;
 			}
 			
+			System.out.println("null");
 			return null;
 		}
 		catch (Exception e) {
@@ -83,13 +85,14 @@ public class HotelDaoImpl implements HotelDao{
 		// TODO Auto-generated method stub
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
-			String sql = "UPDATE hoteltable SET hotelName = ?, address = ?, introduction = ?, service = ? WHERE hotelID = ? ";
+			String sql = "UPDATE hoteltable SET hotelName = ?, address = ?, introduction = ?, service = ? , commentScore = ? WHERE hotelID = ? ";
 			pps = con.prepareStatement(sql);
 			pps.setString(1, hotelPO.getHotelName());
 			pps.setString(2, hotelPO.getAddress());
 			pps.setString(3, hotelPO.getIntroduction());
 			pps.setString(4, hotelPO.getService());
-			pps.setInt(5, hotelPO.getHotelID());
+			pps.setDouble(5, hotelPO.getCommentScore());
+			pps.setInt(6, hotelPO.getHotelID());
 			
 			return pps.executeUpdate() > 0;
 		}
@@ -114,7 +117,7 @@ public class HotelDaoImpl implements HotelDao{
 			pps.setInt(4, po.getCustomerID());
 			pps.setString(5, po.getComment());
 			pps.setDouble(6, po.getScore());
-			pps.setString(7, po.getProducingDateTime().format(DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm:ss")));
+			pps.setTimestamp(7, Timestamp.valueOf(po.getProducingDateTime()));
 			
 			return pps.executeUpdate() > 0;
 		}

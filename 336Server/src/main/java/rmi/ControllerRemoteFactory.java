@@ -462,4 +462,20 @@ public class ControllerRemoteFactory extends UnicastRemoteObject implements Remo
 		return levelVO;
 	}
 
+
+	@Override
+	public int getHotelIDbyOrderID(int orderID) throws RemoteException {
+		// TODO Auto-generated method stub
+		int hotelID = hotelBLService.getHotelIDbyOrderID(orderID);
+		return hotelID;
+	}
+
+
+	@Override
+	public int register(String customerName, String phoneNumber, String password) throws RemoteException {
+		// TODO Auto-generated method stub
+		int id = userBLService.register(customerName, phoneNumber, password);
+		return id;
+	}
+
 }

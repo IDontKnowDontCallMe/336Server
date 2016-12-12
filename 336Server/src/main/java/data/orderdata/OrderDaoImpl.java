@@ -179,6 +179,9 @@ public class OrderDaoImpl implements OrderDao{
 			pps.setBoolean(5, orderPO.getHasComment());
 			pps.setInt(6, orderPO.getOrderID());
 			pps.executeUpdate();
+			
+			System.out.println("update order");
+			
 			return true;
 			
 		}catch (Exception e) {

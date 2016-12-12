@@ -1,14 +1,15 @@
 package data.customerdata;
 
+import data.userdata.UserDataServiceImpl;
 import po.CustomerPO;
 
 public class CustomerDataTest {
 
 	public static void main(String[] args){
-		CustomerDataServiceImpl customerDataServiceImpl = new CustomerDataServiceImpl();
-		CustomerPO customerPO = customerDataServiceImpl.getInfo(100000001);
+		UserDataServiceImpl userDataServiceImpl = new UserDataServiceImpl();
+		CustomerPO customerPO = new CustomerPO("556", "110", 0, null, null, 0, false, false);
 		
-		if(customerPO!=null) System.out.println(customerPO.getName());
+		if(userDataServiceImpl.insertCustomer(customerPO)>0) System.out.println(customerPO.getName());
 		else {
 			System.out.print("null");
 		}

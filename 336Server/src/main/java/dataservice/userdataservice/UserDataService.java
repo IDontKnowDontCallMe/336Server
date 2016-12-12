@@ -21,5 +21,7 @@ public interface UserDataService {
 	public String getPassword(int userID);
 	
 	public boolean addUser(int userID, String password);
+	
+	public int insertCustomer(CustomerPO customerPO);
 
 }

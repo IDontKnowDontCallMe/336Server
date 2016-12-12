@@ -11,11 +11,11 @@ public class UserBLTest {
 	public static void main(String[] args) throws Exception{
 		// TODO Auto-generated method stub
 		int userID = 100000001;
-		String password = "3361001";
+		String password = "3361007";
 		
 		
 		
-		System.out.println(SimpleCoder.AESEncode("336336", "1"));
+		System.out.println(SimpleCoder.AESEncode("336336", "3361007"));
 	}
 
 }

@@ -68,5 +68,11 @@ public class UserController implements UserBLService{
 		return userBLImpl.updateCreditOfCustomer(customerID, delta);
 	}
 
+	@Override
+	public int register(String customerName, String phoneNumber, String password) {
+		// TODO Auto-generated method stub
+		return userBLImpl.register(customerName, phoneNumber, password);
+	}
+
 	
 }

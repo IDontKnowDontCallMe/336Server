@@ -22,4 +22,6 @@ public interface UserDao {
 	
 	public boolean addUser(int userID, String password);
 	
+	public int insertCustomer(CustomerPO customerPO);
+	
 }

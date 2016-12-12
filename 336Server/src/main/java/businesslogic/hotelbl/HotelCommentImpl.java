@@ -19,15 +19,20 @@ public class HotelCommentImpl {
 		int num = 1;
 		List<CommentVO> commentList = BLFactory.getHotelBLService().getCommentList(commentVO.hotelID);
 		
-		for(CommentVO vo : commentList){
-			commentScore += vo.score;
-			num++;
+		if(commentList.size()>0){
+			for(CommentVO vo : commentList){
+				commentScore += vo.score;
+				num++;
+			}
 		}
+		
 		commentScore = commentScore/num;
 		
 		HotelPO hotelPO = DataFactory.getHotelDataService().getHotelInfo(commentVO.hotelID);
 		hotelPO.setCommentScore(commentScore);
 		DataFactory.getHotelDataService().updateHotel(hotelPO);
+		
+	
 		
 		return DataFactory.getHotelDataService().addComment(commentPO);
 	}

@@ -167,4 +167,21 @@ public class UserBLImpl implements UserBLService {
 		
 	}
 
+
+
+	@Override
+	public int register(String customerName, String phoneNumber, String password) {
+		// TODO Auto-generated method stub
+		CustomerPO customerPO = new CustomerPO(customerName, phoneNumber, -1, null, null, 0, false, false);
+		int result = DataFactory.getUserDataService().insertCustomer(customerPO);
+		
+		if(result >0){
+			String enpassword = SimpleCoder.AESEncode("336336", password);
+			DataFactory.getUserDataService().addUser(result, enpassword);
+			return result;
+		}
+		
+		return -1;
+	}
+
 }

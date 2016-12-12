@@ -28,6 +28,8 @@ public interface UserBLService {
 	public boolean updateCreditOfCustomer(int customerID, int delta);
 	
 	public String login(int userID, String password) ;
+	
+	public int register(String customerName, String phoneNumber, String password) ;
 
 	public boolean updateWebMarketer(WebMarketerVO vo) ;
 

@@ -178,6 +178,50 @@ public class UserDaoImpl implements UserDao{
 		
 		return null;
 	}
+	
+	@Override
+	public int insertCustomer(CustomerPO customerPO) {
+		// TODO Auto-generated method stub
+		
+		try{
+			String sql = "SELECT count(*) FROM customertable ";
+			con = ConnectionFactory.getDatabaseConnectionInstance();
+			pps = con.prepareStatement(sql);
+			
+			ResultSet res = pps.executeQuery();
+			
+			int customerID = -1;
+			if(res.next()){
+				customerID = res.getInt(1) + 100000001;
+			}
+			else {
+				return -1;
+			}
+			
+			String sql2 = "INSERT INTO customertable SET customerID = ?, customerName =?, phoneNumber = ?, isBirthVIP =?, isCompanyVIP = ?, credit = 0 ";
+			pps = con.prepareStatement(sql2);
+			pps.setInt(1, customerID);
+			pps.setString(2, customerPO.getName());
+			pps.setString(3, customerPO.getPhoneNumber());
+			pps.setBoolean(4, false);
+			pps.setBoolean(5, false);
+			
+			if(pps.executeUpdate()>0){
+				return customerID;
+			}
+			else {
+				return -1;
+			}
+			 
+			
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		return -1;
+	}
 
 	@Override
 	public boolean addUser(int userID, String password) {
@@ -204,6 +248,8 @@ public class UserDaoImpl implements UserDao{
 		
 		return false;
 	}
+	
+	
 
 	private HotelPO toHotelPO(ResultSet res){
 		try {
@@ -266,5 +312,7 @@ public class UserDaoImpl implements UserDao{
 		}
 		return null;
 	}
+
+	
 	
 }

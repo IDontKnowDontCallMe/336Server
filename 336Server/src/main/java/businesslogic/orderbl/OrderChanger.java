@@ -24,7 +24,7 @@ public class OrderChanger {
 		if(orderPO.getOrderState().equals("正常")){
 			switch (targetState) {
 			
-			case "已执行":
+			case "已执行未离店":
 				normalToExecuted();
 				break;
 				
@@ -51,13 +51,15 @@ public class OrderChanger {
 			}
 			return orderPO;
 		}
-		else if(orderPO.getOrderState().equals("已执行")){
-			if(targetState.equals("已离店")){
+		else if(orderPO.getOrderState().equals("已执行未离店")){
+			if(targetState.equals("已执行已离店")){
 				executedToLeaving();
 			}
-			else{
-				executedToCommented();
-			}
+			
+			return orderPO;
+		}
+		if(orderPO.getOrderState().equals("已执行未离店") || orderPO.getOrderState().equals("已执行已离店")){
+			executedToCommented();
 			
 			return orderPO;
 		}
@@ -69,7 +71,7 @@ public class OrderChanger {
 	
 	private void normalToExecuted(){
 		orderPO.setExecutingDateTime(LocalDateTime.now());
-		orderPO.setOrderState("已执行");
+		orderPO.setOrderState("已执行未离店");
 		DataFactory.getOrderDataService().updateOrder(orderPO);
 		
 		CreditVO creditVO = new CreditVO(orderPO.getCustomerID(), LocalDateTime.now(), String.valueOf(orderPO.getOrderID()), "订单成功执行", orderPO.getTotal(), -1);
@@ -100,7 +102,7 @@ public class OrderChanger {
 	
 	private void abnormalToExecuted(){
 		orderPO.setExecutingDateTime(LocalDateTime.now());
-		orderPO.setOrderState("已执行");
+		orderPO.setOrderState("已执行未离店");
 		DataFactory.getOrderDataService().updateOrder(orderPO);
 		
 		CreditVO creditVO = new CreditVO(orderPO.getCustomerID(), LocalDateTime.now(), String.valueOf(orderPO.getOrderID()), "延期入住", orderPO.getTotal(), -1);
@@ -126,6 +128,7 @@ public class OrderChanger {
 	}
 	
 	private void executedToLeaving(){
+		orderPO.setOrderState("已执行已离店");
 		orderPO.setLeavingDateTime(LocalDateTime.now());
 		DataFactory.getOrderDataService().updateOrder(orderPO);
 	}

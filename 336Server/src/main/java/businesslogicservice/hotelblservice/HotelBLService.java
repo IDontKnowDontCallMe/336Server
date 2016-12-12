@@ -30,6 +30,8 @@ public interface HotelBLService {
 	public boolean addComment(CommentVO commentVO) ;
 
 	public HotelVO getHotelInfo(int hotelID) ;
+	
+	public int getHotelIDbyOrderID(int orderID);
 
 	public boolean update(HotelVO hotelVO) ;
 

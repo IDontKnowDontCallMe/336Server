@@ -4,6 +4,8 @@ import java.util.List;
 
 import businesslogic.userbl.HotelInfoUpdater;
 import businesslogicservice.hotelblservice.HotelBLService;
+import factory.DataFactory;
+import po.OrderPO;
 import vo.AreaVO;
 import vo.CommentVO;
 import vo.HotelVO;
@@ -117,6 +119,14 @@ public class HotelController implements HotelBLService, HotelInfoUpdater{
 		// TODO Auto-generated method stub
 		return hotelInfoUpdaterImpl.addHotel(hotelVO);
 	}
+	
+	@Override
+	public int getHotelIDbyOrderID(int orderID) {
+		// TODO Auto-generated method stub
+		OrderPO orderPO = DataFactory.getOrderDataService().getOrderInfo(orderID);
+		return orderPO.getHotelID();
+	}
+
 
 	//-------------------------------------//maybe delet 
 	
@@ -132,5 +142,7 @@ public class HotelController implements HotelBLService, HotelInfoUpdater{
 		return true;
 	}
 
+
+	
 
 }

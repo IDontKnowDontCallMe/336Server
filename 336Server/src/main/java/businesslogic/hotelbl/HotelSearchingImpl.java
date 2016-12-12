@@ -88,6 +88,8 @@ public class HotelSearchingImpl {
 	}
 	
 	public List<HotelVO> getBookedHotelList(int customerID) {
+		
+		
 		Map<Integer, HotelPO> map = new HashMap<Integer,HotelPO>();
 		
 		List<Integer> hotelID = BLFactory.getOrderBLService().getBookedHotelidOf(customerID);

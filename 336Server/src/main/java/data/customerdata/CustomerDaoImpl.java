@@ -3,8 +3,10 @@ package data.customerdata;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -166,7 +168,7 @@ public class CustomerDaoImpl implements CustomerDao{
 		// TODO Auto-generated method stub
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
-			String sql1 = "SELECT credit FROM customertble WHERE customerID = ? ";
+			String sql1 = "SELECT credit FROM customertable WHERE customerID = ? ";
 			pps = con.prepareStatement(sql1);
 			pps.setInt(1, po.getCustomerID());
 			ResultSet res = pps.executeQuery();
@@ -179,10 +181,10 @@ public class CustomerDaoImpl implements CustomerDao{
 				return false;
 			}
 			
-			String sql2 = "INSERT INTO  credittable SET customerID = ?, producingTime = ?, orderID = ?, action = ?, creditDelta = ? creditResult = ? ";
+			String sql2 = "INSERT INTO  credittable SET customerID = ?, producingTime = ?, orderID = ?, action = ?, creditDelta = ?, creditResult = ? ";
 			pps = con.prepareStatement(sql2);
 			pps.setInt(1, po.getCustomerID());
-			pps.setString(2, po.getTime().format(DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm:ss")));
+			pps.setTimestamp(2, Timestamp.valueOf(po.getTime()));
 			pps.setString(3, po.getOrderID());
 			pps.setString(4, po.getActionType());
 			pps.setInt(5, po.getDelta());
@@ -230,7 +232,7 @@ public class CustomerDaoImpl implements CustomerDao{
 	private CreditPO toCreditPO(ResultSet res){
 		try{
 			int customerID = res.getInt(1);
-			LocalDateTime producingDateTime = LocalDateTime.from(res.getTimestamp(2).toInstant());
+			LocalDateTime producingDateTime = LocalDateTime.ofInstant(res.getTimestamp(2).toInstant(), ZoneId.systemDefault());;
 			String orderID = String.valueOf(res.getInt(3));
 			String action = res.getString(4);
 			int delta = res.getInt(5);

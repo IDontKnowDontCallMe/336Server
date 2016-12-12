@@ -54,6 +54,12 @@ public class UserDataServiceImpl implements UserDataService {
 		return userDao.addUser(userID, password);
 	}
 
+	@Override
+	public int insertCustomer(CustomerPO customerPO) {
+		// TODO Auto-generated method stub
+		return userDao.insertCustomer(customerPO);
+	}
+
 	
 	
 	

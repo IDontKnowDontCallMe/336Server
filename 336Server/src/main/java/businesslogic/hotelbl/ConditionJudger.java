@@ -65,6 +65,8 @@ public class ConditionJudger {
 		List<RoomVO> roomList = null;
 		roomList = BLFactory.getRoomBLService().getRoomTypeList(hotelVO.hotelID);
 		
+		if(roomList.size()<1) return false;
+		
 		for(RoomVO roomVO: roomList){
 			if(searchConditionVO.peopleNumOfRoom <= roomVO.maxNumOfPeople){
 				return true;

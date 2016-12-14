@@ -22,7 +22,7 @@ public class BirthdayPromotion extends HotelPromotionType {
 	
 	@Override
 	public double calculateDiscount(CalculationConditionVO calculationVO, LocalDate checkInDate, CustomerVO customerVO) {
-		if(!customerVO.isBirthVIP || !customerVO.birthday.isEqual(checkInDate)){
+		if(!customerVO.isBirthVIP || customerVO.birthday.getMonthValue()!=checkInDate.getMonthValue() || customerVO.birthday.getDayOfMonth()!=checkInDate.getDayOfMonth()){
 			return 1.0;
 		}
 		else {

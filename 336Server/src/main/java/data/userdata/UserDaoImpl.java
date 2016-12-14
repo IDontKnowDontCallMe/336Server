@@ -35,12 +35,24 @@ public class UserDaoImpl implements UserDao{
 				list.add(po);
 			}
 			
-			return list;
+			res.close();
+			
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
 		
 		return list;
 	}
@@ -62,11 +74,21 @@ public class UserDaoImpl implements UserDao{
 				list.add(po);
 			}
 			
-			return list;
+			res.close();
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		
 		return list;
@@ -75,6 +97,7 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public boolean insertWebMarketer(WebMarketerPO po) {
 		// TODO Auto-generated method stub
+		boolean result = false;
 		try{
 			String sql = "INSERT INTO marketertable SET marketerID =?, name = ?, phoneNumber = ? ";
 			con = ConnectionFactory.getDatabaseConnectionInstance();
@@ -84,18 +107,26 @@ public class UserDaoImpl implements UserDao{
 			pps.setString(3, po.getPhoneNumber());
 			
 			if(pps.executeUpdate()>0){
-				return true;
+				result = true;
 			}
-			else{
-				return false;
-			}
+			
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 		
-		return false;
+		return result;
 	}
 
 	@Override
@@ -115,11 +146,22 @@ public class UserDaoImpl implements UserDao{
 				list.add(po);
 			}
 			
-			return list;
+			res.close();
+			
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		
 		return list;
@@ -128,6 +170,7 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public boolean updateWebMarketer(WebMarketerPO po) {
 		// TODO Auto-generated method stub
+		boolean result = false;
 		try{
 			String sql = "UPDATE marketertable SET  name = ?, phoneNumber = ? WHERE marketerID = ? ";
 			con = ConnectionFactory.getDatabaseConnectionInstance();
@@ -137,23 +180,32 @@ public class UserDaoImpl implements UserDao{
 			pps.setInt(3, po.getWebMarketerID());
 			
 			if(pps.executeUpdate()>0){
-				return true;
+				result = true;
 			}
-			else{
-				return false;
-			}
+			
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 		
-		return false;
+		return result;
 	}
 
 	@Override
 	public String getPassword(int userID) {
 		// TODO Auto-generated method stub
+		String result = null;
 		try{
 			String sql = "SELECT * FROM logintable WHERE userID = ? ";
 			con = ConnectionFactory.getDatabaseConnectionInstance();
@@ -163,10 +215,8 @@ public class UserDaoImpl implements UserDao{
 			ResultSet res = pps.executeQuery();
 			
 			if(res.next()){
-				return res.getString(2);
-			}
-			else{
-				return "NOT_FOUND";
+				result =  res.getString(2);
+				res.close();
 			}
 			
 			
@@ -175,14 +225,24 @@ public class UserDaoImpl implements UserDao{
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 		
-		return null;
+		return result;
 	}
 	
 	@Override
 	public int insertCustomer(CustomerPO customerPO) {
 		// TODO Auto-generated method stub
-		
+		int customerID = -1;
 		try{
 			String sql = "SELECT count(*) FROM customertable ";
 			con = ConnectionFactory.getDatabaseConnectionInstance();
@@ -190,11 +250,14 @@ public class UserDaoImpl implements UserDao{
 			
 			ResultSet res = pps.executeQuery();
 			
-			int customerID = -1;
+			
 			if(res.next()){
 				customerID = res.getInt(1) + 100000001;
 			}
 			else {
+				res.close();
+				pps.close();
+				con.close();
 				return -1;
 			}
 			
@@ -207,17 +270,28 @@ public class UserDaoImpl implements UserDao{
 			pps.setBoolean(5, false);
 			
 			if(pps.executeUpdate()>0){
+				res.close();
+				pps.close();
+				con.close();
 				return customerID;
 			}
-			else {
-				return -1;
-			}
+			
 			 
 			
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		
 		return -1;
@@ -226,6 +300,7 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public boolean addUser(int userID, String password) {
 		// TODO Auto-generated method stub
+		boolean result = false;
 		try{
 			String sql = "INSERT INTO logintable SET userID =?, password = ?, isOnline = ? ";
 			con = ConnectionFactory.getDatabaseConnectionInstance();
@@ -235,18 +310,25 @@ public class UserDaoImpl implements UserDao{
 			pps.setBoolean(3, false);
 			
 			if(pps.executeUpdate()>0){
-				return true;
-			}
-			else{
-				return false;
+				result = true;
 			}
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 		
-		return false;
+		return result;
 	}
 	
 	
@@ -266,6 +348,7 @@ public class UserDaoImpl implements UserDao{
 		double commentScore = res.getDouble(11);
 		
 		HotelPO po = new HotelPO(hotelID, hotelName, city, businessCircle, address, introduction, service, workerName, phoneNumber, score, commentScore, -1, -1);
+		
 		return po;
 		
 		} catch (SQLException e) {

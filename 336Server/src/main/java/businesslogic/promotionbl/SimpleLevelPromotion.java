@@ -26,7 +26,8 @@ public class SimpleLevelPromotion extends LevelPromotionType{
 			return 1.0;
 		}
 		else {
-			return 1 - discountDistance * customerVO.level;
+			double off = discountDistance *0.01 * customerVO.level;
+			return 1 - off;
 		}
 	}
 

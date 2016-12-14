@@ -75,10 +75,11 @@ public class HotelController implements HotelBLService, HotelInfoUpdater{
 	@Override
 	public boolean updateSimpleHotelInfo(HotelVO hotelVO) {
 		// TODO Auto-generated method stub
+		String oldBussinessCircle = hotelVO.businessCircle;
 		boolean updateTag = hotelInfoUpdaterImpl.updateSimpleInfo(hotelVO);
 		
 		if(updateTag){
-			hotelSearchingImpl.updateAreaCache(hotelVO);
+			hotelSearchingImpl.updateAreaCache(oldBussinessCircle,hotelVO);
 			return true;
 		}
 		else{
@@ -105,7 +106,7 @@ public class HotelController implements HotelBLService, HotelInfoUpdater{
 		boolean updateTag = hotelInfoUpdaterImpl.updateWorkerInfo(hotelVO);
 		
 		if(updateTag){
-			hotelSearchingImpl.updateAreaCache(hotelVO);
+			hotelSearchingImpl.updateAreaCache(hotelVO.businessCircle, hotelVO);
 			return true;
 		}
 		else{

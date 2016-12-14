@@ -33,11 +33,6 @@ public class OrderDataServiceImpl implements OrderDataService{
 		return orderDao.getOrderByHotelID(hotelID);
 	}
 
-	@Override
-	public List<OrderPO> getAbnormalOrdersOfToday() {
-		// TODO Auto-generated method stub
-		return orderDao.getAbnormalOrdersOfToday();
-	}
 
 	@Override
 	public boolean updateOrder(OrderPO orderPO) {
@@ -61,6 +56,18 @@ public class OrderDataServiceImpl implements OrderDataService{
 	public List<OrderPO> getOrderListOfHotel(int hotelID, int customerID) {
 		// TODO Auto-generated method stub
 		return orderDao.getOrderListByHotelID_CustomerID(hotelID, customerID);
+	}
+
+	@Override
+	public Map<Integer, OrderPO> initAbnormalOrdersOfToday() {
+		// TODO Auto-generated method stub
+		return orderDao.initAbnormalOrdersOfToday();
+	}
+
+	@Override
+	public List<OrderPO> getUnhandledAbnormalOrders() {
+		// TODO Auto-generated method stub
+		return orderDao.getUnhandledAbnormalOrders();
 	}
 
 	

@@ -13,8 +13,6 @@ public interface OrderDao {
 	
 	public Map<Integer,OrderPO> getOrderByHotelID(int hotelID);
 	
-	public List<OrderPO> getAbnormalOrdersOfToday();
-	
 	public boolean updateOrder(OrderPO orderPO);
 	
 	public boolean insertOrder(OrderPO po);
@@ -22,5 +20,11 @@ public interface OrderDao {
 	public int getNumOfAllOrders();
 
 	public List<OrderPO> getOrderListByHotelID_CustomerID(int hotelID, int customerID) ;
+	
+	public Map<Integer,OrderPO> initAbnormalOrdersOfToday();
+	
+	public List<OrderPO> getUnhandledAbnormalOrders();
+	
+	
 
 }

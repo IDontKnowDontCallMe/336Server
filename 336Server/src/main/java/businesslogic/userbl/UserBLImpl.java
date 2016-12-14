@@ -118,7 +118,7 @@ public class UserBLImpl implements UserBLService {
 	public boolean updateWebMarketer(WebMarketerVO vo) {
 		WebMarketerPO po = new WebMarketerPO(vo.ID, vo.name, vo.phoneNumber);
 
-		return DataFactory.getUserDataService().insertWebMarketer(po);
+		return DataFactory.getUserDataService().updateWebMarketer(po);
 	}
 
 	@Override

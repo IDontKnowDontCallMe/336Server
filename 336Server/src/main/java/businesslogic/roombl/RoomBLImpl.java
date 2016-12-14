@@ -56,9 +56,11 @@ public class RoomBLImpl {
 	
 	private List<RoomVO> getRoomVOsByPOs(Map<Integer, RoomPO> map){
 		List<RoomVO> list = new ArrayList<RoomVO>();
-		for(Entry<Integer, RoomPO> entry: map.entrySet()){
-			RoomVO vo = new RoomVO(entry.getValue().getRoomID(), entry.getValue().getRoomName(), entry.getValue().getPrice(), entry.getValue().getRoomNum(), entry.getValue().getIntroduction(), entry.getValue().getPeopleNum());
-			list.add(vo);
+		if(map.size()>0){
+			for(Entry<Integer, RoomPO> entry: map.entrySet()){
+				RoomVO vo = new RoomVO(entry.getValue().getRoomID(), entry.getValue().getRoomName(), entry.getValue().getPrice(), entry.getValue().getRoomNum(), entry.getValue().getIntroduction(), entry.getValue().getPeopleNum());
+				list.add(vo);
+			}
 		}
 		return list;
 	}

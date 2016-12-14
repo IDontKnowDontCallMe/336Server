@@ -6,6 +6,7 @@ import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -44,10 +45,23 @@ public class HotelPromotionDaoImpl implements HotelPromotionDao {
 				HotelPromotionType hotelPromotionType = (HotelPromotionType)x;
 				map.get(hotelID).put(promotionType, hotelPromotionType);
 			}
+			res.close();
 			
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
 		return map;
 	}
 	
@@ -73,10 +87,21 @@ public class HotelPromotionDaoImpl implements HotelPromotionDao {
 				HotelPromotionType hotelPromotionType = (HotelPromotionType)x;
 				map.put(promotionType, hotelPromotionType);
 			}
+			res.close();
 			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		return map;
 	}
@@ -85,6 +110,7 @@ public class HotelPromotionDaoImpl implements HotelPromotionDao {
 	@Override
 	public boolean writeHotelPromotionObject(int hotelID, HotelPromotionType newHotelPromotion) {
 		// TODO Auto-generated method stub
+		boolean result = false;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "INSERT INTO hotelpromotiontable SET hotelID = ?, promotionType = ?, promotionObject = ? ";
@@ -94,17 +120,24 @@ public class HotelPromotionDaoImpl implements HotelPromotionDao {
 			pps.setObject(3, (Object)newHotelPromotion);
 			
 			if (pps.executeUpdate()>0) {
-				return true;
-			}
-			else {
-				return false;
+				result = true;
 			}
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return false;
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return result;
 	}
 	
 	
@@ -112,6 +145,7 @@ public class HotelPromotionDaoImpl implements HotelPromotionDao {
 	@Override
 	public boolean deleteHotelPromotionObject(int hotelID, String promotionType) {
 		// TODO Auto-generated method stub
+		boolean result = false;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "DELETE FROM hotelpromotiontable WHERE hotelID = ? and promotionType = ? ";
@@ -121,17 +155,24 @@ public class HotelPromotionDaoImpl implements HotelPromotionDao {
 			
 			
 			if (pps.executeUpdate()>0) {
-				return true;
-			}
-			else {
-				return false;
+				result = true;
 			}
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return false;
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return result;
 	}
 
 	

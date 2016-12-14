@@ -9,10 +9,13 @@ import vo.OrderVO;
 public class OrderController implements OrderBLService{
 
 	private OrderBLImpl orderBLImpl;
+	private AbnormalOrderManager abnormalOrderManager;
 	
 	public OrderController() {
 		// TODO Auto-generated constructor stub
 		orderBLImpl = new OrderBLImpl();
+		abnormalOrderManager = new AbnormalOrderManager();
+		abnormalOrderManager.addObserver(orderBLImpl);
 	}
 	
 	@Override
@@ -30,7 +33,7 @@ public class OrderController implements OrderBLService{
 	@Override
 	public List<OrderVO> getAbnormalOrdersOfToday(){
 		// TODO Auto-generated method stub
-		return orderBLImpl.getAbnormalOrdersOfToday();
+		return abnormalOrderManager.getAbnormalList();
 	}
 
 	@Override
@@ -62,7 +65,14 @@ public class OrderController implements OrderBLService{
 	@Override
 	public boolean changeOrderState(int orderID, String state) {
 		// TODO Auto-generated method stub
-		return orderBLImpl.changeOrderState(orderID, state);
+		if(orderBLImpl.changeOrderState(orderID, state)){
+			if(state.equals("恢复一半")||state.equals("恢复全部")){
+				abnormalOrderManager.removeRecoverdOrder(orderID);
+			}
+			return true;
+		}
+		
+		return false;
 	}
 
 	@Override

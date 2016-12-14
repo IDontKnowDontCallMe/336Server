@@ -21,7 +21,7 @@ import vo.WebPromotionVO;
 public class PromotionInit {
 
 	public static void main(String[] args){
-		
+		/***
 		WebPromotionDaoImpl webPromotionDaoImpl = new WebPromotionDaoImpl();
 		
 		LevelPromotionType levelMethod = webPromotionDaoImpl.getLevelPromotionType();
@@ -30,10 +30,15 @@ public class PromotionInit {
 		
 		System.out.print(level);
 		
-		/******
+		******/
+		
 		try{
-			LevelVO levelVO = new LevelVO(1000, 15, -1);
+			Connection con = null;
+			PreparedStatement pps = null;
+			
+			LevelVO levelVO = new LevelVO(1000, 15, 1);
 			SimpleLevelMethod simpleLevelMethod = new SimpleLevelMethod(levelVO);
+			SimpleLevelPromotion simpleLevelPromotion = new SimpleLevelPromotion(levelVO);
 			
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "INSERT INTO webpromotiontable SET  promotionObject = ?, promotionType = ? ";
@@ -43,7 +48,7 @@ public class PromotionInit {
 			ObjectOutputStream out = null; 
 		    try { 
 		      out = new ObjectOutputStream(baos); 
-		      out.writeObject(simpleLevelMethod);    
+		      out.writeObject(simpleLevelPromotion);    
 		    } catch (IOException e) { 
 		      e.printStackTrace();
 		    }finally{ 
@@ -55,7 +60,7 @@ public class PromotionInit {
 		    } 
 			
 			pps.setObject(1, baos.toByteArray());
-			pps.setString(2, "等级方法");
+			pps.setString(2, "等级促销策略");
 			System.out.print(pps.executeUpdate());
 			
 		}
@@ -63,7 +68,7 @@ public class PromotionInit {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		******/
+		
 		
 		
 		

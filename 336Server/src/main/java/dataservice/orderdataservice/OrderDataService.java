@@ -13,7 +13,9 @@ public interface OrderDataService {
 	
 	public Map<Integer,OrderPO> getHotelOrder(int hotelID);
 	
-	public List<OrderPO> getAbnormalOrdersOfToday();
+	public Map<Integer,OrderPO> initAbnormalOrdersOfToday();
+	
+	public List<OrderPO> getUnhandledAbnormalOrders();
 	
 	//public void changeOrderState(String orderID, String state);
 	

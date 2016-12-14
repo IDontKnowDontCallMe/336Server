@@ -3,6 +3,7 @@ package data.customerdata;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,6 +25,7 @@ public class CustomerDaoImpl implements CustomerDao{
 	@Override
 	public CustomerPO getInfo(int customerID) {
 		// TODO Auto-generated method stub
+		CustomerPO customerPO = null;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "SELECT * FROM customertable WHERE customerID = ?";
@@ -34,22 +36,32 @@ public class CustomerDaoImpl implements CustomerDao{
 			ResultSet res = pps.executeQuery();
 			
 			if(res.next()){
-				CustomerPO po = toCustomerPO(res);
-				return po;
+				customerPO = toCustomerPO(res);
 			}
 			
-			return null;
+			res.close();
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return null;
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return customerPO;
 	}
 
 	@Override
 	public boolean updateSimpleInfo(CustomerPO po) {
 		// TODO Auto-generated method stub
+		boolean result = false;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "UPDATE customertable SET customerName = ?, phoneNumber = ? WHERE customerID = ?";
@@ -59,22 +71,30 @@ public class CustomerDaoImpl implements CustomerDao{
 			pps.setInt(3, po.getID());
 
 			if(pps.executeUpdate()>0){
-				return true;
-			}
-			else{
-				return false;
+				result =  true;
 			}
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return false;
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return result;
 	}
 
 	@Override
 	public boolean updateVIP(CustomerPO po) {
 		// TODO Auto-generated method stub
+		boolean result = false;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql;
@@ -94,26 +114,37 @@ public class CustomerDaoImpl implements CustomerDao{
 				pps.setInt(3, po.getID());
 			}
 			else {
+				pps.close();
+				con.close();
 				return false;
 			}
 			
 			if(pps.executeUpdate()>0){
 				return true;
 			}
-			else{
-				return false;
-			}
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return false;
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return result;
 	}
 	
 	@Override
 	public boolean updateCredit(int customerID, int delta) {
 		// TODO Auto-generated method stub
+		boolean result = false;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "UPDATE customertable SET credit = credit + ? WHERE customerID = ?";
@@ -122,17 +153,24 @@ public class CustomerDaoImpl implements CustomerDao{
 			pps.setInt(2, customerID);
 			
 			if(pps.executeUpdate()>0){
-				return true;
-			}
-			else{
-				return false;
+				result = true;
 			}
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return false;
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return result;
 	}
 
 	@Override
@@ -153,12 +191,22 @@ public class CustomerDaoImpl implements CustomerDao{
 				list.add(po);
 			}
 			
-			return list;
+			res.close();
 			
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		return list;
 	}
@@ -166,6 +214,7 @@ public class CustomerDaoImpl implements CustomerDao{
 	@Override
 	public boolean addCreditRecord(CreditPO po) {
 		// TODO Auto-generated method stub
+		boolean result = false;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql1 = "SELECT credit FROM customertable WHERE customerID = ? ";
@@ -178,6 +227,9 @@ public class CustomerDaoImpl implements CustomerDao{
 				initCredit = res.getInt(1);
 			}
 			else{
+				res.close();
+				pps.close();
+				con.close();
 				return false;
 			}
 			
@@ -198,13 +250,23 @@ public class CustomerDaoImpl implements CustomerDao{
 			pps.setInt(2, po.getCustomerID());
 			pps.executeUpdate();
 			
-			return true;
+			result = true;
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return false;
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return result;
 	}
 	
 	private CustomerPO toCustomerPO(ResultSet res){
@@ -233,7 +295,7 @@ public class CustomerDaoImpl implements CustomerDao{
 		try{
 			int customerID = res.getInt(1);
 			LocalDateTime producingDateTime = LocalDateTime.ofInstant(res.getTimestamp(2).toInstant(), ZoneId.systemDefault());;
-			String orderID = String.valueOf(res.getInt(3));
+			String orderID = res.getString(3);
 			String action = res.getString(4);
 			int delta = res.getInt(5);
 			int result = res.getInt(6);

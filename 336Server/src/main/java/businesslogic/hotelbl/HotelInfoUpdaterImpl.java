@@ -8,6 +8,7 @@ public class HotelInfoUpdaterImpl {
 
 	public boolean updateSimpleInfo(HotelVO hotelVO){
 		HotelPO hotelPO = DataFactory.getHotelDataService().getHotelInfo(hotelVO.hotelID);
+		hotelPO.setBusinessCircle(hotelVO.businessCircle);
 		hotelPO.setHotelName(hotelVO.hotelName);
 		hotelPO.setAddress(hotelVO.address);
 		hotelPO.setScore(hotelVO.score);
@@ -42,7 +43,7 @@ public class HotelInfoUpdaterImpl {
 	
 	public boolean addHotel(HotelVO hotelVO){
 		int hotelID = DataFactory.getHotelDataService().getHotelNum() + 200000001;
-		HotelPO hotelPO = new HotelPO(hotelID, hotelVO.hotelName, hotelVO.city, hotelVO.businessCircle, null, null, null, hotelVO.workerName, hotelVO.phoneNumber, 1, 0, -1, -1);
+		HotelPO hotelPO = new HotelPO(hotelID, hotelVO.hotelName, hotelVO.city, "无", "无", "无", "无", hotelVO.workerName, hotelVO.phoneNumber, 1, 0, -1, -1);
 		return DataFactory.getHotelDataService().addHotel(hotelPO);
 	}
 	

@@ -17,6 +17,7 @@ public class WebTimePromotion extends WebPromotionType {
 		super(webPromotionVO);
 		this.start = webPromotionVO.startTime;
 		this.end = webPromotionVO.endTime;
+		this.discount = webPromotionVO.discount;
 	}
 
 	@Override

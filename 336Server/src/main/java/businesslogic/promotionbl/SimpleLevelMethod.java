@@ -24,8 +24,14 @@ public class SimpleLevelMethod implements LevelMethod{
 			return 0;
 		}
 		else {
-			return credit/creditDistance;
+			int level = credit/creditDistance;
+			if(level > maxLevel){
+				level = maxLevel;
+			}
+			
+			return level;
 		}
+		
 	}
 
 	@Override

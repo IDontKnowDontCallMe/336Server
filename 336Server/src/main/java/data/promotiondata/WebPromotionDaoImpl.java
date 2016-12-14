@@ -6,6 +6,7 @@ import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -27,14 +28,14 @@ public class WebPromotionDaoImpl implements WebPromotionDao {
 		
 		try {
 			con = ConnectionFactory.getDatabaseConnectionInstance();
-			String sql = "SELECT * FROM webpromotiontable ";
+			String sql = "SELECT * FROM webpromotiontable WHERE promotionType != '等级促销策略' and promotionType != '等级方法' ";
 			pps = con.prepareStatement(sql);
 			ResultSet res = pps.executeQuery();
 			
 			while(res.next()){
-				
-				String promotionType = res.getString(2);
-				Blob blob = res.getBlob(3);
+				System.out.println("web one");
+				String promotionType = res.getString(1);
+				Blob blob = res.getBlob(2);
 				
 				InputStream is = blob.getBinaryStream();
 			    ObjectInputStream ois = new ObjectInputStream(is);
@@ -42,9 +43,20 @@ public class WebPromotionDaoImpl implements WebPromotionDao {
 				WebPromotionType webPromotionType = (WebPromotionType)x;
 				map.put(promotionType, webPromotionType);
 			}
+			res.close();
 			
 		} catch (Exception e) {
 			// TODO: handle exception
+		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		return map;
 	}
@@ -53,6 +65,7 @@ public class WebPromotionDaoImpl implements WebPromotionDao {
 	@Override
 	public boolean writeWebPromotionObject(WebPromotionType newWebPromotion) {
 		// TODO Auto-generated method stub
+		boolean result = false;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "INSERT INTO webpromotiontable SET  promotionType = ?, promotionObject = ? ";
@@ -61,23 +74,30 @@ public class WebPromotionDaoImpl implements WebPromotionDao {
 			pps.setObject(2, (Object)newWebPromotion);
 			
 			if (pps.executeUpdate()>0) {
-				return true;
-			}
-			else {
-				return false;
+				result = true;
 			}
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		}finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
-		return false;
+		return result;
 	}
 	
 	
 	@Override
 	public boolean deleteWebPromotionObject(String promotionType) {
 		// TODO Auto-generated method stub
+		boolean result = false;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "DELETE FROM webpromotiontable WHERE  promotionType = ? ";
@@ -86,23 +106,31 @@ public class WebPromotionDaoImpl implements WebPromotionDao {
 			
 			
 			if (pps.executeUpdate()>0) {
-				return true;
-			}
-			else {
-				return false;
+				result = true;
 			}
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return false;
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return result;
 	}
 	
 	
 	@Override
 	public LevelMethod getLevelMethodObject() {
 		// TODO Auto-generated method stub
+		LevelMethod levelMethod = null;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "SELECT * FROM webpromotiontable WHERE promotionType = ? ";
@@ -117,22 +145,34 @@ public class WebPromotionDaoImpl implements WebPromotionDao {
 				InputStream is = blob.getBinaryStream();
 			    ObjectInputStream ois = new ObjectInputStream(is);
 				Object x = ois.readObject();
-				LevelMethod levelMethod = (LevelMethod)x;
+				levelMethod = (LevelMethod)x;
 
-				return levelMethod;
 			}
+			res.close();
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return null;
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return levelMethod;
 	}
 	
 	
 	@Override
 	public boolean updateLevelMethodObject(LevelMethod newLevelMethod) {
 		// TODO Auto-generated method stub
+		boolean result = false;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "UPDATE webpromotiontable SET promotionObject = ? WHERE promotionType = ? ";
@@ -141,23 +181,31 @@ public class WebPromotionDaoImpl implements WebPromotionDao {
 			pps.setString(2, "等级方法");
 			
 			if(pps.executeUpdate()>0){
-				return true;
-			}
-			else {
-				return false;
+				result = true;
 			}
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return false;
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return result;
 	}
 	
 	
 	@Override
 	public LevelPromotionType getLevelPromotionType() {
 		// TODO Auto-generated method stub
+		LevelPromotionType levelPromotionType = null;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "SELECT * FROM webpromotiontable WHERE promotionType = ? ";
@@ -172,22 +220,34 @@ public class WebPromotionDaoImpl implements WebPromotionDao {
 				InputStream is = blob.getBinaryStream();
 			    ObjectInputStream ois = new ObjectInputStream(is);
 				Object x = ois.readObject();
-				LevelPromotionType levelPromotionType = (LevelPromotionType)x;
-
-				return levelPromotionType;
+				levelPromotionType = (LevelPromotionType)x;
 			}
+			
+			res.close();
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return null;
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return levelPromotionType;
 	}
 	
 	
 	@Override
 	public boolean updateLevelPromotionType(LevelPromotionType newLevelPromotionType) {
 		// TODO Auto-generated method stub
+		boolean result = false;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "UPDATE webpromotiontable SET promotionObject = ? WHERE promotionType = ? ";
@@ -196,17 +256,24 @@ public class WebPromotionDaoImpl implements WebPromotionDao {
 			pps.setString(2, "等级促销策略");
 			
 			if(pps.executeUpdate()>0){
-				return true;
-			}
-			else {
-				return false;
+				result = true;
 			}
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return false;
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return result;
 	}
 
 	

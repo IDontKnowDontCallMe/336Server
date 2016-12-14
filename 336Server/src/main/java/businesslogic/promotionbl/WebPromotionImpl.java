@@ -59,6 +59,8 @@ public class WebPromotionImpl {
 		
 		DataFactory.getPromotionDataService().writeWebPromotionObject(webPromotionType);
 		
+		System.out.println("add web");
+		
 		return true;
 	}
 
@@ -73,6 +75,8 @@ public class WebPromotionImpl {
 		
 		DataFactory.getPromotionDataService().deleteWebPromotionObject(vo.promotionType);
 		DataFactory.getPromotionDataService().writeWebPromotionObject(webPromotionType);
+		
+		System.out.println("update web");
 		
 		return true;
 	}

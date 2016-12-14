@@ -42,11 +42,21 @@ public class HotelDaoImpl implements HotelDao{
 				result.put(po.getHotelID(), po);
 			}
 			
-			return result;
+			res.close();
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		
 		return result;
@@ -55,6 +65,7 @@ public class HotelDaoImpl implements HotelDao{
 	@Override
 	public HotelPO getHotelInfo(int hotelID) {
 		// TODO Auto-generated method stub
+		HotelPO po = null;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "SELECT * FROM hoteltable WHERE hotelID = ?";
@@ -65,24 +76,33 @@ public class HotelDaoImpl implements HotelDao{
 			ResultSet res = pps.executeQuery();
 			
 			if(res.next()){
-				HotelPO po = toHotelPO(res);
-				return po;
+				po = toHotelPO(res);
 			}
 			
-			System.out.println("null");
-			return null;
+			res.close();
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 		
-		return null;
+		return po;
 	}
 
 	@Override
 	public boolean updateSimpleHotelInfo(HotelPO hotelPO) {
 		// TODO Auto-generated method stub
+		boolean result = false;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "UPDATE hoteltable SET hotelName = ?, address = ?, introduction = ?, service = ? , commentScore = ? WHERE hotelID = ? ";
@@ -94,19 +114,32 @@ public class HotelDaoImpl implements HotelDao{
 			pps.setDouble(5, hotelPO.getCommentScore());
 			pps.setInt(6, hotelPO.getHotelID());
 			
-			return pps.executeUpdate() > 0;
+			if( pps.executeUpdate() > 0){
+				result = true;
+			}
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 		
-		return false;
+		return result;
 	}
 
 	@Override
 	public boolean addComment(CommentPO po) {
 		// TODO Auto-generated method stub
+		boolean result = false;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "INSERT INTO commenttable SET hotelID = ?, hotelName = ?, roomName = ?, customerID = ?, comment = ?, score = ?, producingTime = ? ";
@@ -119,14 +152,25 @@ public class HotelDaoImpl implements HotelDao{
 			pps.setDouble(6, po.getScore());
 			pps.setTimestamp(7, Timestamp.valueOf(po.getProducingDateTime()));
 			
-			return pps.executeUpdate() > 0;
+			if(pps.executeUpdate() > 0){
+				result = true;
+			}
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		}finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		
-		return false;
+		return result;
 	}
 
 	@Override
@@ -147,11 +191,21 @@ public class HotelDaoImpl implements HotelDao{
 				result.add(po);
 			}
 			
-			return result;
+			res.close();
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		
 		return result;
@@ -160,6 +214,7 @@ public class HotelDaoImpl implements HotelDao{
 	@Override
 	public boolean updateWorker(HotelPO hotelPO) {
 		// TODO Auto-generated method stub
+		boolean result = false;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "UPDATE hoteltable SET workerName = ? WHERE hotelID = ? ";
@@ -167,19 +222,32 @@ public class HotelDaoImpl implements HotelDao{
 			pps.setString(1, hotelPO.getWorkerName());
 			pps.setInt(2, hotelPO.getHotelID());
 			
-			return pps.executeUpdate() > 0;
+			if(pps.executeUpdate() > 0){
+				result = true;
+			}
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 		
-		return false;
+		return result;
 	}
 	
 	@Override
 	public boolean addHotel(HotelPO hotelPO) {
 		// TODO Auto-generated method stub
+		boolean result = false;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "INSERT INTO hoteltable SET hotelID = ?, hotelName = ?, city = ?, businessCircle =?, workerName =?, phoneNumber =? ";
@@ -192,18 +260,31 @@ public class HotelDaoImpl implements HotelDao{
 			pps.setString(6, hotelPO.getPhoneNumber());
 			
 			
-			return pps.executeUpdate() > 0;
+			if(pps.executeUpdate() > 0){
+				result = true;
+			}
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 		
-		return false;
+		return result;
 	}
 	
 	@Override
 	public int getHotelNum(){
+		int result = -1;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "SELECT count(*)  FROM  hoteltable ";
@@ -212,18 +293,25 @@ public class HotelDaoImpl implements HotelDao{
 			ResultSet res = pps.executeQuery();
 			
 			if (res.next()) {
-				int result = res.getInt(1);
-				return result;
+				result = res.getInt(1);
 			}
-			else {
-				return -1;
-			}
+			
+			res.close();
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		}finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
-		return -1;
+		return result;
 	}
 	
 	private HotelPO toHotelPO(ResultSet res){

@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -44,18 +43,24 @@ public class OrderDaoImpl implements OrderDao{
 				po = toOrderPO(res);
 			}
 			
-			pps.close();
-			con.close();
-			
-			return po;
 			
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 		
 		
-		return null;
+		return po;
 	}
 
 
@@ -78,14 +83,21 @@ public class OrderDaoImpl implements OrderDao{
 				result.put(po.getOrderID(), po);
 			}
 			
-			pps.close();
-			con.close();
-			
-			return result;
+			res.close();
 			
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		
 		
@@ -111,62 +123,32 @@ public class OrderDaoImpl implements OrderDao{
 				result.put(po.getOrderID(),po);
 			}
 			
-			pps.close();
-			con.close();
-			
-			return result;
+			res.close();
 			
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		
-		
-		return result;
-	}
-
-
-
-	@Override
-	public List<OrderPO> getAbnormalOrdersOfToday() {
-		// TODO Auto-generated method stub
-		List<OrderPO> result = new ArrayList<OrderPO>();
-		
-		try{
-			con = ConnectionFactory.getDatabaseConnectionInstance();
-			String sql = "SELECT * FROM ordertable WHERE checkInDate >= ? and checkInDate < ? and orderState = ?";
-			String today = LocalDate.now().format(DateTimeFormatter.ISO_DATE);
-			String tomorrow = LocalDate.now().plusDays(1).format(DateTimeFormatter.ISO_DATE);
-			pps = con.prepareStatement(sql);
-			pps.setString(1, today);
-			pps.setString(2, tomorrow);
-			pps.setString(3, "异常");
-			ResultSet res =  pps.executeQuery();
-			
-			while(res.next()){
-				OrderPO po = toOrderPO(res);
-				result.add(po);
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			
-			pps.close();
-			con.close();
-			
-			return result;
-			
-		}catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
 		}
 		
 		
 		return result;
 	}
-
 
 
 	@Override
 	public boolean updateOrder(OrderPO orderPO) {
 		// TODO Auto-generated method stub
+		boolean result = false;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "UPDATE ordertable  SET orderState = ?, revokingDateTime = ?, executingDateTime = ?, leavingDateTime = ?, hasComment = ? "
@@ -182,15 +164,25 @@ public class OrderDaoImpl implements OrderDao{
 			
 			System.out.println("update order");
 			
-			return true;
+			result = true;
 			
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 		
 		
-		return false;
+		return result;
 	}
 
 
@@ -199,7 +191,7 @@ public class OrderDaoImpl implements OrderDao{
 	public boolean insertOrder(OrderPO po) {
 		// TODO Auto-generated method stub
 		
-		
+		boolean result = false;
 		
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
@@ -244,18 +236,30 @@ public class OrderDaoImpl implements OrderDao{
 				pps.setNull(18, Types.TIMESTAMP);
 			}
 			
-			
 			pps.setBoolean(19, false);
-			pps.executeUpdate();
 			
-			return true;
+			
+			if(pps.executeUpdate()>0){
+				result = true;
+			}
+			
 			
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 		
-		return false;
+		return result;
 	}
 
 
@@ -263,28 +267,39 @@ public class OrderDaoImpl implements OrderDao{
 	@Override
 	public int getNumOfAllOrders() {
 		// TODO Auto-generated method stub
+		int result = -1;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "SELECT count(*) FROM ordertable";
 			pps = con.prepareStatement(sql);
 			
 			ResultSet res = pps.executeQuery();
-			int result = -1;
+			
 			if(res.next()){
 				if(!res.wasNull()){
 					result = res.getInt(1);
 				}
 			}
 			
-			return result;
+			res.close();
 			
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 		
 		
-		return -1;
+		return result;
 	}
 
 
@@ -308,18 +323,114 @@ public class OrderDaoImpl implements OrderDao{
 				result.add(po);
 			}
 			
-			pps.close();
-			con.close();
-			
-			return result;
+			res.close();
 			
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 		
 		
 		return result;
+	}
+	
+	@Override
+	public Map<Integer, OrderPO> initAbnormalOrdersOfToday() {
+		// TODO Auto-generated method stub
+		Map<Integer, OrderPO> map = new LinkedHashMap<Integer, OrderPO>();
+		
+		try{
+			con = ConnectionFactory.getDatabaseConnectionInstance();
+			String sql = "UPDATE ordertable SET orderState = ? WHERE orderState = ? and UNIX_TIMESTAMP(latestArrivingTime) - UNIX_TIMESTAMP(NOW()) < 0 ";
+			pps = con.prepareStatement(sql);
+			pps.setString(1, "异常");
+			pps.setString(2, "正常");
+			pps.executeUpdate();
+			
+			String sql2 = "DELETE FROM unhandled_abnormal_order ";
+			pps.executeUpdate(sql2);
+			
+			String sql3 = "SELECT * FROM ordertable WHERE TO_DAYS(checkInDate) - TO_DAYS(NOW()) = 0 and orderState = '异常' ";
+			ResultSet res = pps.executeQuery(sql3);
+			
+			while(res.next()){
+				OrderPO orderPO = toOrderPO(res);
+				map.put(orderPO.getOrderID(), orderPO);
+			}
+			
+			res.close();
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+
+		return map;
+	}
+	
+	@Override
+	public List<OrderPO> getUnhandledAbnormalOrders() {
+		// TODO Auto-generated method stub
+		List<OrderPO> list = new ArrayList<OrderPO>();
+		try{
+			con = ConnectionFactory.getDatabaseConnectionInstance();
+			String sql = "SELECT * FROM unhandled_abnormal_order ";
+			pps = con.prepareStatement(sql);
+			ResultSet res = pps.executeQuery();
+			
+			while(res.next()){
+				int orderID = res.getInt(1);
+				String sql2 = "SELECT * FROM ordertable WHERE orderID = ? ";
+				pps = con.prepareStatement(sql2);
+				pps.setInt(1, orderID);
+				ResultSet res2 = pps.executeQuery();
+				if(res2.next()){
+					OrderPO orderPO = toOrderPO(res2);
+					list.add(orderPO);
+				}
+				res2.close();
+			}
+			
+			String sql3 = "DELETE FROM unhandled_abnormal_order";
+			pps.executeUpdate(sql3);
+			
+			res.close();
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return list;
 	}
 	
 	private OrderPO toOrderPO(ResultSet res) throws SQLException{
@@ -346,5 +457,9 @@ public class OrderDaoImpl implements OrderDao{
 		OrderPO po = new OrderPO(orderID, customerName, customerID, producingDateTime, hotelName, hotelID, roomName, roomNum, hasChildren, peopleNum, checkInDate, latestArrivingTime, checkOutDate, total, orderState, revokingDateTime, executingDateTime, leavingDateTime, hasComment);
 		return po;
 	}
+
+
+
+	
 
 }

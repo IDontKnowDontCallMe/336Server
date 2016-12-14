@@ -114,10 +114,21 @@ public class HotelSearchingImpl {
 		return true;
 	}
 	
-	public void  updateAreaCache(HotelVO hotelVO){
-		if(areaCache.containsKey(hotelVO.city + "--" + hotelVO.businessCircle)){
-			HotelPO hotelPO = new HotelPO(hotelVO.hotelID, hotelVO.hotelName, hotelVO.city, hotelVO.businessCircle, hotelVO.address, hotelVO.introduction, hotelVO.service, hotelVO.workerName, hotelVO.phoneNumber, hotelVO.score, hotelVO.commentScore, -1, -1);
-			areaCache.get(hotelPO.getCity()+ "--" + hotelPO.getBusinessCircle()).replace(hotelPO.getHotelID(), hotelPO);
+	public void  updateAreaCache(String oldBussinessCircle, HotelVO hotelVO){
+		if(oldBussinessCircle.equals(hotelVO.businessCircle)){
+			if(areaCache.containsKey(hotelVO.city + "--" + hotelVO.businessCircle)){
+				HotelPO hotelPO = new HotelPO(hotelVO.hotelID, hotelVO.hotelName, hotelVO.city, hotelVO.businessCircle, hotelVO.address, hotelVO.introduction, hotelVO.service, hotelVO.workerName, hotelVO.phoneNumber, hotelVO.score, hotelVO.commentScore, -1, -1);
+				areaCache.get(hotelPO.getCity()+ "--" + hotelPO.getBusinessCircle()).replace(hotelPO.getHotelID(), hotelPO);
+			}
+		}
+		else if(!oldBussinessCircle.equals(hotelVO.businessCircle)){
+			if(areaCache.containsKey(hotelVO.city + "--" + hotelVO.businessCircle)){
+				HotelPO hotelPO = new HotelPO(hotelVO.hotelID, hotelVO.hotelName, hotelVO.city, hotelVO.businessCircle, hotelVO.address, hotelVO.introduction, hotelVO.service, hotelVO.workerName, hotelVO.phoneNumber, hotelVO.score, hotelVO.commentScore, -1, -1);
+				areaCache.get(hotelPO.getCity()+ "--" + hotelPO.getBusinessCircle()).put(hotelPO.getHotelID(), hotelPO);
+			}
+			if(areaCache.containsKey(hotelVO.city + "--" + oldBussinessCircle)){
+				areaCache.get(hotelVO.city + "--" + oldBussinessCircle).remove(hotelVO.hotelID);
+			}
 		}
 	}
 	
@@ -131,6 +142,8 @@ public class HotelSearchingImpl {
 		if(areaCache.size() >= maxCache){
 			cleanSomeAreaCache();
 		}
+		
+		System.out.println("load area");
 		
 		HotelDataService hotelDataService = DataFactory.getHotelDataService();
 		Map<Integer, HotelPO> map = hotelDataService.getHotelListOfArea(areaVO.city, areaVO.businessCircle);
@@ -172,6 +185,10 @@ public class HotelSearchingImpl {
 		for(Entry<Integer, HotelPO> entry: map.entrySet()){
 			int bookedTag = orderBLService.getBookedTag(customerID, entry.getValue().getHotelID());
 			int minPrice = getMinPriceOfHotel(entry.getValue().getHotelID());
+			
+			if(minPrice==Integer.MAX_VALUE)
+				continue;
+			
 			HotelVO hotelVO = new HotelVO(entry.getValue().getHotelID(), entry.getValue().getHotelName(), entry.getValue().getCity(), entry.getValue().getBusinessCircle(), entry.getValue().getAddress(),entry.getValue().getIntroduction(),
 					entry.getValue().getService(), entry.getValue().getScore(), entry.getValue().getCommentScore(), entry.getValue().getWorkerName(), entry.getValue().getPhoneNumber(), minPrice, bookedTag);
 			result.add(hotelVO);
@@ -186,9 +203,11 @@ public class HotelSearchingImpl {
 		roomList = roomBLService.getRoomTypeList(hotelID);
 		
 		int minPrice = Integer.MAX_VALUE;
-		for(RoomVO roomVO: roomList){
-			if(roomVO.price < minPrice)
-				minPrice = roomVO.price;
+		if(roomList.size()>0){
+			for(RoomVO roomVO: roomList){
+				if(roomVO.price < minPrice)
+					minPrice = roomVO.price;
+			}
 		}
 		return minPrice;
 	}

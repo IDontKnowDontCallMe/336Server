@@ -18,7 +18,7 @@ import vo.CalculationConditionVO;
 import vo.CustomerVO;
 import vo.OrderVO;
 
-public class OrderBLImpl  {
+public class OrderBLImpl  implements AbnormalObserver{
 
 	private Map<Integer, Map<Integer,OrderPO>> orderPOCache;
 	private Queue<Integer> IDQueue;
@@ -62,11 +62,11 @@ public class OrderBLImpl  {
 	
 	public String canBeProduced(CalculationConditionVO calculationConditionVO) {
 
-		if(!orderPOCache.containsKey(calculationConditionVO.customerID)){
-			loadToCache(calculationConditionVO.customerID);
+		if(!orderPOCache.containsKey(calculationConditionVO.hotelID)){
+			loadToCache(calculationConditionVO.hotelID);
 		}
 		
-		ValidOrderJudger judger = new ValidOrderJudger(calculationConditionVO, orderPOCache.get(calculationConditionVO.customerID));
+		ValidOrderJudger judger = new ValidOrderJudger(calculationConditionVO, orderPOCache.get(calculationConditionVO.hotelID));
 		
 		return judger.judge();
 	}
@@ -285,17 +285,37 @@ public class OrderBLImpl  {
 			Map<Integer,OrderPO> map = DataFactory.getOrderDataService().getCustomerOrder(userID);
 			orderPOCache.put(userID, map);
 			IDQueue.add(userID);
+			System.out.println("load customer orders");
 		}
 		else if(userID/100000000 == 2){
 			Map<Integer,OrderPO> map = DataFactory.getOrderDataService().getHotelOrder(userID);
 			orderPOCache.put(userID, map);
 			IDQueue.add(userID);
+			System.out.println("load hotel orders");
 		}
 	}
 	
 	private void clearSomeCache(){
 		for(int i=0; i<10; i++){
 			orderPOCache.remove(IDQueue.poll());
+		}
+	}
+
+
+	@Override
+	public void update(List<OrderPO> changedOrderPO) {
+		// TODO Auto-generated method stub
+		if(changedOrderPO.size()<1) return ;
+		
+		for(OrderPO orderPO: changedOrderPO){
+			if(orderPOCache.containsKey(orderPO.getCustomerID())){
+				orderPOCache.get(orderPO.getCustomerID()).get(orderPO.getOrderID()).setOrderState("异常");
+			}
+			
+			if(orderPOCache.containsKey(orderPO.getHotelID())){
+				orderPOCache.get(orderPO.getHotelID()).get(orderPO.getHotelID()).setOrderState("异常");
+			}
+			
 		}
 	}
 	

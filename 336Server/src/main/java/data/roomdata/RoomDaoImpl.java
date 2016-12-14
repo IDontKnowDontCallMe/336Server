@@ -3,6 +3,7 @@ package data.roomdata;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ public class RoomDaoImpl implements RoomDao{
 	@Override
 	public boolean addRoomType(RoomPO po) {
 		// TODO Auto-generated method stub
+		boolean result = false;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "INSERT INTO  roomtable SET roomID = ?, hotelID = ?, roomName = ?, price = ?, peopleNum = ?, introduction = ?, roomNum = ? ";
@@ -31,17 +33,26 @@ public class RoomDaoImpl implements RoomDao{
 			pps.setInt(7, po.getRoomNum());
 			
 			if(pps.executeUpdate()>0){
-				return true;
+				result = true;
 			}
-			else{
-				return false;
-			}
+			
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return false;
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return result;
 	}
 
 	@Override
@@ -62,18 +73,33 @@ public class RoomDaoImpl implements RoomDao{
 				RoomPO po = toRoomPO(res);
 				map.put(po.getRoomID(), po);
 			}
-			return map;
+			
+			
+			res.close();
+			
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
 		return map;
 	}
 
 	@Override
 	public RoomPO getRoomPO(int roomID) {
 		// TODO Auto-generated method stub
+		RoomPO roomPO = null;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
 			String sql = "SELECT * FROM roomtable WHERE roomID = ?";
@@ -83,21 +109,29 @@ public class RoomDaoImpl implements RoomDao{
 			ResultSet res = pps.executeQuery();
 			
 			if(res.next()){
-				RoomPO po = toRoomPO(res);
-				return po;
-			}
-			else{
-				return null;
+				roomPO = toRoomPO(res);
+				
 			}
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return null;
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return roomPO;
 	}
 
 	private RoomPO toRoomPO(ResultSet res){
+
 		try{
 			int roomID = res.getInt(1);
 			int hotelID = res.getInt(2);
@@ -114,6 +148,8 @@ public class RoomDaoImpl implements RoomDao{
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		
+		
 		return null;
 	}
 	

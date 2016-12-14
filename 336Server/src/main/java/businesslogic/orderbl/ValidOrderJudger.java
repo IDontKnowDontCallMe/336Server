@@ -62,14 +62,17 @@ public class ValidOrderJudger {
 		
 		for(LocalDate i = checkInDate; i.isBefore(checkOutDate); i = i.plusDays(1)){
 			int usedRoomNum = 0;
-			System.out.println("room is valid");
-			for(Entry<Integer, OrderPO> entry: orderPOs.entrySet()){
-				if(isUsed(entry.getValue(), roomVO) && inDateInterval(entry.getValue(), i)){
-					usedRoomNum += entry.getValue().getRoomNum();
+			
+			if(orderPOs.size()>0){
+				for(Entry<Integer, OrderPO> entry: orderPOs.entrySet()){
+					if(isUsed(entry.getValue(), roomVO) && inDateInterval(entry.getValue(), i)){
+						usedRoomNum += entry.getValue().getRoomNum();
+						System.out.println("order's room match the room to be booked");
+					}
 				}
-			}
-			if(maxRoomNum - usedRoomNum < num){
-				return false;
+				if(maxRoomNum - usedRoomNum < num){
+					return false;
+				}
 			}
 		}
 		
@@ -78,7 +81,7 @@ public class ValidOrderJudger {
 	
 	private boolean isUsed(OrderPO orderPO ,RoomPO roomVO){
 		return  orderPO.getHotelID() == roomVO.getHotelID() && orderPO.getRoomName() == roomVO.getRoomName() &&
-				(orderPO.getOrderState().equals("正常") || (orderPO.getOrderState().equals("已执行"))&&orderPO.getLeavingDateTime()==null);
+				( orderPO.getOrderState().equals("正常") || (orderPO.getOrderState().equals("已执行") && orderPO.getLeavingDateTime()==null));
 	}
 	
 	private boolean inDateInterval(OrderPO po, LocalDate date){

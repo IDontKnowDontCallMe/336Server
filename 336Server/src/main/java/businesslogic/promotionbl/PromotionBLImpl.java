@@ -62,7 +62,7 @@ public class PromotionBLImpl {
 			double webDiscount = webPromotionImpl.getDiscount(calculationVO, i, customerVO);
 			double levelDiscount = levelImpl.getDiscount(calculationVO, i, customerVO);
 			result += price * hotelDiscount * webDiscount * levelDiscount * calculationVO.roomNum;
-			System.out.println("cal");
+			System.out.println(hotelDiscount + "  " + webDiscount + " " + levelDiscount);
 		}
 		
 		return result;

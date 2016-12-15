@@ -17,11 +17,13 @@ import vo.WebMarketerVO;
 
 public class UserBLImpl implements UserBLService {
 
-	private Map<Integer, Boolean> loginTag;
+	//private Map<Integer, Boolean> loginTag;
+	private LoginImpl loginImpl;
 	
 	public UserBLImpl() {
 		// TODO Auto-generated constructor stub
-		loginTag = new HashMap<Integer, Boolean>();
+		//loginTag = new HashMap<Integer, Boolean>();
+		loginImpl = new LoginImpl();
 	}
 	
 	
@@ -133,6 +135,7 @@ public class UserBLImpl implements UserBLService {
 		//	return "has logined";
 		//}
 		
+		/***
 		String encodePassword = DataFactory.getUserDataService().getPassword(userID);
 		if(encodePassword.equals("NOT_FOUND")){
 			return "NOT_FOUND";
@@ -163,8 +166,17 @@ public class UserBLImpl implements UserBLService {
 		else{
 			return "password wrong";
 		}
+		***/
+		
+		return loginImpl.login(userID, password);
 		
 		
+	}
+	
+	@Override
+	public void survivalConfirm(int userID) {
+		// TODO Auto-generated method stub
+		loginImpl.survivalConfirm(userID);
 	}
 
 
@@ -183,5 +195,9 @@ public class UserBLImpl implements UserBLService {
 		
 		return -1;
 	}
+
+
+
+	
 
 }

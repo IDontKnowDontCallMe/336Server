@@ -28,12 +28,12 @@ public class AbnormalOrderManager implements AbnormalSubject{
 		observer = null;
 		init();
 		
-		updateAbnormalTimer = new Timer();
+		updateAbnormalTimer = new Timer(true);
 		int hour = LocalTime.now().getHour() + 1;
 		LocalDateTime nextHour = LocalDateTime.now().withHour(hour%24).withMinute(2);
 		updateAbnormalTimer.schedule(new getNewAbnormalOrderTask(), Timestamp.valueOf(nextHour), 1000*60*60);
 		
-		iniTimer = new Timer();
+		iniTimer = new Timer(true);
 		LocalDateTime tomorrow = LocalDateTime.now().plusDays(1).withHour(0).withMinute(1);
 		iniTimer.schedule(new InitAbnormalManagerTask() , Timestamp.valueOf(tomorrow),1000*60*60*24);
 	}

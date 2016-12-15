@@ -36,6 +36,8 @@ public class ValidOrderJudger {
 			return "信用值小于0";
 		}
 		
+		System.out.println(roomID + " " + customerID + " " + checkInDate + " " + checkOutDate + " " + num + " " + orderPOs.size() );
+		
 		if(roomNumIsValid()){
 			return "房间充足";
 		}
@@ -59,6 +61,7 @@ public class ValidOrderJudger {
 		RoomPO roomVO = DataFactory.getRoomDataService().getRoomPO(roomID);
 		
 		int maxRoomNum = roomVO.getRoomNum();
+		System.out.println(maxRoomNum);
 		
 		for(LocalDate i = checkInDate; i.isBefore(checkOutDate); i = i.plusDays(1)){
 			int usedRoomNum = 0;
@@ -70,18 +73,19 @@ public class ValidOrderJudger {
 						System.out.println("order's room match the room to be booked");
 					}
 				}
+				System.out.println(usedRoomNum);
 				if(maxRoomNum - usedRoomNum < num){
 					return false;
 				}
 			}
 		}
 		
-		return true;
+		return num<=maxRoomNum;
 	}
 	
 	private boolean isUsed(OrderPO orderPO ,RoomPO roomVO){
-		return  orderPO.getHotelID() == roomVO.getHotelID() && orderPO.getRoomName() == roomVO.getRoomName() &&
-				( orderPO.getOrderState().equals("正常") || (orderPO.getOrderState().equals("已执行") && orderPO.getLeavingDateTime()==null));
+		return  orderPO.getHotelID() == roomVO.getHotelID() && orderPO.getRoomName().equals(roomVO.getRoomName()) &&
+				( orderPO.getOrderState().equals("正常") || orderPO.getOrderState().equals("已执行未离店") );
 	}
 	
 	private boolean inDateInterval(OrderPO po, LocalDate date){

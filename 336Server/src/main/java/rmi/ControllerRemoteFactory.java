@@ -478,4 +478,11 @@ public class ControllerRemoteFactory extends UnicastRemoteObject implements Remo
 		return id;
 	}
 
+
+	@Override
+	public void survivalConfirm(int userID) throws RemoteException {
+		// TODO Auto-generated method stub
+		userBLService.survivalConfirm(userID);
+	}
+
 }

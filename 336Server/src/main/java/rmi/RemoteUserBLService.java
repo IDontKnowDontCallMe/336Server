@@ -29,6 +29,8 @@ public interface RemoteUserBLService extends Remote{
 	
 	public String login(int userID, String password) throws RemoteException;
 	
+	public void survivalConfirm(int userID) throws RemoteException;
+	
 	public int register(String customerName, String phoneNumber, String password) throws RemoteException;
 
 	public boolean updateWebMarketer(WebMarketerVO vo) throws RemoteException;

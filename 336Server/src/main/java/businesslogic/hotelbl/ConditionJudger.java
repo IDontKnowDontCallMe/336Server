@@ -104,7 +104,7 @@ public class ConditionJudger {
 
 
 		for(RoomVO roomVO: roomList){
-			String tag = orderBLService.canBeProduced(new CalculationConditionVO(hotelVO.hotelID, roomVO.roomID, searchConditionVO.customerID, 
+			String tag = orderBLService.canBeProduced(new CalculationConditionVO(hotelVO.hotelID, roomVO.roomID, 23333, 
 				searchConditionVO.checkInDate, searchConditionVO.checkOutDate, searchConditionVO.roomNum, 0, false, null, null));
 			if(tag.equals("房间充足")){
 				return true;

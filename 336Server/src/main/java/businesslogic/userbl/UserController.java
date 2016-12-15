@@ -74,5 +74,11 @@ public class UserController implements UserBLService{
 		return userBLImpl.register(customerName, phoneNumber, password);
 	}
 
+	@Override
+	public void survivalConfirm(int userID) {
+		// TODO Auto-generated method stub
+		userBLImpl.survivalConfirm(userID);
+	}
+
 	
 }

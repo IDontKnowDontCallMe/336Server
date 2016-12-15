@@ -29,6 +29,8 @@ public interface UserBLService {
 	
 	public String login(int userID, String password) ;
 	
+	public void survivalConfirm(int userID);
+	
 	public int register(String customerName, String phoneNumber, String password) ;
 
 	public boolean updateWebMarketer(WebMarketerVO vo) ;

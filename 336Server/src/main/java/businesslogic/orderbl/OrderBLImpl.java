@@ -165,9 +165,11 @@ public class OrderBLImpl  implements AbnormalObserver{
 		System.out.println("orders");
 		if(orderPOCache.get(customerID) == null || orderPOCache.get(customerID).size()<1) return new ArrayList<OrderVO>();
 		
+		int index = 0;
 		for(Entry<Integer, OrderPO> entry: orderPOCache.get(customerID).entrySet()){
 			if(entry.getValue().getHotelID() == hotelID){
-				list.put(entry.getValue().getHotelID(), entry.getValue());
+				list.put(index, entry.getValue());
+				index++;
 			}
 		}
 		

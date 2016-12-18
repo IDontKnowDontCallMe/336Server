@@ -1,5 +1,10 @@
 package data.hoteldata;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,7 +12,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -15,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import data.databaseutility.ConnectionFactory;
+import javafx.scene.image.Image;
 import po.CommentPO;
 import po.HotelPO;
 
@@ -314,6 +319,90 @@ public class HotelDaoImpl implements HotelDao{
 		return result;
 	}
 	
+	@Override
+	public byte[] getHotelImage(int hotelID) {
+		// TODO Auto-generated method stub
+		byte[] result = null;
+		
+		try{
+			con = ConnectionFactory.getDatabaseConnectionInstance();
+			String sql = "SELECT *  FROM  hotelimagetable WHERE hotelID = ? ";
+			pps = con.prepareStatement(sql);
+			pps.setInt(1, hotelID);
+			
+			ResultSet res = pps.executeQuery();
+			
+			if(res.next()){
+				Blob blob = res.getBlob(2);
+				
+				InputStream is = blob.getBinaryStream();
+				ByteArrayOutputStream output = new ByteArrayOutputStream();
+				byte[] buf = new byte[1024];
+				int numBytesRead = 0;
+				while ((numBytesRead = is.read(buf)) != -1) {
+				output.write(buf, 0, numBytesRead);
+				}
+				result = output.toByteArray();
+				
+				
+			}
+			
+			res.close();
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		
+		return result;
+	}
+
+	@Override
+	public boolean saveHotelImage(int hotelID, byte[] imageDate) {
+		// TODO Auto-generated method stub
+		boolean result = false;
+		
+		try{
+			con = ConnectionFactory.getDatabaseConnectionInstance();
+			String sql = "UPDATE hotelimagetable SET  image = ? WHERE hotelID = ? ";
+			pps = con.prepareStatement(sql);
+			pps.setObject(1, (Object)imageDate);
+			pps.setInt(2, hotelID);
+			
+			if (pps.executeUpdate()>0) {
+				result = true;
+			}
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		
+		return result;	
+	}
+	
+	
+	
 	private HotelPO toHotelPO(ResultSet res){
 		try {
 		int hotelID = res.getInt(1);
@@ -358,8 +447,6 @@ public class HotelDaoImpl implements HotelDao{
 		
 		return null;
 	}
-
-	
 
 	
 

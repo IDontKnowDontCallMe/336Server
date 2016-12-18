@@ -37,4 +37,8 @@ public interface HotelBLService {
 
 	public boolean delete(HotelVO hotelVO);
 	
+	public byte[] getHotelImage(int hotelID);
+	
+	public boolean saveHotelImage(int hotelID, byte[] imageData);
+	
 }

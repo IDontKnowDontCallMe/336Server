@@ -19,6 +19,7 @@ public class HotelController implements HotelBLService, HotelInfoUpdater{
 	private HotelDetailInfoImpl hotelDetailInfoImpl;
 	private HotelCommentImpl hotelCommentImpl;
 	private HotelInfoUpdaterImpl hotelInfoUpdaterImpl;
+	private HotelImageImpl hotelImageImpl;
 	
 	public HotelController() {
 		// TODO Auto-generated constructor stub
@@ -26,6 +27,7 @@ public class HotelController implements HotelBLService, HotelInfoUpdater{
 		hotelSearchingImpl = new HotelSearchingImpl();
 		hotelCommentImpl = new HotelCommentImpl();
 		hotelInfoUpdaterImpl = new HotelInfoUpdaterImpl();
+		hotelImageImpl = new HotelImageImpl();
 	}
 	
 	
@@ -127,7 +129,19 @@ public class HotelController implements HotelBLService, HotelInfoUpdater{
 		OrderPO orderPO = DataFactory.getOrderDataService().getOrderInfo(orderID);
 		return orderPO.getHotelID();
 	}
+	
+	@Override
+	public byte[] getHotelImage(int hotelID) {
+		// TODO Auto-generated method stub
+		return hotelImageImpl.getHotelImage(hotelID);
+	}
 
+
+	@Override
+	public boolean saveHotelImage(int hotelID, byte[] imageData) {
+		// TODO Auto-generated method stub
+		return hotelImageImpl.saveHotelImage(hotelID, imageData);
+	}
 
 	//-------------------------------------//maybe delet 
 	
@@ -142,8 +156,5 @@ public class HotelController implements HotelBLService, HotelInfoUpdater{
 		// TODO Auto-generated method stub
 		return true;
 	}
-
-
-	
 
 }

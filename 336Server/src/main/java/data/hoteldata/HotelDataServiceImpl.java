@@ -64,6 +64,20 @@ public class HotelDataServiceImpl implements HotelDataService{
 		// TODO Auto-generated method stub
 		return hotelDao.getHotelNum();
 	}
+
+	@Override
+	public byte[] getHotelImage(int hotelID) {
+		// TODO Auto-generated method stub
+		return hotelDao.getHotelImage(hotelID);
+	}
+
+	@Override
+	public boolean saveHotelImage(int hotelID, byte[] imageDate) {
+		// TODO Auto-generated method stub
+		return hotelDao.saveHotelImage(hotelID, imageDate);
+	}
+
+	
 	
 	
 	

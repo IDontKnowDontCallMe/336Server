@@ -4,12 +4,6 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDate;
 import java.util.List;
-import businesslogic.customerbl.CustomerController;
-import businesslogic.hotelbl.HotelController;
-import businesslogic.orderbl.OrderController;
-import businesslogic.promotionbl.PromotionController;
-import businesslogic.roombl.RoomController;
-import businesslogic.userbl.UserController;
 import businesslogicservice.customerblservice.CustomerBLService;
 import businesslogicservice.hotelblservice.HotelBLService;
 import businesslogicservice.orderblservice.OrderBLService;
@@ -483,6 +477,22 @@ public class ControllerRemoteFactory extends UnicastRemoteObject implements Remo
 	public void survivalConfirm(int userID) throws RemoteException {
 		// TODO Auto-generated method stub
 		userBLService.survivalConfirm(userID);
+	}
+
+
+	@Override
+	public byte[] getHotelImage(int hotelID) throws RemoteException {
+		// TODO Auto-generated method stub
+		byte[] imageData = hotelBLService.getHotelImage(hotelID);
+		return imageData;
+	}
+
+
+	@Override
+	public boolean saveHotelImage(int hotelID, byte[] imageData) throws RemoteException {
+		// TODO Auto-generated method stub
+		boolean saveResult = hotelBLService.saveHotelImage(hotelID, imageData);
+		return saveResult;
 	}
 
 }

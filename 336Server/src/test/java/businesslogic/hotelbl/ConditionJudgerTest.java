@@ -1,4 +1,4 @@
-package businesslogic.hotel;
+package businesslogic.hotelbl;
 
 import static org.junit.Assert.*;
 

@@ -1,5 +1,6 @@
 package data.hoteldata;
 
+
 import java.util.List;
 import java.util.Map;
 
@@ -23,4 +24,8 @@ public interface HotelDao {
 	public boolean addHotel(HotelPO hotelPO);
 	
 	public int getHotelNum();
+	
+	public byte[] getHotelImage(int hotelID);
+	
+	public boolean saveHotelImage(int hotelID, byte[] imageDate);	
 }

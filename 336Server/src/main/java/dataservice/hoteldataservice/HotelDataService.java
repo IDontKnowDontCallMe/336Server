@@ -23,5 +23,9 @@ public interface HotelDataService {
 	public boolean addHotel(HotelPO hotelPO);
 	
 	public int getHotelNum();
+	
+	public byte[] getHotelImage(int hotelID);
+	
+	public boolean saveHotelImage(int hotelID, byte[] imageDate);	
 
 }

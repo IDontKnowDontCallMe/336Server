@@ -2,6 +2,7 @@ package data.hoteldata;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.sql.Blob;
@@ -110,14 +111,15 @@ public class HotelDaoImpl implements HotelDao{
 		boolean result = false;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
-			String sql = "UPDATE hoteltable SET hotelName = ?, address = ?, introduction = ?, service = ? , commentScore = ? WHERE hotelID = ? ";
+			String sql = "UPDATE hoteltable SET hotelName = ?, address = ?, introduction = ?, service = ? , score = ?, commentScore = ? WHERE hotelID = ? ";
 			pps = con.prepareStatement(sql);
 			pps.setString(1, hotelPO.getHotelName());
 			pps.setString(2, hotelPO.getAddress());
 			pps.setString(3, hotelPO.getIntroduction());
 			pps.setString(4, hotelPO.getService());
-			pps.setDouble(5, hotelPO.getCommentScore());
-			pps.setInt(6, hotelPO.getHotelID());
+			pps.setInt(5, hotelPO.getScore());
+			pps.setDouble(6, hotelPO.getCommentScore());
+			pps.setInt(7, hotelPO.getHotelID());
 			
 			if( pps.executeUpdate() > 0){
 				result = true;
@@ -255,7 +257,8 @@ public class HotelDaoImpl implements HotelDao{
 		boolean result = false;
 		try{
 			con = ConnectionFactory.getDatabaseConnectionInstance();
-			String sql = "INSERT INTO hoteltable SET hotelID = ?, hotelName = ?, city = ?, businessCircle =?, workerName =?, phoneNumber =? ";
+			String sql = "INSERT INTO hoteltable SET hotelID = ?, hotelName = ?, city = ?, businessCircle =?, workerName =?, phoneNumber =?,"
+					+ " score = 0, commentScore = 0, address = '无', introduction = '无', service = '无'  ";
 			pps = con.prepareStatement(sql);
 			pps.setInt(1, hotelPO.getHotelID());
 			pps.setString(2, hotelPO.getHotelName());
@@ -264,10 +267,32 @@ public class HotelDaoImpl implements HotelDao{
 			pps.setString(5, hotelPO.getWorkerName());
 			pps.setString(6, hotelPO.getPhoneNumber());
 			
+			if(pps.executeUpdate() < 0){
+				pps.close();
+				con.close();
+				return false;
+			}
+			
+			String sql2 = "INSERT INTO hotelimagetable SET hotelID = ?, image = ? ";
+			pps = con.prepareStatement(sql2);
+			pps.setInt(1, hotelPO.getHotelID());
+			
+			byte[] imageData;
+			InputStream is = new FileInputStream(getClass().getResource("noPicture.png").getFile());
+			ByteArrayOutputStream output = new ByteArrayOutputStream();
+			byte[] buf = new byte[1024];
+			int numBytesRead = 0;
+			while ((numBytesRead = is.read(buf)) != -1) {
+			output.write(buf, 0, numBytesRead);
+			}
+			imageData = output.toByteArray();
+			
+			pps.setObject(2, imageData);
 			
 			if(pps.executeUpdate() > 0){
 				result = true;
 			}
+			
 		}
 		catch (Exception e) {
 			// TODO: handle exception

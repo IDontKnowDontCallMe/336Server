@@ -15,6 +15,14 @@ import factory.DataFactory;
 import rmi.ControllerRemoteFactory;
 import rmi.RemoteRegister;
 
+
+/**
+ * 服务器端启动类
+ * 
+ * @author sjl
+ *
+ */
+
 public class ServerRunner {
 
 	public static void main(String[] args) throws RemoteException{
@@ -22,12 +30,17 @@ public class ServerRunner {
 		serverRunner.start();
 	}
 	
+	
+	/**
+	 * 启动方法
+	 * @throws RemoteException
+	 */
 	private void start() throws RemoteException{
 		DataFactory.initDataFactory();
 		BLFactory.initBLFactory();
 		
 	
-		//System.setProperty("java.rmi.server.hostname ", "202.119.48.79");
+		//System.setProperty("java.rmi.server.hostname ", "202.119.46.62");
 		
 		System.out.println("Data and BL ready...");
 		

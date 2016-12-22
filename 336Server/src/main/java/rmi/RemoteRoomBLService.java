@@ -16,4 +16,5 @@ public interface RemoteRoomBLService extends Remote{
 	public List<RoomVO> getRoomTypeList(int hotelID) throws RemoteException;
 	
 	public RoomVO getRoomType(int roomID) throws RemoteException;
+	
 }

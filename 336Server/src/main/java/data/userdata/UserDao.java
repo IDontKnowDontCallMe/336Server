@@ -24,4 +24,6 @@ public interface UserDao {
 	
 	public int insertCustomer(CustomerPO customerPO);
 	
+	public void updatePassworder(int userID, String newPassword) ;
+	
 }

@@ -9,8 +9,16 @@ import businesslogicservice.customerblservice.CustomerBLService;
 import vo.CreditVO;
 import vo.CustomerVO;
 
+/**
+ * CustomerBLService的提供者
+ * @author sjl
+ *
+ */
 public class CustomerController implements CustomerBLService, CustomerInfoUpdater{
+	
 	CustomerBLImpl customerblImpl = new CustomerBLImpl();
+	
+	
 	
 	@Override
 	public CustomerVO getCustomerInfo(int customerID) {

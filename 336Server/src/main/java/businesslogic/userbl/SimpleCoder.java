@@ -77,6 +77,7 @@ public class SimpleCoder {
             KeyGenerator keygen=KeyGenerator.getInstance("AES");
             //2.根据ecnodeRules规则初始化密钥生成器
             //生成一个128位的随机源,根据传入的字节数组
+            
             keygen.init(128, new SecureRandom(encodeRules.getBytes()));
               //3.产生原始对称密钥
             SecretKey original_key=keygen.generateKey();

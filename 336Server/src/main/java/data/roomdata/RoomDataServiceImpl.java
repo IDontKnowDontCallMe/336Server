@@ -33,5 +33,11 @@ public class RoomDataServiceImpl implements RoomDataService{
 		return roomDao.getRoomPO(roomID);
 	}
 
+	@Override
+	public int getRoomNum() {
+		// TODO Auto-generated method stub
+		return roomDao.getRoomNum();
+	}
+
 	
 }

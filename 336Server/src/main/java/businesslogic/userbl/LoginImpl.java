@@ -37,7 +37,8 @@ public class LoginImpl {
 	
 	public String login(int userID, String password) {
 		if(preUser.containsKey(userID)){
-			if(preUser.get(userID) > 0)
+			//if(preUser.get(userID) > 0)
+			if(false)
 			return "has logined";
 		}
 		
@@ -45,6 +46,8 @@ public class LoginImpl {
 		if(encodePassword.equals("NOT_FOUND")){
 			return "NOT_FOUND";
 		}
+		
+		System.out.println("233");
 		
 		String realPassword = SimpleCoder.AESDncode("336336", encodePassword);
 		String result = "";

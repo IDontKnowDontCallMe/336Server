@@ -5,9 +5,9 @@ import java.sql.*;
 public class MySQLConnection implements DatabaseConnection{
 	
 	private static final String driverName = "com.mysql.jdbc.Driver";
-	private static final String URL = "jdbc:mysql://localhost/hotelsystem?useSSL=true";
+	private static final String URL = "jdbc:mysql://localhost/mysql?useSSL=true";
 	private static final String userName = "root";
-	private static final String password = "336336";
+	private static final String password = "a4s5d6f1";
 	
 	//private Connection con = null;
 	

@@ -53,6 +53,11 @@ public class PromotionBLImpl {
 		return webPromotionImpl.deleteWebPromotion(vo);
 	}
 
+	/**
+	 * @param calculationVO
+	 * @param customerVO
+	 * @return 此订单条件在各项优惠促销策略下的最低价格（计算方法为：得出一个最低的酒店方面的折扣，得出一个网站方面的最低折扣，得出一个等级折扣，三者相乘为最终折扣）
+	 */
 	public int calculateOrder(CalculationConditionVO calculationVO, CustomerVO customerVO) {
 		customerVO.level = levelImpl.calculateLevel(customerVO.credit);
 		int price = calculationVO.roomPrice;

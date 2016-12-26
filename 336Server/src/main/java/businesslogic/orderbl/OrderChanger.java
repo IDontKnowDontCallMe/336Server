@@ -7,6 +7,11 @@ import data.factory.DataFactory;
 import po.OrderPO;
 import vo.CreditVO;
 
+/**
+ * 提供改变订单状态功能的类；包装了改变状态后相应要执行的后续动作
+ * @author sjl
+ *
+ */
 public class OrderChanger {
 
 	private OrderPO orderPO;

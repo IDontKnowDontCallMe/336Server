@@ -331,6 +331,38 @@ public class UserDaoImpl implements UserDao{
 		return result;
 	}
 	
+	@Override
+	public void updatePassworder(int userID, String newPassword) {
+		// TODO Auto-generated method stub
+		
+		try{
+			String sql = "UPDATE logintable SET password = ?, isOnline = ? WHERE userID = ?";
+			con = ConnectionFactory.getDatabaseConnectionInstance();
+			pps = con.prepareStatement(sql);
+			pps.setString(1, newPassword);
+			pps.setBoolean(2, false);
+			pps.setInt(3, userID);
+			
+			pps.executeUpdate();
+			
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+	}
+	
 	
 
 	private HotelPO toHotelPO(ResultSet res){
@@ -395,6 +427,8 @@ public class UserDaoImpl implements UserDao{
 		}
 		return null;
 	}
+
+	
 
 	
 	

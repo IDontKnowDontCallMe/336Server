@@ -152,5 +152,37 @@ public class RoomDaoImpl implements RoomDao{
 		
 		return null;
 	}
+
+	@Override
+	public int getRoomNum() {
+		// TODO Auto-generated method stub
+		int result = -1;
+		try{
+			con = ConnectionFactory.getDatabaseConnectionInstance();
+			String sql = "SELECT count(*) FROM roomtable ";
+			pps = con.prepareStatement(sql);
+			
+			ResultSet res = pps.executeQuery();
+			
+			if(res.next()){
+				result = res.getInt(1);
+			}
+		
+			res.close();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				pps.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
 	
 }

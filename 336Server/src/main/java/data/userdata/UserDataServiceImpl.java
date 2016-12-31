@@ -60,6 +60,12 @@ public class UserDataServiceImpl implements UserDataService {
 		return userDao.insertCustomer(customerPO);
 	}
 
+	@Override
+	public void updatePassworder(int userID, String newPassword) {
+		// TODO Auto-generated method stub
+		userDao.updatePassworder(userID, newPassword);
+	}
+
 	
 	
 	

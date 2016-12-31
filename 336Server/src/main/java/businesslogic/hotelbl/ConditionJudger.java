@@ -9,6 +9,11 @@ import vo.HotelVO;
 import vo.RoomVO;
 import vo.SearchConditionVO;
 
+/**
+ * 负责判断一个酒店是否符合客户的当前搜索条件的类
+ * @author sjl
+ *
+ */
 public class ConditionJudger {
 
 	private SearchConditionVO searchConditionVO;
@@ -34,6 +39,11 @@ public class ConditionJudger {
 		}
 	}
 	
+	/**
+	 * 搜索条件起联合作用时，用此方法判断
+	 * @param hotelVO
+	 * @return 判断结果
+	 */
 	private boolean interactiveJudge(HotelVO hotelVO) {
 		if(!hasLimit){
 			return true;
@@ -43,6 +53,11 @@ public class ConditionJudger {
 				satisfyWithDateLimit(hotelVO) && satisfyWithPriceLimit(hotelVO) && satisfyWithScoreLimit(hotelVO) && satisfyWithCommentLimit(hotelVO);
 	}
 	
+	/**
+	 * 搜索条件不起联合作用时，用此方法判断
+	 * @param hotelVO
+	 * @return 判断结果
+	 */ 
 	private boolean uninteractiveJudge(HotelVO hotelVO){
 		if(!hasLimit){
 			return true;
@@ -57,6 +72,11 @@ public class ConditionJudger {
 			   ( searchConditionVO.hasCommentScoreLimit && satisfyWithCommentLimit(hotelVO) ) ;
 	}
 	
+	/**
+	 * 判断酒店是否符合房间类型限制
+	 * @param hotelVO
+	 * @return
+	 */
 	private boolean satisfyWithRoomTypeLimit(HotelVO hotelVO){
 		if(!searchConditionVO.hasRoomTypeLimit){
 			return true;
@@ -76,6 +96,12 @@ public class ConditionJudger {
 		return false;
 	}
 	
+	/**
+	 * 
+	 * 判断酒店是否符合价格限制
+	 * @param hotelVO
+	 * @return
+	 */
 	private boolean satisfyWithPriceLimit(HotelVO hotelVO){
 		if(!searchConditionVO.hasPriceLimit){
 			return true;
@@ -93,6 +119,11 @@ public class ConditionJudger {
 		return false;
 	}
 	
+	/**
+	 * 判断酒店是否符合入住时间限制
+	 * @param hotelVO
+	 * @return
+	 */
 	private boolean satisfyWithDateLimit(HotelVO hotelVO){
 		if(!searchConditionVO.hasDateLimit){
 			return true;
@@ -115,6 +146,11 @@ public class ConditionJudger {
 		
 	}
 	
+	/**
+	 * 判断酒店是否符合评分限制
+	 * @param hotelVO
+	 * @return
+	 */
 	private boolean satisfyWithScoreLimit(HotelVO hotelVO){
 		if(!searchConditionVO.hasScoreLimit){
 			return true;

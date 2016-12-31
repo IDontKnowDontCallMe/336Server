@@ -16,6 +16,11 @@ import po.OrderPO;
 import vo.CustomerVO;
 import vo.OrderVO;
 
+/**
+ * 负责初始化、定时更新异常订单的类；也提供实时根据订单变化而改变的功能
+ * @author sjl
+ *
+ */
 public class AbnormalOrderManager implements AbnormalSubject{
 
 	private Timer iniTimer;
@@ -70,6 +75,11 @@ public class AbnormalOrderManager implements AbnormalSubject{
 		this.observer = observer;
 	}
 
+	/**
+	 * 初始化当日的异常订单，用于日期+1天时
+	 * @author USER
+	 *
+	 */
 	public class InitAbnormalManagerTask extends TimerTask{
 
 		@Override
@@ -81,6 +91,11 @@ public class AbnormalOrderManager implements AbnormalSubject{
 		
 	}
 	
+	/**
+	 * 从数据库中读新的被置为异常的订单
+	 * @author USER
+	 *
+	 */
 	public class getNewAbnormalOrderTask extends TimerTask{
 
 		@Override

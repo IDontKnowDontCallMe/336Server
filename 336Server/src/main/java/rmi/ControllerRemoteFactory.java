@@ -495,4 +495,11 @@ public class ControllerRemoteFactory extends UnicastRemoteObject implements Remo
 		return saveResult;
 	}
 
+
+	@Override
+	public void changePassword(int userID, String newPassword) throws RemoteException {
+		// TODO Auto-generated method stub
+		userBLService.changePassword(userID, newPassword);
+	}
+
 }

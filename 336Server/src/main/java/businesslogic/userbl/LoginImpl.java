@@ -10,8 +10,16 @@ import java.util.Map.Entry;
 
 import factory.DataFactory;
 
+/**
+ * 负责验证登录、防止同一账号多处登录的类
+ * @author sjl
+ *
+ */
 public class LoginImpl {
 
+	/**
+	 * 负责记录当前在线信息，key为账号，value为一个值，大于0表示在线，否则表示已离线
+	 */
 	private Map<Integer, Integer> preUser;
 	
 	private Timer scanner;
@@ -35,6 +43,12 @@ public class LoginImpl {
 	}
 	
 	
+	/**
+	 * 处理登录验证，返回验证信息
+	 * @param userID
+	 * @param password
+	 * @return
+	 */
 	public String login(int userID, String password) {
 		if(preUser.containsKey(userID)){
 			if(preUser.get(userID) > 0)
@@ -45,6 +59,8 @@ public class LoginImpl {
 		if(encodePassword.equals("NOT_FOUND")){
 			return "NOT_FOUND";
 		}
+		
+		System.out.println("233");
 		
 		String realPassword = SimpleCoder.AESDncode("336336", encodePassword);
 		String result = "";
@@ -77,6 +93,11 @@ public class LoginImpl {
 		
 	}
 	
+	/**
+	 * 负责每秒减少preUser的value，当一个账户断线不刷新它的value时，视为离线
+	 * @author sjl
+	 *
+	 */
 	public class ScanTask extends TimerTask{
 
 		@Override

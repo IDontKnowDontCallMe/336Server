@@ -18,6 +18,7 @@ import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 public class SimpleCoder {
+
 	public static String AESEncode(String encodeRules, String content) {
 		try {
 			// 1.构造密钥生成器，指定为AES算法,不区分大小写
@@ -108,7 +109,8 @@ public class SimpleCoder {
 			e.printStackTrace();
 		}
 
-		// 如果有错就返加nulll
+		// 如果有错就返加null
 		return null;
 	}
+
 }

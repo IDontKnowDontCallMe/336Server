@@ -194,7 +194,7 @@ public class OrderBLImpl  implements AbnormalObserver{
 			if(entry.getValue().getHotelID() != hotelID){
 				continue;
 			}
-			else if(entry.getValue().getOrderState().equals("已执行")) {
+			else if(entry.getValue().getOrderState().equals("已执行未离店") || entry.getValue().getOrderState().equals("已执行已离店")) {
 				result = 2;
 				break;
 			}

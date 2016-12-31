@@ -198,6 +198,15 @@ public class UserBLImpl implements UserBLService {
 
 
 
+	@Override
+	public void changePassword(int userID, String newPassword) {
+		// TODO Auto-generated method stub
+		newPassword = SimpleCoder.AESEncode("336336", newPassword);
+		DataFactory.getUserDataService().updatePassworder(userID, newPassword);
+	}
+
+
+
 	
 
 }

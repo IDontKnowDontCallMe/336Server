@@ -12,6 +12,11 @@ import vo.CalculationConditionVO;
 import vo.CustomerVO;
 import vo.RoomVO;
 
+/**
+ * 用来判断一个order是否符合各项生成条件的类，并返回相应判断信息
+ * @author USER
+ *
+ */
 public class ValidOrderJudger {
 
 	private int roomID;
@@ -83,11 +88,23 @@ public class ValidOrderJudger {
 		return num<=maxRoomNum;
 	}
 	
+	/**
+	 * 判断此订单的房型是否是该roomVO的房型
+	 * @param orderPO
+	 * @param roomVO
+	 * @return
+	 */
 	private boolean isUsed(OrderPO orderPO ,RoomPO roomVO){
 		return  orderPO.getHotelID() == roomVO.getHotelID() && orderPO.getRoomName().equals(roomVO.getRoomName()) &&
 				( orderPO.getOrderState().equals("正常") || orderPO.getOrderState().equals("已执行未离店") );
 	}
 	
+	/**
+	 * 判断此订单的入住离店时间区间是否包含了该date
+	 * @param po
+	 * @param date
+	 * @return
+	 */
 	private boolean inDateInterval(OrderPO po, LocalDate date){
 		return (po.getCheckInDate().isBefore(date) || po.getCheckInDate().isEqual(date)) && po.getCheckOutDate().isAfter(date);
 	}

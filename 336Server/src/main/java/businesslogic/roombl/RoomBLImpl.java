@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import data.factory.DataFactory;
+import factory.DataFactory;
 import po.RoomPO;
 import vo.RoomVO;
 
@@ -21,7 +21,8 @@ public class RoomBLImpl {
 	
 	
 	public boolean addRoomType(int hotelID,RoomVO roomVO){
-		RoomPO po = new RoomPO(roomVO.roomID, hotelID, roomVO.roomName, roomVO.price, roomVO.maxNumOfPeople, roomVO.introduction, roomVO.numOfRoom);
+		int roomID = DataFactory.getRoomDataService().getRoomNum();
+		RoomPO po = new RoomPO(roomID, hotelID, roomVO.roomName, roomVO.price, roomVO.maxNumOfPeople, roomVO.introduction, roomVO.numOfRoom);
 		
 		if(DataFactory.getRoomDataService().addRoomType(po)){
 			if(roomListCache.containsKey(hotelID)){

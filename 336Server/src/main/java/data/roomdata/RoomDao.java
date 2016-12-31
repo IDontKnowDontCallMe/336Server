@@ -12,4 +12,6 @@ public boolean addRoomType(RoomPO po);
 	
 	public RoomPO getRoomPO(int roomID);
 	
+	public int getRoomNum();
+	
 }

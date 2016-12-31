@@ -80,5 +80,11 @@ public class UserController implements UserBLService{
 		userBLImpl.survivalConfirm(userID);
 	}
 
+	@Override
+	public void changePassword(int userID, String newPassword) {
+		// TODO Auto-generated method stub
+		userBLImpl.changePassword(userID, newPassword);
+	}
+
 	
 }

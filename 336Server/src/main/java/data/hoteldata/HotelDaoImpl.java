@@ -35,8 +35,9 @@ public class HotelDaoImpl implements HotelDao{
 		HashMap<Integer, HotelPO> result = new LinkedHashMap<Integer,HotelPO>();
 		
 		try{
+			System.out.println(city + " " + businessCircle);
 			con = ConnectionFactory.getDatabaseConnectionInstance();
-			String sql = "SELECT * FROM hoteltable WHERE city = ? and businessCircle = ?";
+			String sql = "SELECT * FROM hoteltable WHERE city =? and businessCircle =?";
 			pps = con.prepareStatement(sql);
 			pps.setString(1, city);
 			pps.setString(2, businessCircle);

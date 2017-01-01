@@ -42,6 +42,7 @@ public class HotelSearchingImpl {
 
 		if( !areaCache.containsKey(toAreaString(areaVO))){
 			loadToAreaCache(areaVO);
+			System.out.println(233);
 		}
 		
 		List<HotelVO> resultList = getVOsByPOs(areaCache.get(toAreaString(areaVO)), customerID);
@@ -147,6 +148,7 @@ public class HotelSearchingImpl {
 		
 		HotelDataService hotelDataService = DataFactory.getHotelDataService();
 		Map<Integer, HotelPO> map = hotelDataService.getHotelListOfArea(areaVO.city, areaVO.businessCircle);
+		System.out.println(map.size());
 		areaCache.put(toAreaString(areaVO), map);
 		areaQueue.add(toAreaString(areaVO));
 	}

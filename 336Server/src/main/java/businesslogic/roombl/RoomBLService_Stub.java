@@ -25,20 +25,6 @@ public class RoomBLService_Stub implements RoomBLService{
 	}
 
 	@Override
-	public boolean updateRoomType(int hotelID, RoomVO roomVO) {
-		// TODO Auto-generated method stub
-		System.out.println("update room");
-		return true;
-	}
-
-	@Override
-	public boolean deleteRoomType(int roomID) {
-		// TODO Auto-generated method stub
-		System.out.println("delete room");
-		return true;
-	}
-
-	@Override
 	public List<RoomVO> getRoomTypeList(int hotelID) {
 		// TODO Auto-generated method stub
 		return roomVOList;

@@ -49,17 +49,6 @@ public class RoomBLMock implements RoomBLService{
 		return true;
 	}
 
-	@Override
-	public boolean updateRoomType(int hotelID, RoomVO roomVO) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean deleteRoomType(int roomID) {
-		// TODO Auto-generated method stub
-		return true;
-	}
 
 	@Override
 	public List<RoomVO> getRoomTypeList(int hotelID) {

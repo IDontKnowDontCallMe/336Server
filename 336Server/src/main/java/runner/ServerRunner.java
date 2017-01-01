@@ -63,6 +63,7 @@ public class ServerRunner {
 				// TODO Auto-generated method stub
 				try {
 					UnicastRemoteObject.unexportObject(controllerRemoteFactory, true);
+					System.exit(0);
 				} catch (NoSuchObjectException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

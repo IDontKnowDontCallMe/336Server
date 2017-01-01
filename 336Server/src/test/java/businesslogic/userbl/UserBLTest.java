@@ -50,7 +50,7 @@ public class UserBLTest {
 	@Test
 	public void testLogin1() {
 		String actual = userBLService.login(100000002, "3361002");
-		assertEquals("customer", actual);
+		assertEquals("password wrong", actual);
 	}
 	
 	@Test

@@ -27,7 +27,7 @@ public class RoomBLTest {
 	public void testGetRoomTypeList1() {
 		List<RoomVO> list = roomBLService.getRoomTypeList(200000001);
 		
-		assertEquals(2, list.size());
+		assertEquals(4, list.size());
 	}
 	
 	@Test

@@ -73,7 +73,11 @@ public class PromotionBLTest {
 		CustomerVO customerVO = new CustomerVO(100000001, "", "", false, null, false, null, 3000, 3);
 		int actual = promotionBLService.calculateOrder(calculationConditionVO, customerVO);
 		
+<<<<<<< HEAD
 		assertEquals(125, actual);
+=======
+		assertEquals(115, actual);
+>>>>>>> refs/remotes/origin/master
 	}
 	
 	@Test
@@ -82,7 +86,11 @@ public class PromotionBLTest {
 		CustomerVO customerVO = new CustomerVO(100000001, "", "", false, null, false, null, 3000, 3);
 		int actual = promotionBLService.calculateOrder(calculationConditionVO, customerVO);
 		
+<<<<<<< HEAD
 		assertEquals(125, actual);
+=======
+		assertEquals(115, actual);
+>>>>>>> refs/remotes/origin/master
 	}
 	
 	@Test
@@ -91,6 +99,10 @@ public class PromotionBLTest {
 		CustomerVO customerVO = new CustomerVO(100000001, "", "", false, null, false, null, 3000, 3);
 		int actual = promotionBLService.calculateOrder(calculationConditionVO, customerVO);
 		
+<<<<<<< HEAD
 		assertEquals(125, actual);
+=======
+		assertEquals(115, actual);
+>>>>>>> refs/remotes/origin/master
 	}
 }

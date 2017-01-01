@@ -14,7 +14,7 @@ public class RemoteRegister {
 		try {
 			
 			LocateRegistry.createRegistry(8888);
-			Naming.bind("rmi://localhost:8888/controllerRemoteFactory", remoteObject);
+			Naming.bind("rmi://172.26.102.100:8888/controllerRemoteFactory", remoteObject);
 			
 			return true;
 		} catch (RemoteException e) {

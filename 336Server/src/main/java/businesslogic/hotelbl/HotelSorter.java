@@ -4,10 +4,19 @@ import java.util.List;
 
 import vo.HotelVO;
 
+/**
+ * 负责处理酒店排序的类
+ * @author sjl
+ *
+ */
 public class HotelSorter {
 
 	private SimpleComparator comparator;
 	
+	/**
+	 * 根据排序类型的构造方法
+	 * @param sortTarget
+	 */
 	public HotelSorter(String sortTarget) {
 		// TODO Auto-generated constructor stub
 		switch (sortTarget) {
@@ -45,6 +54,11 @@ public class HotelSorter {
 		return hotelList;
 	}
 	
+	/**
+	 * 一个抽象私有类，负责提供比较方法；可以衍生新类实现compare方法，实现新的比较功能
+	 * @author sjl
+	 *
+	 */
 	public abstract class SimpleComparator{
 		abstract public int compare(HotelVO vo1, HotelVO vo2);
 	}

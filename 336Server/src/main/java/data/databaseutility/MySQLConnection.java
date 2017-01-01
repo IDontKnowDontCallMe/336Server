@@ -36,7 +36,7 @@ public class MySQLConnection implements DatabaseConnection{
 				System.out.println("connection is null!");
 			}
 			else{
-				System.out.println("connect to ->->->" + con);
+				//System.out.println("connect to ->->->" + con);
 			}
 		}catch(Exception e){
 			e.printStackTrace();

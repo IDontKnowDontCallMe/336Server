@@ -127,20 +127,6 @@ public class ControllerRemoteFactory extends UnicastRemoteObject implements Remo
 	}
 
 	@Override
-	public boolean updateRoomType(int hotelID, RoomVO roomVO) throws RemoteException {
-		// TODO Auto-generated method stub
-		boolean updateTag = roomBLService.updateRoomType(hotelID, roomVO);
-		return updateTag;
-	}
-
-	@Override
-	public boolean deleteRoomType(int roomID) throws RemoteException {
-		// TODO Auto-generated method stub
-		//需求无，暂时不实现
-		return false;
-	}
-
-	@Override
 	public List<RoomVO> getRoomTypeList(int hotelID) throws RemoteException {
 		// TODO Auto-generated method stub
 		List<RoomVO> list = roomBLService.getRoomTypeList(hotelID);

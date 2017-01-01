@@ -24,24 +24,5 @@ public class RoomController implements RoomBLService{
 		// TODO Auto-generated method stub
 		return roomblImpl.getRoomType(roomID);
 	}
-	
-	//-----------------------------------------------------
-
-	@Override
-	public boolean updateRoomType(int hotelID, RoomVO roomVO) {
-		// TODO Auto-generated method stub
-		return roomblImpl.updateRoomType(hotelID, roomVO);
-	}
-
-	@Override
-	public boolean deleteRoomType(int roomID) {
-		// TODO Auto-generated method stub
-		return roomblImpl.deleteRoomType(roomID);
-	}
-
-	
-	
-	
-
 
 }

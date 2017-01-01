@@ -22,7 +22,13 @@ import vo.SearchConditionVO;
 
 public class HotelSearchingImpl {
 
+	/**
+	 * 根据商圈分类的酒店列表的cache，key为城市--商圈
+	 */
 	private Map<String, Map<Integer, HotelPO>> areaCache;
+	/**
+	 * 客户搜索结果的cache，存储了当前显示在客户界面上的酒店列表，key为customerID
+	 */
 	private Map<Integer, List<HotelVO>> resultCache;
 	private Queue<String> areaQueue;
 	private Queue<Integer> customerQueue;
@@ -135,6 +141,10 @@ public class HotelSearchingImpl {
 	
 	//-----------------------------------------
 	
+	/**
+	 * 从数据库中读出该商圈的酒店，放入cache
+	 * @param areaVO
+	 */
 	private void loadToAreaCache(AreaVO areaVO){
 		if(areaCache.containsKey(toAreaString(areaVO))){
 			return;
@@ -153,12 +163,20 @@ public class HotelSearchingImpl {
 		areaQueue.add(toAreaString(areaVO));
 	}
 	
+	/**
+	 * 清除一些最晚不被使用的商圈的酒店
+	 */
 	private void cleanSomeAreaCache(){
 		for(int i=0; i < cleanTimes; i++){
 			areaCache.remove(areaQueue.poll());
 		}
 	}
 	
+	/**
+	 * 在resultCache中增加一个customer的搜索结果
+	 * @param customerID
+	 * @param list
+	 */
 	private void addResult(int customerID, List<HotelVO> list){
 		if(resultCache.containsKey(customerID)){
 			resultCache.replace(customerID, list);
@@ -178,6 +196,12 @@ public class HotelSearchingImpl {
 		}
 	}
 	
+	/**
+	 * 把map转为对应的list
+	 * @param map
+	 * @param customerID
+	 * @return
+	 */
 	private List<HotelVO> getVOsByPOs(Map<Integer, HotelPO> map , int customerID){
 		List<HotelVO> result = new ArrayList<HotelVO>();
 		
@@ -198,6 +222,11 @@ public class HotelSearchingImpl {
 		return result;
 	}
 	
+	/**
+	 * 根据酒店的各个房型，得出当前酒店的最小未优惠房间价格
+	 * @param hotelID
+	 * @return
+	 */
 	private int getMinPriceOfHotel(int hotelID){
 		RoomBLService roomBLService = BLFactory.getRoomBLService();
 		List<RoomVO> roomList = null;
@@ -214,6 +243,11 @@ public class HotelSearchingImpl {
 		return minPrice;
 	}
 	
+	/**
+	 * 城市商圈的String格式化
+	 * @param areaVO
+	 * @return
+	 */
 	private String toAreaString(AreaVO areaVO){
 		return areaVO.city + "--" + areaVO.businessCircle;
 	}

@@ -70,7 +70,7 @@ public class OrderBLTest {
 		
 		int actual = orderBLService.calculateTotal(vo);
 		
-		assertEquals(33, actual);
+		assertEquals(44, actual);
 	}
 	
 	@Test
@@ -79,7 +79,7 @@ public class OrderBLTest {
 		
 		int actual = orderBLService.calculateTotal(vo);
 		
-		assertEquals(33, actual);
+		assertEquals(55, actual);
 	}
 	
 	@Test
@@ -123,7 +123,7 @@ public class OrderBLTest {
 		
 		int actual = orderBLService.getBookedTag(100000001, 200000001);
 		
-		assertEquals(1, actual);
+		assertEquals(2, actual);
 		
 	}
 	

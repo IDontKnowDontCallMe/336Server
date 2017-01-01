@@ -2,7 +2,6 @@ package runner;
 
 import java.time.LocalDate;
 import java.util.List;
-
 import businesslogic.customerbl.CustomerBLService_Stub;
 import businesslogic.hotelbl.HotelBLService_Stub;
 import businesslogic.orderbl.OrderBLService_Stub;
